@@ -9,7 +9,6 @@ public class GeoDevineurApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(GeoDevineurApplication.class, args);
-        System.out.println("Coucou");
     }
 
 }
