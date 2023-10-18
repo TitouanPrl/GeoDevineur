@@ -9,7 +9,7 @@ public class ContainLetter implements Condition{
         departement = dep_;
         random = new Random();
     }
-    public void findLetter() {
+    public void setAttributes() {
         char selected;
         do {
             int a = random.nextInt(departement.getName().length());
