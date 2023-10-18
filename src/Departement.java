@@ -21,6 +21,34 @@ public class Departement {
         politic = politic_;
     }
 
+    public Cardinal getCardinal() {
+        return cardinal;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNeightbours() {
+        return neightbours;
+    }
+
+    public String getPolitic() {
+        return politic;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public int getSurface() {
+        return surface;
+    }
+
     public void setPossible(boolean possible) {
         this.possible = possible;
     }
