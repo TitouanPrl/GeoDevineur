@@ -49,11 +49,23 @@ public class Departement {
         return surface;
     }
 
+    public boolean getSeaside() {
+        return seaside;
+    }
+
     public void setPossible(boolean possible) {
         this.possible = possible;
     }
 
     public void setPotential(boolean potential) {
         this.potential = potential;
+    }
+
+    public boolean getPossible() {
+        return possible;
+    }
+
+    public boolean getPotential() {
+        return potential;
     }
 }

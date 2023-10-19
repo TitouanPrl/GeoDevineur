@@ -13,6 +13,8 @@ public class Control extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	private 
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String viewPath = "/WEB-INF/pages/user/showUserForm.jsp";
@@ -22,16 +24,17 @@ public class Control extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Departement departement = new Departement();
-        departement.setId(request.getParameter("id"));
-        departement.setName(request.getParameter("name"));
-		departement.setMainCity(request.getParameter("mainCity"));
+		// Departement departement = new Departement();
+        // departement.setId(request.getParameter("id"));
+        // departement.setName(request.getParameter("name"));
+		// departement.setMainCity(request.getParameter("mainCity"));
+		// departement.setRegion(request.getParameter("region"));
 
-        if (departement.checkVeracity()) {
-            // Congratulations message, new departement?
-        } else {
-            // wrong answers, try again
-        }
+        // if (departement.checkVeracity()) {
+        //     // Congratulations message, new departement?
+        // } else {
+        //     // wrong answers, try again
+        // }
 
 		// request.setAttribute("user", user);
 		// String viewPath = "/WEB-INF/pages/user/showUser.jsp";
