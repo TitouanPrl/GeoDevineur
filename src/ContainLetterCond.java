@@ -1,18 +1,18 @@
 import java.util.Random;
 
-public class ContainLetter extends Condition{
+public class ContainLetterCond extends Condition{
     private Random random;
     private char letter;
 
-    public ContainLetter(Departement dep_) {
+    public ContainLetterCond(Departement dep_) {
         random = new Random();
         setAttributes(dep_);
     }
-    protected void setAttributes(Departement departement) {
+    protected void setAttributes(Departement dep) {
         char selected;
         do {
-            int a = random.nextInt(departement.getName().length());
-            selected = departement.getName().charAt(a);
+            int a = random.nextInt(dep.getName().length());
+            selected = dep.getName().charAt(a);
         } while ((selected == ' ') || (selected == '-') || (selected == '\''));
         letter = selected;
     }
