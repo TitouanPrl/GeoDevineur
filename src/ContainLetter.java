@@ -1,15 +1,14 @@
 import java.util.Random;
 
-public class ContainLetter implements Condition{
-    private Departement departement;
+public class ContainLetter extends Condition{
     private Random random;
     private char letter;
 
     public ContainLetter(Departement dep_) {
-        departement = dep_;
         random = new Random();
+        setAttributes(dep_);
     }
-    public void setAttributes() {
+    protected void setAttributes(Departement departement) {
         char selected;
         do {
             int a = random.nextInt(departement.getName().length());
