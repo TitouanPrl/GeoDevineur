@@ -5,6 +5,7 @@ public class IdCond extends Condition {
     private Departement compareDep;
     private boolean isLess; // If more, isLess is false
     private String threshold;
+    private static final int maxId = 95;
 
     public IdCond (Departement dep_, Departement compareDep_) {
         random = new Random();
@@ -23,11 +24,18 @@ public class IdCond extends Condition {
             threshold = compareDep.getId();
             if (compareId(threshold, dep.getId()) < 0) {
                 isLess = true;
-            } else {
+                return;
+            } else if (compareId(threshold, dep.getId()) > 0) {
                 isLess = false;
+                return;
             }
+        }
+
+        Integer number = random.nextInt(IdCond.maxId) + 1;
+        if (number == 20) {
+            threshold = "2A";
         } else {
-            // create appropriate thresholds
+            threshold = number.toString();
         }
     }
 
@@ -40,7 +48,7 @@ public class IdCond extends Condition {
     }
 
     private int compareId(String id1, String id2) {
-        if (Character.compare(id1.charAt(0), id2.charAt(0)) != 0) 
+        if (Character.compare(id1.charAt(0), id2.charAt(0)) != 0)
             return Character.compare(id1.charAt(0), id2.charAt(0));
         return Character.compare(id1.charAt(1), id2.charAt(1));
 
