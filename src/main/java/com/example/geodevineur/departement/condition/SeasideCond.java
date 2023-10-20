@@ -1,4 +1,7 @@
-package com.example.geodevineur;
+package com.example.geodevineur.departement.condition;
+import com.example.geodevineur.departement.Departement;
+
+
 public class SeasideCond extends Condition{
     private boolean seaside;
 

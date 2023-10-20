@@ -1,3 +1,5 @@
+package com.example.geodevineur.departement;
+
 public class Departement {
     private final String name;
     private final int population;

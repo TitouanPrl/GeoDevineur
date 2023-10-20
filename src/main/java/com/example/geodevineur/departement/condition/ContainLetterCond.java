@@ -1,4 +1,8 @@
+package com.example.geodevineur.departement.condition;
+
 import java.util.Random;
+import com.example.geodevineur.departement.Departement;
+
 
 public class ContainLetterCond extends Condition{
     private Random random;

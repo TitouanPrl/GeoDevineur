@@ -1,3 +1,7 @@
+package com.example.geodevineur.departement.condition;
+
+import com.example.geodevineur.departement.Departement;
+
 public class NbCharactersCond extends Condition{
     private int nbChar;
 

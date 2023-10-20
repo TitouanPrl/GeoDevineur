@@ -1,3 +1,8 @@
+package com.example.geodevineur.departement.condition;
+
+import com.example.geodevineur.departement.Politic;
+import com.example.geodevineur.departement.Departement;
+
 public class PoliticCond extends Condition{
     private Politic politic;
 
