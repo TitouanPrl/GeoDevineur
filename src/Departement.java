@@ -5,12 +5,12 @@ public class Departement {
     private final Cardinal cardinal;
     private final boolean seaside;
     private final int neightbours;
-    private final String id;
-    private final String politic;
+    private final int id;
+    private final Politic politic;
     private boolean possible = true;
     private boolean potential = true;
 
-    public Departement (String name_, int pop_, int surf_, Cardinal card_, boolean sea_, int neigh_, String id_, String politic_) {
+    public Departement (String name_, int pop_, int surf_, Cardinal card_, boolean sea_, int neigh_, int id_, Politic politic_) {
         name = name_;
         population = pop_;
         surface = surf_;
@@ -25,7 +25,7 @@ public class Departement {
         return cardinal;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -37,7 +37,7 @@ public class Departement {
         return neightbours;
     }
 
-    public String getPolitic() {
+    public Politic getPolitic() {
         return politic;
     }
 
