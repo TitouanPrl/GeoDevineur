@@ -41,20 +41,25 @@
         </div>
     </div>
 </header>
-<div class="col-md-4 container">
+<div class="col-md-4 container" style="padding: 1%">
     <div class="card mb-4 box-shadow">
-        <div class="question card-title align-items-center">Ceci est la question</div>
-        <div class="card-body">
+        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
+        <div class="question card-title align-items-center bg-primary text-center">
+            <h3 class="border-bottom border-dark "><strong>Question n°1</strong></h3>
+            <h1>Ceci est la question avec un point d'interrogation</h1>
+        </div>
+        <div class="card-body   align-items-center">
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                </div>
-                <small class="text-muted">9 mins</small>
-            </div>
+            <form act   ion="quizz.html" method="get" class="align-items-center text-center">
+                <input class="" type="text" name="answer">
+                <input class="btn-success" type="submit" value="Valider"><br><br>
+                <i class="card-subtitle border-top">43 correspondants</i>
+            </form>
+
         </div>
     </div>
+
+
 </div>
 <footer class="text-muted">
     <div class="container text-center">
