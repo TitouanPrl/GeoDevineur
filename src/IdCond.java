@@ -4,8 +4,8 @@ public class IdCond extends Condition {
     private Random random;
     private Departement compareDep;
     private boolean isLess; // If more, isLess is false
-    private int threshold;
-    
+    private String threshold;
+
     public IdCond (Departement dep_, Departement compareDep_) {
         random = new Random();
         setAttributes(dep_);
@@ -21,10 +21,10 @@ public class IdCond extends Condition {
     protected void setAttributes(Departement dep) {
         if (compareDep != null) {
             threshold = compareDep.getId();
-            if (threshold < dep.getId()) {
-                isLess = false;
-            } else {
+            if (compareId(threshold, dep.getId()) < 0) {
                 isLess = true;
+            } else {
+                isLess = false;
             }
         } else {
             // create appropriate thresholds
@@ -33,9 +33,16 @@ public class IdCond extends Condition {
 
     public boolean checksCondition(Departement dep) {
         if (isLess) {
-            return dep.getId() < threshold;
+            return compareId(dep.getId(), threshold) < 0;
         } else {
-            return dep.getId() > threshold;
+            return compareId(dep.getId(), threshold) > 0;
         }
+    }
+
+    private int compareId(String id1, String id2) {
+        if (Character.compare(id1.charAt(0), id2.charAt(0)) != 0) 
+            return Character.compare(id1.charAt(0), id2.charAt(0));
+        return Character.compare(id1.charAt(1), id2.charAt(1));
+
     }
 }
