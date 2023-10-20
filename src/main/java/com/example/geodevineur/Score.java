@@ -6,7 +6,7 @@ public class Score {
     private final String pseudo;
     private final Time temps;
 
-    public Departement (String pseudo_, Time temps_) {
+    public Score (String pseudo_, Time temps_) {
         pseudo = pseudo_;
         temps = temps_;
     }
