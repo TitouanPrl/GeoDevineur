@@ -5,7 +5,7 @@ public class NeighbourCond extends Condition {
     private Departement compareDep;
     private boolean isLess; // If more, isLess is false
     private int threshold;
-    private static final int maxNeighbours = 7;
+    private static final int maxNeighbours = 10;
     
     public NeighbourCond (Departement dep_, Departement compareDep_) {
         random = new Random();
@@ -29,7 +29,7 @@ public class NeighbourCond extends Condition {
             }
         } else {
             do {
-                threshold = random.nextInt(NeighbourCond.maxNeighbours - 1) + 1;
+                threshold = random.nextInt(NeighbourCond.maxNeighbours) + 1;
             } while (threshold == dep.getNeightbours());
 
             if (threshold < dep.getNeightbours()) {

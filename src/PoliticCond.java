@@ -1,15 +1,15 @@
 public class PoliticCond extends Condition{
-    private Politic seaside;
+    private Politic politic;
 
     public PoliticCond (Departement dep_) {
         setAttributes(dep_);
     }
 
     protected void setAttributes(Departement dep) {
-        seaside = dep.getPolitic();
+        politic = dep.getPolitic();
     }
 
     public boolean checksCondition(Departement dep) {
-        return dep.getPolitic() == seaside;
+        return dep.getPolitic() == politic;
     }
 }
