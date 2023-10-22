@@ -3,7 +3,7 @@ package com.example.geodevineur;
 public class Departement {
     private final String name;
     private final int population;
-    private final int surface;
+    private final Float surface;
     private final Cardinal cardinal;
     private final boolean seaside;
     private final int neightbours;
@@ -12,7 +12,7 @@ public class Departement {
     private boolean possible = true;
     private boolean potential = true;
 
-    public Departement (String name_, int pop_, int surf_, Cardinal card_, boolean sea_, int neigh_, String id_, Politic politic_) {
+    public Departement (String name_, int pop_, Float surf_, Cardinal card_, boolean sea_, int neigh_, String id_, Politic politic_) {
         name = name_;
         population = pop_;
         surface = surf_;
@@ -47,7 +47,7 @@ public class Departement {
         return population;
     }
 
-    public int getSurface() {
+    public Float getSurface() {
         return surface;
     }
 
