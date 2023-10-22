@@ -16,7 +16,7 @@ FROM CSVREAD('../csv/regions.csv');
 CREATE TABLE DEPARTEMENT
 (
   ID INT PRIMARY KEY,
-  Region VARCHAR(55),
+  Nom VARCHAR(55),
   Numero INT(2),
   Habitants INT(55),
   Superficie FLOAT(55),

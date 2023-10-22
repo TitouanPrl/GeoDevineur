@@ -2,6 +2,7 @@ package com.example.geodevineur;
 
 import java.sql.Time;
 
+/* Classe représentant les scores du leaderboard */
 public class Score {
     private final String pseudo;
     private final Time temps;
