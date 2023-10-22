@@ -1,30 +1,30 @@
-package com.example.geodevineur.region.condition;
-
-import com.example.geodevineur.region.Region;
+package com.example.geodevineur.condition;
 
 import java.util.Random;
 
-public class SurfaceCond extends Condition {
+import com.example.geodevineur.dep_reg.DepReg;
+
+public class SurfaceCond<E extends DepReg> extends Condition<E> {
     private Random random;
-    private Region compareDep;
+    private E compare;
     private boolean isLess; // If more, isLess is false
     private int threshold;
     
-    public SurfaceCond (Region reg_, Region compareDep_) {
+    public SurfaceCond (E e, E compare_) {
         random = new Random();
-        setAttributes(reg_);
+        setAttributes(e);
         double probaCompare = .3;
         double rand = random.nextDouble();
         if (rand < probaCompare) {
-            compareDep = compareDep_;
+            compare = compare_;
         } else {
-            compareDep = null;
+            compare = null;
         }
     }
 
-    protected void setAttributes(Region reg) {
-        if (compareDep != null) {
-            threshold = compareDep.getSurface();
+    protected void setAttributes(E e) {
+        if (compare != null) {
+            threshold = compare.getSurface();
         } else {
             int rand = random.nextInt(2);
             if (rand == 0) {
@@ -33,18 +33,18 @@ public class SurfaceCond extends Condition {
                 threshold = 6500;
             }
         }
-        if (threshold < reg.getSurface()) {
+        if (threshold < e.getSurface()) {
             isLess = false;
         } else {
             isLess = true;
         }
     }
 
-    public boolean checksCondition(Region reg) {
+    public boolean checksCondition(E e) {
         if (isLess) {
-            return reg.getSurface() < threshold;
+            return e.getSurface() < threshold;
         } else {
-            return reg.getSurface() > threshold;
+            return e.getSurface() > threshold;
         }
     }
 }
