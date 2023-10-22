@@ -1,5 +1,5 @@
 package com.example.geodevineur.enumerations;
 
 public enum Politic {
-    GAUCHE, DROITE, CENTRE;
+    LR, UDI, PS, DVD, DVG, Regionaliste, Renaissance, PRG;
 }

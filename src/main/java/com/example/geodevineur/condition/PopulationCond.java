@@ -3,6 +3,7 @@ package com.example.geodevineur.condition;
 import java.util.Random;
 
 import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.dep_reg.Departement;
 
 
 public class PopulationCond<E extends DepReg> extends Condition<E> {
@@ -26,13 +27,18 @@ public class PopulationCond<E extends DepReg> extends Condition<E> {
     protected void setAttributes(E e) {
         if (compare != null) {
             threshold = compare.getPopulation();
-            if (threshold < e.getPopulation()) {
-                isLess = false;
-            } else {
-                isLess = true;
-            }
         } else {
-            // create appropriate thresholds
+            int rand = random.nextInt(2);
+            if (rand == 0) {
+                threshold = (e instanceof Departement)?300000:3500000;
+            } else {
+                threshold = (e instanceof Departement)?700000:6000000;
+            }
+        }
+        if (threshold < e.getPopulation()) {
+            isLess = false;
+        } else {
+            isLess = true;
         }
     }
 

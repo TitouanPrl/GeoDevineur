@@ -3,6 +3,7 @@ package com.example.geodevineur.condition;
 import java.util.Random;
 
 import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.dep_reg.Departement;
 
 public class SurfaceCond<E extends DepReg> extends Condition<E> {
     private Random random;
@@ -28,9 +29,9 @@ public class SurfaceCond<E extends DepReg> extends Condition<E> {
         } else {
             int rand = random.nextInt(2);
             if (rand == 0) {
-                threshold = 5500;
+                threshold = (e instanceof Departement)?5500:30000;
             } else {
-                threshold = 6500;
+                threshold = (e instanceof Departement)?6500:50000;
             }
         }
         if (threshold < e.getSurface()) {
