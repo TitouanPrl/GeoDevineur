@@ -1,30 +1,33 @@
-package com.example.geodevineur;
+package com.example.geodevineur.condition;
 
 import java.util.Random;
 
-public class NeighbourCond extends Condition {
+import com.example.geodevineur.dep_reg.DepReg;
+
+
+public class NeighbourCond<E extends DepReg> extends Condition<E> {
     private Random random;
-    private Departement compareDep;
+    private E compare;
     private boolean isLess; // If more, isLess is false
     private int threshold;
     private static final int maxNeighbours = 10;
     
-    public NeighbourCond (Departement dep_, Departement compareDep_) {
+    public NeighbourCond (E e, E compare_) {
         random = new Random();
-        setAttributes(dep_);
+        setAttributes(e);
         double probaCompare = .3;
         double rand = random.nextDouble();
-        if (rand < probaCompare && dep_.getNeightbours() != compareDep_.getNeightbours()) {
-            compareDep = compareDep_;
+        if (rand < probaCompare && e.getNeightbours() != compare_.getNeightbours()) {
+            compare = compare_;
         } else {
-            compareDep = null;
+            compare = null;
         }
     }
 
-    protected void setAttributes(Departement dep) {
-        if (compareDep != null) {
-            threshold = compareDep.getNeightbours();
-            if (threshold < dep.getNeightbours()) {
+    protected void setAttributes(E e) {
+        if (compare != null) {
+            threshold = compare.getNeightbours();
+            if (threshold < e.getNeightbours()) {
                 isLess = false;
             } else {
                 isLess = true;
@@ -32,9 +35,9 @@ public class NeighbourCond extends Condition {
         } else {
             do {
                 threshold = random.nextInt(NeighbourCond.maxNeighbours) + 1;
-            } while (threshold == dep.getNeightbours());
+            } while (threshold == e.getNeightbours());
 
-            if (threshold < dep.getNeightbours()) {
+            if (threshold < e.getNeightbours()) {
                 isLess = false;
             } else {
                 isLess = true;
@@ -42,7 +45,7 @@ public class NeighbourCond extends Condition {
         }
     }
 
-    public boolean checksCondition(Departement dep) {
+    public boolean checksCondition(E dep) {
         if (isLess) {
             return dep.getNeightbours() < threshold;
         } else {
