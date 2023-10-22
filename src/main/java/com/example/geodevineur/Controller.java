@@ -26,7 +26,7 @@ public class Controller {
 
         /* On importe les CSV de données initiales */
         InputStream inputSream = file.getInputStream();
-        CsvParserSettings setting = CsvParserSettings();
+        CsvParserSettings setting = new CsvParserSettings();
         setting.setHeaderExtractionEnabled(true);
         CsvParser parser = new CsvParser(setting);
         parser.parseAllRecords(inputSream);
@@ -34,7 +34,7 @@ public class Controller {
        
         /* On convertit chaque entrée en objet */
         parseAllRecords.forEach(record -> {
-            Departement departement = new Departement(record.getString("Nom"), Integer.parseInt(record.getString("Habitants")), Float.parseFloat(record.getString("Superficie")), Cardinal.fromString(record.getString("Position")), Boolean.parseBoolean(record.getString("Cotier")), Integer.parseInt(record.getString("Voisins")), record.getString("Numero"), record.getString("Politique"));
+            Departement departement = new Departement(record.getString("Nom"), Integer.parseInt(record.getString("Habitants")), Double(Float.parseFloat((record.getString("Superficie"))), Cardinal.fromString(record.getString("Position")), Boolean.parseBoolean(record.getString("Cotier")), Integer.parseInt(record.getString("Voisins")), record.getString("Numero"), record.getString("Politique")));
             departementList.add(departement);
         });
 

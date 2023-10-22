@@ -6,7 +6,7 @@ public class SurfaceCond extends Condition {
     private Random random;
     private Departement compareDep;
     private boolean isLess; // If more, isLess is false
-    private int threshold;
+    private double threshold;
     
     public SurfaceCond (Departement dep_, Departement compareDep_) {
         random = new Random();
