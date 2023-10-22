@@ -38,7 +38,7 @@ public abstract class DepReg {
         return population;
     }
 
-    public int getSurface() {
+    public double getSurface() {
         return surface;
     }
 
