@@ -2,7 +2,6 @@ package com.example.geodevineur.dep_reg;
 
 import com.example.geodevineur.enumerations.*;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
