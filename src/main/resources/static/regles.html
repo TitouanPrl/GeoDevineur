@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -41,31 +41,15 @@
         </div>
     </div>
 </header>
-<div class="col-md-4 container" style="padding: 1%">
+
+<div class="container">
+
+    <p>Argumentation</p>
     <div class="card mb-4 box-shadow">
         <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <!-- Quand répondu : changement couleur + attribut 'disabled' au bouton du form + -->
-        <!-- valeur de la saisie texte correspond à reponse + nombre de departement correspondants dans balise i -->
-        <div class="question card-title align-items-center bg-success text-center">
-            <h3 class="border-bottom border-dark "><strong>Question n°1</strong></h3>
-            <h1>Ceci est la question répondue un point d'interrogation</h1>
-        </div>
-        <div class="card-body align-items-center">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <form action="quizz.html" method="get" class="align-items-center text-center">
-                <input class="" type="text" name="answer" value="Creuse">
-                <input disabled class="btn-success" type="submit" value="Valider"><br><br>
-                <i class="card-subtitle border-top">43 correspondants</i>
-            </form>
-
-        </div>
-    </div>
-
-    <div class="card mb-4 box-shadow">
-        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <div class="question card-title align-items-center bg-primary text-center">
+        <div class="question card-title align-items-center bg-info text-center">
             <h3 class="border-bottom border-dark "><strong>Question n°2</strong></h3>
-            <h1>Ceci est la question avec un point d'interrogation</h1>
+            <h1 class="">Règles d'un Quizz</h1>
         </div>
         <div class="card-body   align-items-center">
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -77,19 +61,15 @@
 
         </div>
     </div>
-
 </div>
+
+
+
 <footer class="text-muted border-top" style="padding-top: 15px">
     <div class="container text-center">
         <p>Site créé dans le cadre d'un projet JEE</p>
         <p>Pour en savoir plus => <a href="https://github.com/TitouanPrl/GeoDevineur">Github GéoDevineur</a></a></p>
     </div>
 </footer>
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/holder.min.js"></script>
 </body>
 </html>
