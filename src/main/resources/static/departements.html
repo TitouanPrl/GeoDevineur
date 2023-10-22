@@ -2,8 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">A propos</h4>
+                    <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Quizz</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Règles</a></li>
+                        <li><a href="#" class="text-white">Meilleurs scores</a></li>
+                        <li><a href="#" class="text-white">Infomations générales</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="index.html" class="navbar-brand d-flex align-items-center">
+                <img class="" width="140" height="90" src="img/logo.png" alt="">
+                <h2>GéoDevineur</h2>
+            </a>
+            <a href="quizz.html" class="navbar-brand d-flex align-items-center"><h4>Quizz</h4></a>
+            <a href="regles.html" class="navbar-brand d-flex align-items-center"><h4>Règles</h4></a>
+            <a href="scores.html" class="navbar-brand d-flex align-items-center"><h4>Meilleurs scores</h4></a>
+            <a href="departements.html" class="navbar-brand d-flex align-items-center"><h4>Infomations générales</h4></a>
 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="container" style="padding: 50px">
+    <label for="departement-select"></label>
+    <select class="custom-select" name="departements" id="departement-select">
+        <option value="">--Merci de choisir un département--</option>
+        <option value="01">01 - Ain</option>
+        <option value="02">12 - Aveyron</option>
+        <option value="etc">ETC</option>
+    </select>
+    <div class="container border-top text-center" style="padding: 50px">
+        <!-- Changer le nom de l'image par rapport à l'id du departement -->
+        <img class="align-items-center" src="img/departements/00.png" width="400" height="430">
+    </div>
+
+    <div class="container border-top text-center" style="padding: 50px">
+        <p id="habitants-superficie">Il comporte 657 856 habitants pour une superficie de 5825,6 km.</p>
+        <p id="position-cotier">Situé dans l'Est de la France, il est se trouve dans les terres.</p>
+        <p id="voisins"> Il possède 6 départements voisins.</p>
+        <p id="politique"> Il vote LR en majorité.</p>
+    </div>
+</div>
+
+<footer class="text-muted border-top" style="padding-top: 15px">
+    <div class="container text-center">
+        <p>Site créé dans le cadre d'un projet JEE</p>
+        <p>Pour en savoir plus => <a href="https://github.com/TitouanPrl/GeoDevineur">Github GéoDevineur</a></a></p>
+    </div>
+</footer>
 </body>
 </html>
