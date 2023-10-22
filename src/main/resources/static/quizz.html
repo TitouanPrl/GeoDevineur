@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script th:src="@{/webjars/@socialgouv/react-departements/dist/index.js}"></script>
 </head>
 <body>
 <header>
@@ -25,6 +26,7 @@
         </div>
     </div>
     <div class="navbar navbar-dark bg-dark box-shadow">
+        <!-- faut du java ici -->
         <div class="container d-flex justify-content-between">
             <a href="index.html" class="navbar-brand d-flex align-items-center">
                 <img class="" width="140" height="90" src="img/logo.png" alt="">
