@@ -1,6 +1,6 @@
 package com.example.geodevineur.departement.condition;
 
-import com.example.geodevineur.departement.Cardinal;
+import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.departement.Departement;
 
 public class CardinalCond extends Condition{

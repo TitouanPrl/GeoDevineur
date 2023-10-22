@@ -1,8 +1,8 @@
-package com.example.geodevineur.departement;
+package com.example.geodevineur.region;
 
 import com.example.geodevineur.enumerations.*;
 
-public class Departement {
+public class Region {
     private final String name;
     private final int population;
     private final int surface;
@@ -14,7 +14,7 @@ public class Departement {
     private boolean possible = true;
     private boolean potential = true;
 
-    public Departement (String name_, int pop_, int surf_, Cardinal card_, boolean sea_, int neigh_, String id_, Politic politic_) {
+    public Region (String name_, int pop_, int surf_, Cardinal card_, boolean sea_, int neigh_, String id_, Politic politic_) {
         name = name_;
         population = pop_;
         surface = surf_;

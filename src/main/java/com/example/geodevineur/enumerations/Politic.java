@@ -1,4 +1,4 @@
-package com.example.geodevineur.departement;
+package com.example.geodevineur.enumerations;
 
 public enum Politic {
     GAUCHE, DROITE, CENTRE;
