@@ -46,14 +46,10 @@
 
 <div class="container" style="padding: 50px">
     <label for="departement-select"></label>
-    <form id="chooseDep">
-        <select class="custom-select" name="departements" id="departement-select">
-            <option value="00">--Merci de choisir un département--</option>
-            <option value="01">01 - Ain</option>
-            <option value="02">12 - Aveyron</option>
-            <option value="etc">ETC</option>
-        </select>
-    </form>
+    <div th:remove="tag" th:utext="${selectContent}"></div>
+
+
+
 
     <script>
         document.getElementById("departement-select").addEventListener("change", function() {
