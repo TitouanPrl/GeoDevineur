@@ -7,17 +7,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
+@Entity 
 public abstract class DepReg {
     protected String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int population;
     protected double surface;
     protected Cardinal cardinal;
     protected boolean seaside;
     protected int neightbours;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected String id;
     protected Politic politic;
     protected boolean possible = true;
