@@ -1,33 +1,36 @@
-package com.example.geodevineur;
+package com.example.geodevineur.condition;
 
 import java.util.Random;
 
-public class IdCond extends Condition {
+import com.example.geodevineur.dep_reg.DepReg;
+
+
+public class IdCond<E extends DepReg> extends Condition<E> {
     private Random random;
-    private Departement compareDep;
+    private E compare;
     private boolean isLess; // If more, isLess is false
     private String threshold;
     private static final int maxId = 95;
 
-    public IdCond (Departement dep_, Departement compareDep_) {
+    public IdCond (E e, E compare_) {
         random = new Random();
-        setAttributes(dep_);
+        setAttributes(e);
         double probaCompare = .3;
         double rand = random.nextDouble();
         if (rand < probaCompare) {
-            compareDep = compareDep_;
+            compare = compare_;
         } else {
-            compareDep = null;
+            compare = null;
         }
     }
 
-    protected void setAttributes(Departement dep) {
-        if (compareDep != null) {
-            threshold = compareDep.getId();
-            if (compareId(threshold, dep.getId()) < 0) {
+    protected void setAttributes(E e) {
+        if (compare != null) {
+            threshold = compare.getId();
+            if (compareId(threshold, e.getId()) < 0) {
                 isLess = true;
                 return;
-            } else if (compareId(threshold, dep.getId()) > 0) {
+            } else if (compareId(threshold, e.getId()) > 0) {
                 isLess = false;
                 return;
             }
@@ -41,11 +44,11 @@ public class IdCond extends Condition {
         }
     }
 
-    public boolean checksCondition(Departement dep) {
+    public boolean checksCondition(E e) {
         if (isLess) {
-            return compareId(dep.getId(), threshold) < 0;
+            return compareId(e.getId(), threshold) < 0;
         } else {
-            return compareId(dep.getId(), threshold) > 0;
+            return compareId(e.getId(), threshold) > 0;
         }
     }
 

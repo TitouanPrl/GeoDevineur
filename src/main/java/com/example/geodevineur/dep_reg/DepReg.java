@@ -1,27 +1,18 @@
-package com.example.geodevineur;
+package com.example.geodevineur.dep_reg;
 
-public class Departement {
-    private final String name;
-    private final int population;
-    private final int surface;
-    private final Cardinal cardinal;
-    private final boolean seaside;
-    private final int neightbours;
-    private final String id;
-    private final Politic politic;
-    private boolean possible = true;
-    private boolean potential = true;
+import com.example.geodevineur.enumerations.*;
 
-    public Departement (String name_, int pop_, int surf_, Cardinal card_, boolean sea_, int neigh_, String id_, Politic politic_) {
-        name = name_;
-        population = pop_;
-        surface = surf_;
-        cardinal = card_;
-        seaside = sea_;
-        neightbours = neigh_;
-        id = id_;
-        politic = politic_;
-    }
+public abstract class DepReg {
+    protected String name;
+    protected int population;
+    protected int surface;
+    protected Cardinal cardinal;
+    protected boolean seaside;
+    protected int neightbours;
+    protected String id;
+    protected Politic politic;
+    protected boolean possible = true;
+    protected boolean potential = true;
 
     public Cardinal getCardinal() {
         return cardinal;
@@ -47,7 +38,7 @@ public class Departement {
         return population;
     }
 
-    public int getSurface() {
+    public double getSurface() {
         return surface;
     }
 
