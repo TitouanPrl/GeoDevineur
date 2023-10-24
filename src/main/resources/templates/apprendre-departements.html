@@ -46,15 +46,34 @@
 
 <div class="container" style="padding: 50px">
     <label for="departement-select"></label>
+
     <div th:remove="tag" th:utext="${selectContent}"></div>
 
 
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         document.getElementById("departement-select").addEventListener("change", function() {
-            document.getElementById("dep-on-map").src = "resources/static/img/departements/" + this.value + ".png";
-            document.getElementById("dep-on-map").alt = this.value;
+            const dep = this.value;
+            console.log("here avec "+dep)
+            $.ajax({
+                url: '/setDepartement',
+                type: 'POST',
+                data: { departement: dep },
+                success(data) {
+                    //700 fine
+                    sleep(500).then(() => {
+                        document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
+                    });
+                    document.getElementById("dep-on-map").alt = dep;
+                }
+            });
+
+
+
         });
     </script>
 

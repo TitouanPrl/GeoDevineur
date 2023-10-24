@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -31,3 +32,4 @@ public class ContainLetterCond<E extends DepReg> extends Condition<E>{
         return res;
     }
 }
+*/

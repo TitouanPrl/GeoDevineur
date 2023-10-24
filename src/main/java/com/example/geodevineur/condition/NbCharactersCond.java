@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.condition;
 
 import com.example.geodevineur.dep_reg.DepReg;
@@ -17,3 +18,4 @@ public class NbCharactersCond<E extends DepReg> extends Condition<E>{
         return (e.getName().length() == nbChar);
     }
 }
+*/

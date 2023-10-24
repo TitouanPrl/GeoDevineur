@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur;
 
 import java.io.InputStream;
@@ -19,20 +20,24 @@ public class Controller {
 
     @Autowired
     DepartementRepository service;
-    
+
     @PostMapping("/upload")
     public String uploadData(@RequestParam("file") MultipartFile file) throws Exception {
         List<Departement> departementList = new ArrayList<>();
 
-        /* On importe les CSV de données initiales */
+        */
+/* On importe les CSV de données initiales *//*
+
         InputStream inputSream = file.getInputStream();
         CsvParserSettings setting = new CsvParserSettings();
         setting.setHeaderExtractionEnabled(true);
         CsvParser parser = new CsvParser(setting);
         parser.parseAllRecords(inputSream);
         List<com.univocity.parsers.common.record.Record> parseAllRecords = parser.parseAllRecords(inputSream);
-       
-        /* On convertit chaque entrée en objet */
+
+        */
+/* On convertit chaque entrée en objet *//*
+
         parseAllRecords.forEach(record -> {
             Departement departement = new Departement(record.getString("Nom"), Integer.parseInt(record.getString("Habitants")), Double(Float.parseFloat((record.getString("Superficie"))), Cardinal.fromString(record.getString("Position")), Boolean.parseBoolean(record.getString("Cotier")), Integer.parseInt(record.getString("Voisins")), record.getString("Numero"), record.getString("Politique")));
             departementList.add(departement);
@@ -42,3 +47,4 @@ public class Controller {
         return "Upload successfull";
     }
 }
+*/

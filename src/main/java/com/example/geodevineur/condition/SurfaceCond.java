@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -49,3 +50,4 @@ public class SurfaceCond<E extends DepReg> extends Condition<E> {
         }
     }
 }
+*/
