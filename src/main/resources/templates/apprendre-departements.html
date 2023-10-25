@@ -84,10 +84,10 @@
     </div>
 
     <div class="container border-top text-center" style="padding: 50px">
-        <p id="habitants-superficie">Il comporte 657 856 habitants pour une superficie de 5825,6 km.</p>
-        <p id="position-cotier">Situé dans l'Est de la France, il est se trouve dans les terres.</p>
-        <p id="voisins"> Il possède 6 départements voisins.</p>
-        <p id="politique"> Il vote LR en majorité.</p>
+        <p th:text="'Il comporte '+${habitants}+' habitants pour une superficie de '+${superficie}+' km²'"></p>
+        <p th:text="'Situé dans '+${position}+' de la France, il '+${cotier}+'.'"></p>
+        <p th:text="'Il possède '+${voisins}+' départements voisins.'"></p>
+        <p th:text="'Il vote '+${politique}+' en majorité.'"></p>
     </div>
 </div>
 

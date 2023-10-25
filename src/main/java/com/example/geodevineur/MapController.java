@@ -40,6 +40,7 @@ public class MapController{
         allDepartements.remove(20);
         allDepartements.add(20,"2a");
         allDepartements.add(20,"2b");
+        allDepartements.remove(0);
 
 
         for (String departement : allDepartements) {
@@ -57,6 +58,12 @@ public class MapController{
         selectContent.append("</select>");
         model.addAttribute("selectContent", selectContent);
         model.addAttribute("allDepartements", allDepartements);
+        model.addAttribute("superficie","7500");
+        model.addAttribute("habitants","420 000");
+        model.addAttribute("position","l'Est");
+        model.addAttribute("cotier","se trouve dans les terres");
+        model.addAttribute("voisins","6");
+        model.addAttribute("politique","RN");
         return "apprendre-departements";
     }
     @PostMapping("setDepartement")
@@ -95,14 +102,14 @@ public class MapController{
             }
         }
         Thread.sleep(500);
-        setInfosDepartement(departement);
+        //setInfosDepartement(departement);
 
         //colorizeDepartement(departement, rouge);
         return "apprendre-departements";
     }
 
-
-    public void setInfosDepartement(String departement) {
+    //@GetMapping("setInfosDepartement")
+    /*public void setInfosDepartement(Model model, String departement) {
         String region;
         String cotier;
         Integer voisins;
@@ -111,7 +118,14 @@ public class MapController{
         Integer habitants;
         Integer superficie;
 
-    }
+        model.addAttribute("superficie","4");
+        model.addAttribute("habitants","4");
+        model.addAttribute("position","l'4");
+        model.addAttribute("cotier","4");
+        model.addAttribute("voisins","6");
+        model.addAttribute("politique","4");
+
+    }*/
 
     public void colorizeDepartement(String departement, String color) throws IOException {
         String fileName = "src/main/resources/static/img/france_departements.svg";
@@ -144,8 +158,6 @@ public class MapController{
 
         Collections.sort(allRegions);
         Collections.sort(allIDs);
-        System.out.println(allRegions);
-        System.out.println(allIDs);
 
         StringBuilder selectContent = new StringBuilder();
         selectContent.append("<select class=\"custom-select\" name=\"regions\" id=\"region-select\">");
