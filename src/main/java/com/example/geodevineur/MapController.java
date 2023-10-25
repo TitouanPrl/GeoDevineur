@@ -79,10 +79,11 @@ public class MapController{
 
         ArrayList<ArrayList<String>> regions = new ArrayList<ArrayList<String>>(Arrays.asList(nouvelleAquitaine,corse,bretagne,hautsDeFrance,occitanie,normandie,ileDeFrance,grandEst,paysDeLaLoire,centreValDeLoire,bourgogneFrancheComte,auvergneRhoneAlpes,provenceAlpesCoteAzur));
 
-        String legerRouge = "#fb335b";//"#ACACAC";
+        String legerRouge = "#ffcccb";//"#ACACAC";
         String rouge = "red";
 
         resetMapColors();
+
 
         for(ArrayList<String> region : regions) {
             if (region.contains(departement)) {

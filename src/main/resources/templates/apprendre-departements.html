@@ -52,9 +52,21 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        if (window.PerformanceNavigationTiming) {
+            document.getElementById("departement-select").value = "00"
+            $.ajax({
+                url: '/setDepartement',
+                type: 'POST',
+                data: { departement: "00" },
+                success(data) {
+                    document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
+                    document.getElementById("dep-on-map").alt = "00";
+                }
+            });
+        }
+
         document.getElementById("departement-select").addEventListener("change", function() {
             const dep = this.value;
-            console.log("here avec "+dep)
             $.ajax({
                 url: '/setDepartement',
                 type: 'POST',
