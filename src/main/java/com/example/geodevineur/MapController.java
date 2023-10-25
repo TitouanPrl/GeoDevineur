@@ -62,7 +62,7 @@ public class MapController{
     }
 
     @PostMapping("setDepartement")
-    public String setDepartement(String departement) throws IOException {
+    public String setDepartement(String departement) throws IOException, InterruptedException {
         ArrayList<String> nouvelleAquitaine = new ArrayList<String>(Arrays.asList("16","17","19","23","24","33","40","47","64","79","86","87"));
         ArrayList<String> bretagne = new ArrayList<String>(Arrays.asList("22","29","35","56"));
         ArrayList<String> hautsDeFrance = new ArrayList<String>(Arrays.asList("02","59","60","62","80"));
@@ -86,9 +86,17 @@ public class MapController{
 
         for(ArrayList<String> region : regions) {
             if (region.contains(departement)) {
-                colorizeRegion(region, legerRouge);
+                for (String dep : region) {
+                    if (dep.equals(departement)){
+                        colorizeDepartement(dep, rouge);
+                    } else {
+                        colorizeDepartement(dep, legerRouge);
+                    }
+                }
             }
         }
+        Thread.sleep(500);
+        //setInfosDepartement(departement);
 
         //colorizeDepartement(departement, rouge);
         return "apprendre-departements";
@@ -96,9 +104,7 @@ public class MapController{
 
 
     public void colorizeRegion(ArrayList<String> region, String color) throws IOException {
-        for (String departement : region) {
-            colorizeDepartement(departement, color);
-        }
+
     }
 
     public void colorizeDepartement(String departement, String color) throws IOException {
@@ -107,14 +113,6 @@ public class MapController{
         String cibleX = "_" + departement + "\"";
         String content = Files.readString(path);
         content = content.replace(cibleX, cibleX + " style=\"fill: " + color + ";\"");
-        /*if (content.contains(cibleX + " d=")) {
-            content = content.replace(cibleX, cibleX + " style=\"fill: " + color + ";\"");
-        }
-        else {
-            String regex = cibleX + " style=\"fill: (#[A-Fa-f0-9]{6}|[a-z]*);\"";
-            content = content.replace(regex, cibleX + "style=\"fill: " + color + ";\"");
-        }*/
-
         Files.writeString(path,content);
     }
 

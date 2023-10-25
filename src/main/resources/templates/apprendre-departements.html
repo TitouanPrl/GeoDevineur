@@ -52,10 +52,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
         document.getElementById("departement-select").addEventListener("change", function() {
             const dep = this.value;
             console.log("here avec "+dep)
@@ -64,17 +60,10 @@
                 type: 'POST',
                 data: { departement: dep },
                 success(data) {
-                    //700 fine
-                    sleep(500).then(() => {
-                        document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
-                    });
+                    document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
                     document.getElementById("dep-on-map").alt = dep;
-                }
+                }});
             });
-
-
-
-        });
     </script>
 
     <div class="container border-top text-center" style="padding: 50px">
