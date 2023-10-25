@@ -12,4 +12,6 @@ public class GeoDevineurApplication {
         SpringApplication.run(GeoDevineurApplication.class, args);
     }
 
+
+
 }
