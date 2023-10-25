@@ -9,21 +9,22 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.geodevineur.dep_reg.Departement;
 import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.enumerations.Politic;
 
-import ch.qos.logback.core.model.Model;
 
 @Controller
 public class TableController {
 
     @Autowired
-    DepartementRepository service;
+    DeRegRepository service;
     
-    @PostMapping(path = "/uploadDpt")
-    public String uploadDepartements(Model model) throws Exception {
+    /* Convertis et injecte le csv département dans la BDD */
+    @PostMapping("/uploadDpt")
+    public String uploadDptements() {
         System.out.println("YESSSAI MONGARS");
         List<Departement> departementList = new ArrayList<Departement>();
         String filePath = "../../../../ressources/static/csv/departements.csv";
@@ -48,15 +49,19 @@ public class TableController {
                 /* On ajoute l'élément à la liste */
                 departementList.add(departement);
                 
-                service.saveAll(departementList);
-                return "Upload successfull";
             }
         }catch (IOException e) {
             e.printStackTrace();
-            return "Upload bug";
+            return "Upload buged";
         }
-        return "Upload en demi teinte";
+        service.saveAll(departementList);
+        return "Upload worked";
     }
+
+@RequestMapping("/test")
+public void test() {
+    System.out.println("IT WORKED FINE");
+}
 
         // /* On importe les CSV de données initiales */
         // BufferedReader reader = new BufferedReader(new FileReader("../../../../ressources/static/csv/departements.csv"));  
