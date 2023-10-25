@@ -44,16 +44,23 @@
 </header>
 
 <div class="container" style="padding: 50px">
-    <label for="departement-select"></label>
-    <select class="custom-select" name="departements" id="departement-select">
-        <option value="">--Merci de choisir un département--</option>
-        <option value="01">01 - Ain</option>
-        <option value="02">12 - Aveyron</option>
-        <option value="etc">ETC</option>
-    </select>
+    <label for="region-select"></label>
+
+    <div th:remove="tag" th:utext="${selectContent}"></div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        document.getElementById("region-select").addEventListener("change", function() {
+            const region = this.value;
+            document.getElementById("reg-on-map").src = "resources/static/img/regions/" + region + ".svg";
+            document.getElementById("reg-on-map").alt = region;
+        });
+    </script>
+
     <div class="container border-top text-center" style="padding: 50px">
         <!-- Changer le nom de l'image par rapport à l'id du departement -->
-        <img class="align-items-center" src="../assets/img/departements/64.png" width="400" height="430" alt="">
+        <img class="align-items-center" id="reg-on-map" src="resources/static/img/regions/france_regions.svg" width="450" height="430" alt="Carte de la France">
     </div>
 
     <div class="container border-top text-center" style="padding: 50px">

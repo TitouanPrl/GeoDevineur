@@ -1,4 +1,5 @@
 package com.example.geodevineur;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +11,21 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 @Controller
 public class MapController{
-    @GetMapping("apprendre-departements")
-    public String apprendreDep(Model model) throws IOException {
+    private final HttpSession session;
 
-        resetMapColors();
+    public MapController(HttpSession session) {
+        this.session = session;
+    }
+
+    @GetMapping("apprendre-departements")
+    public String apprendreDep(Model model) throws IOException, InterruptedException {
+        System.out.println(session.getId());
+        resetMapDepartementsColors();
+        Thread.sleep(500);
 
         ArrayList<String> allDepartements = new ArrayList<>();
         ArrayList<String> allNames = new ArrayList<>();
@@ -50,17 +59,6 @@ public class MapController{
         model.addAttribute("allDepartements", allDepartements);
         return "apprendre-departements";
     }
-
-    @GetMapping("apprendre-regions")
-    public String apprendreReg(Model model) {
-        String numeroDep = "00";
-        //model add select pour chacun des departements de la bdd
-        String maVariableJava = "Ceci est une variable Java.";
-        model.addAttribute("maVariableJava", maVariableJava);
-        model.addAttribute("numeroDep", numeroDep);
-        return "apprendre-regions"; // renvoie le nom de votre fichier HTML
-    }
-
     @PostMapping("setDepartement")
     public String setDepartement(String departement) throws IOException, InterruptedException {
         ArrayList<String> nouvelleAquitaine = new ArrayList<String>(Arrays.asList("16","17","19","23","24","33","40","47","64","79","86","87"));
@@ -82,11 +80,11 @@ public class MapController{
         String legerRouge = "#ffcccb";//"#ACACAC";
         String rouge = "red";
 
-        resetMapColors();
+        resetMapDepartementsColors();
 
 
         for(ArrayList<String> region : regions) {
-            if (region.contains(departement)) { 
+            if (region.contains(departement)) {
                 for (String dep : region) {
                     if (dep.equals(departement)){
                         colorizeDepartement(dep, rouge);
@@ -97,7 +95,7 @@ public class MapController{
             }
         }
         Thread.sleep(500);
-        //setInfosDepartement(departement);
+        setInfosDepartement(departement);
 
         //colorizeDepartement(departement, rouge);
         return "apprendre-departements";
@@ -124,7 +122,7 @@ public class MapController{
         Files.writeString(path,content);
     }
 
-    public void resetMapColors() throws IOException {
+    public void resetMapDepartementsColors() throws IOException {
         String fileName = "src/main/resources/static/img/france_departements.svg";
         Path path = Path.of(fileName);
         String regex = "style=\"fill: (#[A-Fa-f0-9]{6}|[a-z]*);\" ";
@@ -134,5 +132,32 @@ public class MapController{
         Files.writeString(path,content);
     }
 
+
+
+    //----------------------------------------------------
+
+    @GetMapping("apprendre-regions")
+    public String apprendreRegions(Model model) throws IOException, InterruptedException {
+
+        ArrayList<String> allRegions = new ArrayList<>(Arrays.asList("Ile-de-France","Nouvelle-Aquitaine","Corse","Bretagne","Hauts-de-France","Occitanie","Normandie","Grand Est","Pays de la Loire","Centre-Val de Loire","Bourgogne-Franche-Comté","Auvergne-Rhône-Alpes","Provence-Alpes-Côte d'Azur"));
+        ArrayList<String> allIDs = new ArrayList<String>(Arrays.asList("ileDeFrance","nouvelleAquitaine","corse","bretagne","hautsDeFrance","occitanie","normandie","grandEst","paysDeLaLoire","centreValDeLoire","bourgogneFrancheComte","auvergneRhoneAlpes","provenceAlpesCoteAzur"));
+
+        Collections.sort(allRegions);
+        Collections.sort(allIDs);
+        System.out.println(allRegions);
+        System.out.println(allIDs);
+
+        StringBuilder selectContent = new StringBuilder();
+        selectContent.append("<select class=\"custom-select\" name=\"regions\" id=\"region-select\">");
+        int i=0;
+        for (String nom : allRegions) {
+            selectContent.append("<option value=\"").append(allIDs.get(i)).append("\">").append(nom).append("</option>");
+            i++;
+        }
+        selectContent.append("</select>");
+        model.addAttribute("selectContent", selectContent);
+        model.addAttribute("allRegions", allRegions);
+        return "apprendre-regions"; // renvoie le nom de votre fichier HTML
+    }
 
 }
