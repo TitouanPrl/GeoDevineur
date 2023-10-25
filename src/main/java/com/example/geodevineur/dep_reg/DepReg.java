@@ -2,13 +2,22 @@ package com.example.geodevineur.dep_reg;
 
 import com.example.geodevineur.enumerations.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity 
 public abstract class DepReg {
     protected String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int population;
-    protected int surface;
+    protected double surface;
     protected Cardinal cardinal;
     protected boolean seaside;
     protected int neightbours;
+
     protected String id;
     protected Politic politic;
     protected boolean possible = true;
