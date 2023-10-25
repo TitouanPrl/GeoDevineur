@@ -1,4 +1,3 @@
-/*
 package com.example.geodevineur.condition;
 
 import com.example.geodevineur.dep_reg.DepReg;
@@ -19,4 +18,3 @@ public class PoliticCond<E extends DepReg> extends Condition<E>{
         return e.getPolitic() == politic;
     }
 }
-*/

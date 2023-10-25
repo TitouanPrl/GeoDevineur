@@ -69,7 +69,8 @@ public class MapController{
         ArrayList<String> occitanie = new ArrayList<String>(Arrays.asList("09","11","12","30","31","32","34","46","48","65","66","81","82"));
         ArrayList<String> normandie = new ArrayList<String>(Arrays.asList("14","27","50","61","76"));
         ArrayList<String> ileDeFrance = new ArrayList<String>(Arrays.asList("75","92","92","94","77","78","91","95"));
-        ArrayList<String> grandEst = new ArrayList<String>(Arrays.asList("08","10","51","52","54","55","67","68","88"));
+        //manque moselle
+        ArrayList<String> grandEst = new ArrayList<String>(Arrays.asList("08","10","51","52","54","55","57","67","68","88"));
         ArrayList<String> paysDeLaLoire = new ArrayList<String>(Arrays.asList("44","49","53","72","85"));
         ArrayList<String> centreValDeLoire = new ArrayList<String>(Arrays.asList("18","28","36","37","41","45"));
         ArrayList<String> bourgogneFrancheComte = new ArrayList<String>(Arrays.asList("21","25","39","58","70","71","89","90"));
@@ -104,7 +105,14 @@ public class MapController{
     }
 
 
-    public void colorizeRegion(ArrayList<String> region, String color) throws IOException {
+    public void setInfosDepartement(String departement) {
+        String region;
+        String cotier;
+        Integer voisins;
+        String position;
+        String politique;
+        Integer habitants;
+        Integer superficie;
 
     }
 

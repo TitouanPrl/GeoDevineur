@@ -1,4 +1,3 @@
-/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -51,4 +50,3 @@ public class PopulationCond<E extends DepReg> extends Condition<E> {
         }
     }
 }
-*/
