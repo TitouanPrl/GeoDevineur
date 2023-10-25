@@ -68,8 +68,7 @@ public class MapController{
         ArrayList<String> hautsDeFrance = new ArrayList<String>(Arrays.asList("02","59","60","62","80"));
         ArrayList<String> occitanie = new ArrayList<String>(Arrays.asList("09","11","12","30","31","32","34","46","48","65","66","81","82"));
         ArrayList<String> normandie = new ArrayList<String>(Arrays.asList("14","27","50","61","76"));
-        ArrayList<String> ileDeFrance = new ArrayList<String>(Arrays.asList("75","92","92","94","77","78","91","95"));
-        //manque moselle
+        ArrayList<String> ileDeFrance = new ArrayList<String>(Arrays.asList("75","92","93","94","77","78","91","95"));
         ArrayList<String> grandEst = new ArrayList<String>(Arrays.asList("08","10","51","52","54","55","57","67","68","88"));
         ArrayList<String> paysDeLaLoire = new ArrayList<String>(Arrays.asList("44","49","53","72","85"));
         ArrayList<String> centreValDeLoire = new ArrayList<String>(Arrays.asList("18","28","36","37","41","45"));
@@ -78,7 +77,7 @@ public class MapController{
         ArrayList<String> provenceAlpesCoteAzur = new ArrayList<String>(Arrays.asList("04","05","06","13","83","84"));
         ArrayList<String> corse = new ArrayList<String>(Arrays.asList("2a","2b"));
 
-        ArrayList<ArrayList<String>> regions = new ArrayList<ArrayList<String>>(Arrays.asList(nouvelleAquitaine,corse,bretagne,hautsDeFrance,occitanie,normandie,ileDeFrance,grandEst,paysDeLaLoire,centreValDeLoire,bourgogneFrancheComte,auvergneRhoneAlpes,provenceAlpesCoteAzur));
+        ArrayList<ArrayList<String>> regions = new ArrayList<ArrayList<String>>(Arrays.asList(ileDeFrance,nouvelleAquitaine,corse,bretagne,hautsDeFrance,occitanie,normandie,grandEst,paysDeLaLoire,centreValDeLoire,bourgogneFrancheComte,auvergneRhoneAlpes,provenceAlpesCoteAzur));
 
         String legerRouge = "#ffcccb";//"#ACACAC";
         String rouge = "red";
@@ -87,7 +86,7 @@ public class MapController{
 
 
         for(ArrayList<String> region : regions) {
-            if (region.contains(departement)) {
+            if (region.contains(departement)) { 
                 for (String dep : region) {
                     if (dep.equals(departement)){
                         colorizeDepartement(dep, rouge);
