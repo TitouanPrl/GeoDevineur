@@ -10,7 +10,7 @@ public class SurfaceCond<E extends DepReg> extends Condition<E> {
     private Random random;
     private E compare;
     private boolean isLess; // If more, isLess is false
-    private int threshold;
+    private double threshold;
     
     public SurfaceCond (E e, E compare_) {
         random = new Random();
