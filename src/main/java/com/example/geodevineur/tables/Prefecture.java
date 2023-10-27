@@ -32,6 +32,8 @@ public class Prefecture {
 
     }
 
+
+
     public boolean getPossible() {
         return possible;
     }

@@ -17,14 +17,12 @@ import java.util.List;
 
 @Controller
 public class MapController{
-    private final HttpSession session;
     private final TableController tableController;
 
     private Model model;
 
-    public MapController(TableController tableController, HttpSession session) {
+    public MapController(TableController tableController) {
         this.tableController = tableController;
-        this.session = session;
         this.model = null;
     }
 
@@ -37,7 +35,6 @@ public class MapController{
 
         setModel(model);
 
-        System.out.println(session.getId());
         resetMapDepartementsColors();
         Thread.sleep(500);
 
