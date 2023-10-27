@@ -6,10 +6,9 @@ import jakarta.persistence.Id;
 
 import java.sql.Time;
 
-*/
-/* Classe représentant les scores du leaderboard *//*
+import jakarta.persistence.Entity;
 
-
+/* Classe représentant les scores du leaderboard */
 @Entity
 public class Score {
 
