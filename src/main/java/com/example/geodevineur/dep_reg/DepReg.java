@@ -70,4 +70,8 @@ public abstract class DepReg {
     public boolean getPotential() {
         return potential;
     }
+
+    public String getType() {
+        return "Departement";
+    }
 }

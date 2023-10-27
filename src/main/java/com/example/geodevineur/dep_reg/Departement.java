@@ -4,6 +4,8 @@ import com.example.geodevineur.enumerations.*;
 
 import jakarta.persistence.Entity;
 
+import java.util.List;
+
 @Entity
 public class Departement extends DepReg {
 
@@ -24,6 +26,7 @@ public class Departement extends DepReg {
         neightbours = neigh_;
         politic = politic_;
     }
+
     public Departement() {
 
     }

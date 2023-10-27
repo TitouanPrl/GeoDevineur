@@ -4,8 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
+import com.example.geodevineur.dep_reg.DepReg;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +33,10 @@ public class TableController {
     /* Convertis et injecte le csv département dans la BDD */
     @GetMapping("/uploadDpt")
     public String uploadDptements(Model model) {
-        System.out.println("YESSSAI MONGARS");
+        System.out.println("Uploading on DB ...");
+
+        //Clearing Database before upload
+        service.deleteAll();
 
         List<Departement> departementList = new ArrayList<Departement>();
         String filePath = "src/main/resources/static/csv/departements.csv";
@@ -62,7 +69,32 @@ public class TableController {
         }
         service.saveAll(departementList);
         model.addAttribute("status","success");
+
+
+
         return "bdd";
+    }
+
+    public List<DepReg> getAllDpt() {
+        Iterable<DepReg> allDpt = service.findAll();
+        List<DepReg> result = new ArrayList<DepReg>();
+        allDpt.forEach(depReg -> {
+            if (depReg.getType().equals("Departement")) {
+                result.add(depReg);
+            }
+        });
+        return result;
+    }
+
+    public DepReg getDpt(String id) {
+        Iterable<DepReg> allDpt = service.findAll();
+        DepReg result = null;
+        for(DepReg dep : allDpt){
+            if (id.equals(dep.getId())) {
+                result = dep;
+            }
+        }
+        return result;
     }
 
     @GetMapping("/test")

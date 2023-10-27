@@ -1,4 +1,5 @@
 package com.example.geodevineur;
+import com.example.geodevineur.dep_reg.DepReg;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,47 +13,42 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 public class MapController{
     private final HttpSession session;
+    private final TableController tableController;
 
-    public MapController(HttpSession session) {
+    private Model model;
+
+    public MapController(TableController tableController, HttpSession session) {
+        this.tableController = tableController;
         this.session = session;
+        this.model = null;
+    }
+
+    public void setModel(Model model){
+        this.model = model;
     }
 
     @GetMapping("apprendre-departements")
     public String apprendreDep(Model model) throws IOException, InterruptedException {
+
+        setModel(model);
+
         System.out.println(session.getId());
         resetMapDepartementsColors();
         Thread.sleep(500);
 
-        ArrayList<String> allDepartements = new ArrayList<>();
-        ArrayList<String> allNames = new ArrayList<>();
-        for (int i = 0; i <= 9; i++) {
-            for (int j = 0; j <= 9; j++) {
-                allDepartements.add(String.format("%s%s", i, j));
-            }
-        }
-        for (int i = 0; i < 4; i++) {
-            allDepartements.remove(96);
-        }
-        allDepartements.remove(20);
-        allDepartements.add(20,"2a");
-        allDepartements.add(20,"2b");
-        allDepartements.remove(0);
-
-
-        for (String departement : allDepartements) {
-            allNames.add(departement + "- XX");
-        }
-
+        //Get les departements dans la bdd
+        List<DepReg> allDepartements = tableController.getAllDpt();
 
         StringBuilder selectContent = new StringBuilder();
         selectContent.append("<select class=\"custom-select\" name=\"departements\" id=\"departement-select\">");
         int i=0;
-        for (String option : allDepartements) {
-            selectContent.append("<option value=\"").append(option).append("\">").append(allNames.get(i)).append("</option>");
+        for (DepReg depReg : allDepartements) {
+            selectContent.append("<option value=\"").append(depReg.getId()).append("\">").append(depReg.getId()).append(" - ").append(depReg.getName()).append("</option>");
             i++;
         }
         selectContent.append("</select>");
@@ -68,6 +64,12 @@ public class MapController{
     }
     @PostMapping("setDepartement")
     public String setDepartement(String departement) throws IOException, InterruptedException {
+        System.out.println(departement);
+        if (departement.length() == 1){
+            departement = "0" + departement;
+        }
+        System.out.println("here with "+departement);
+
         ArrayList<String> nouvelleAquitaine = new ArrayList<String>(Arrays.asList("16","17","19","23","24","33","40","47","64","79","86","87"));
         ArrayList<String> bretagne = new ArrayList<String>(Arrays.asList("22","29","35","56"));
         ArrayList<String> hautsDeFrance = new ArrayList<String>(Arrays.asList("02","59","60","62","80"));
@@ -108,24 +110,18 @@ public class MapController{
         return "apprendre-departements";
     }
 
-    //@GetMapping("setInfosDepartement")
-    /*public void setInfosDepartement(Model model, String departement) {
-        String region;
-        String cotier;
-        Integer voisins;
-        String position;
-        String politique;
-        Integer habitants;
-        Integer superficie;
 
-        model.addAttribute("superficie","4");
-        model.addAttribute("habitants","4");
-        model.addAttribute("position","l'4");
-        model.addAttribute("cotier","4");
-        model.addAttribute("voisins","6");
-        model.addAttribute("politique","4");
+    public void setInfosDepartement(String departement) {
+//        DepReg dep = tableController.getDpt(departement);
+//
+//        model.addAttribute("superficie",dep.getSurface());
+//        model.addAttribute("habitants",dep.getPopulation());
+//        model.addAttribute("position",dep.getCardinal());
+//        model.addAttribute("cotier",dep.getSeaside());
+//        model.addAttribute("voisins",dep.getNeightbours());
+//        model.addAttribute("politique",dep.getPolitic());
 
-    }*/
+    }
 
     public void colorizeDepartement(String departement, String color) throws IOException {
         String fileName = "src/main/resources/static/img/france_departements.svg";
