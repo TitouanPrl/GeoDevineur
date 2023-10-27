@@ -2,7 +2,10 @@ package com.example.geodevineur;
 
 import java.sql.Time;
 
+import jakarta.persistence.Entity;
+
 /* Classe représentant les scores du leaderboard */
+@Entity
 public class Score {
     private final String pseudo;
     private final Time temps;
