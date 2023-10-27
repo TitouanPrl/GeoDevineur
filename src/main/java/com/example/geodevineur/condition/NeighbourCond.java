@@ -2,10 +2,10 @@ package com.example.geodevineur.condition;
 
 import java.util.Random;
 
-import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.tables.Departement;
 
 
-public class NeighbourCond<E extends DepReg> extends Condition<E> {
+public class NeighbourCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;
     private boolean isLess; // If more, isLess is false

@@ -1,11 +1,11 @@
 package com.example.geodevineur;
-import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.tables.Region;
+import com.example.geodevineur.tables.Departement;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -42,12 +42,12 @@ public class MapController{
         Thread.sleep(500);
 
         //Get les departements dans la bdd
-        List<DepReg> allDepartements = tableController.getAllDpt();
+        List<Departement> allDepartements = tableController.getAllDpt();
 
         StringBuilder selectContent = new StringBuilder();
         selectContent.append("<select class=\"custom-select\" name=\"departements\" id=\"departement-select\">");
         int i=0;
-        for (DepReg depReg : allDepartements) {
+        for (Departement depReg : allDepartements) {
             selectContent.append("<option value=\"").append(depReg.getId()).append("\">").append(depReg.getId()).append(" - ").append(depReg.getName()).append("</option>");
             i++;
         }

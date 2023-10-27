@@ -1,8 +1,8 @@
 package com.example.geodevineur.condition;
 
-import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.tables.Departement;
 
-public class NbCharactersCond<E extends DepReg> extends Condition<E>{
+public class NbCharactersCond<E extends Departement> extends Condition<E>{
     private int nbChar;
 
     public NbCharactersCond(E e) {

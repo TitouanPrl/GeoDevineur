@@ -1,9 +1,9 @@
 package com.example.geodevineur.condition;
 
-import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.enumerations.Politic;
 
-public class PoliticCond<E extends DepReg> extends Condition<E>{
+public class PoliticCond<E extends Departement> extends Condition<E>{
     private Politic politic;
 
     public PoliticCond (E e) {

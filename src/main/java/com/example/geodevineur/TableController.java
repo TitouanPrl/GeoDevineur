@@ -4,20 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
-import com.example.geodevineur.dep_reg.DepReg;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.geodevineur.tables.Region;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.geodevineur.dep_reg.Departement;
+import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.enumerations.Politic;
 
@@ -28,7 +23,7 @@ import static java.lang.Math.round;
 public class TableController {
 
     @Autowired
-    DeRegRepository service;
+    DepartementRepository departementService;
 
     /* Convertis et injecte le csv département dans la BDD */
     @GetMapping("/uploadDpt")
@@ -36,7 +31,7 @@ public class TableController {
         System.out.println("Uploading on DB ...");
 
         //Clearing Database before upload
-        service.deleteAll();
+        departementService.deleteAll();
 
         List<Departement> departementList = new ArrayList<Departement>();
         String filePath = "src/main/resources/static/csv/departements.csv";
@@ -53,7 +48,6 @@ public class TableController {
                         values[2], //Numero
                         Integer.parseInt(values[3]), //Population
                         round((double) Float.parseFloat(values[4]),2), //Superficie
-                        Cardinal.fromString(values[5]), //Position
                         IntToBoolean(Integer.parseInt(values[6])), //Cotier
                         Integer.parseInt(values[7]), //Voisins
                         Politic.fromString(values[8])); //Politique
@@ -67,7 +61,7 @@ public class TableController {
             model.addAttribute("status","failed");
             return "bdd";
         }
-        service.saveAll(departementList);
+        departementService.saveAll(departementList);
         model.addAttribute("status","success");
 
 
@@ -75,21 +69,15 @@ public class TableController {
         return "bdd";
     }
 
-    public List<DepReg> getAllDpt() {
-        Iterable<DepReg> allDpt = service.findAll();
-        List<DepReg> result = new ArrayList<DepReg>();
-        allDpt.forEach(depReg -> {
-            if (depReg.getType().equals("Departement")) {
-                result.add(depReg);
-            }
-        });
-        return result;
+    public List<Departement> getAllDpt() {
+        Iterable<Departement> allDpt = departementService.findAll();
+        return new ArrayList<Departement>();
     }
 
-    public DepReg getDpt(String id) {
-        Iterable<DepReg> allDpt = service.findAll();
-        DepReg result = null;
-        for(DepReg dep : allDpt){
+    public Departement getDpt(String id) {
+        Iterable<Departement> allDpt = departementService.findAll();
+        Departement result = null;
+        for(Departement dep : allDpt){
             if (id.equals(dep.getId())) {
                 result = dep;
             }
