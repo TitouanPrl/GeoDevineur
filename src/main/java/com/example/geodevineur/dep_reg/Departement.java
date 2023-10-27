@@ -4,17 +4,30 @@ import com.example.geodevineur.enumerations.*;
 
 import jakarta.persistence.Entity;
 
+import java.util.List;
+
 @Entity
 public class Departement extends DepReg {
 
-    public Departement (String name_, int pop_, double surf_, Cardinal card_, boolean sea_, int neigh_, String id_, Politic politic_) {
+    public Departement (String name_,
+                        String id_,
+                        int pop_,
+                        double surf_,
+                        Cardinal card_,
+                        boolean sea_,
+                        int neigh_,
+                        Politic politic_) {
         name = name_;
+        id = id_;
         population = pop_;
         surface = surf_;
         cardinal = card_;
         seaside = sea_;
         neightbours = neigh_;
-        id = id_;
         politic = politic_;
+    }
+
+    public Departement() {
+
     }
 }

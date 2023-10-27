@@ -18,4 +18,7 @@ public class Region extends DepReg{
         politic = politic_;
     }
 
+    public Region() {
+
+    }
 }

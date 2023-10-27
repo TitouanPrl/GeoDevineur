@@ -9,7 +9,7 @@ public enum Politic {
         if (input.equals("PS")) return Politic.PS;
         if (input.equals("DVD")) return Politic.DVD;
         if (input.equals("DVG")) return Politic.DVG;
-        if (input.equals("Régionalistes")) return Politic.Regionaliste;
+        if (input.equals("Régionaliste")) return Politic.Regionaliste;
         if (input.equals("Renaissance")) return Politic.Renaissance;
         if (input.equals("PRG")) return Politic.PRG;
         if (input.equals("FaC")) return Politic.FaC;

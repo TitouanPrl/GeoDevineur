@@ -10,23 +10,20 @@ public class Index{
         return "index";
     }
 
-    @GetMapping("/regles")
-    public String regles(Model model) {
+    @GetMapping("regles")
+    public String regles(Model model) {return "regles";}
 
-        return "regles";
-    }
-
-    @GetMapping("/scores")
+    @GetMapping("scores")
     public String scores(Model model) {
         return "scores";
     }
 
-    @GetMapping("/quizz-departements")
+    @GetMapping("quizz-departements")
     public String quizzDepartements(Model model) {
         return "quizz-departements";
     }
 
-    @GetMapping("/quizz-regions")
+    @GetMapping("quizz-regions")
     public String quizzRegions(Model model) {
         return "quizz-regions";
     }
