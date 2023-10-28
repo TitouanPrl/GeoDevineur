@@ -15,13 +15,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-public class MapController{
-    private final TableController tableController;
+public class ApprendreController {
 
     private Model model;
 
-    public MapController(TableController tableController) {
-        this.tableController = tableController;
+    public ApprendreController() {
         this.model = null;
     }
 
@@ -30,15 +28,15 @@ public class MapController{
     }
 
     @GetMapping("apprendre")
-    public String apprendreDep(Model model) throws IOException, InterruptedException {
+    public String apprendre(Model model) throws IOException, InterruptedException {
 
-        setModel(model);
+        /*setModel(model);
 
         resetMapDepartementsColors();
         Thread.sleep(500);
 
         //Get les departements dans la bdd
-        List<Departement> allDepartements = tableController.getAllDpt();
+        //List<Departement> allDepartements = tableController.getAllDpt();
 
         StringBuilder selectContent = new StringBuilder();
         selectContent.append("<select class=\"custom-select\" name=\"departements\" id=\"departement-select\">");
@@ -55,7 +53,7 @@ public class MapController{
         model.addAttribute("position","l'Est");
         model.addAttribute("cotier","se trouve dans les terres");
         model.addAttribute("voisins","6");
-        model.addAttribute("politique","RN");
+        model.addAttribute("politique","RN");*/
         return "apprendre";
     }
     @PostMapping("setDepartement")
