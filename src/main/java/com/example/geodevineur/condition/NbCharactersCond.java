@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.condition;
 
 import com.example.geodevineur.tables.Departement;
@@ -17,3 +18,4 @@ public class NbCharactersCond<E extends Departement> extends Condition<E>{
         return (e.getName().length() == nbChar);
     }
 }
+*/

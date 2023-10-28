@@ -5,11 +5,12 @@ import com.example.geodevineur.repos.DepartementRepository;
 import com.example.geodevineur.tables.Departement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Service
 public class DepartementController {
 
     @Autowired
@@ -25,14 +26,37 @@ public class DepartementController {
         return departementService.findById(id).orElse(null);
     }
 
-    /*public Departement getByPrefectureId(String prefecture_id){
-        return getAll().stream()
-                .filter(departement -> departement.getId().equals(prefecture_id))
-                .findFirst()
-                .orElse(null);
-    }*/
+    public Departement getByNumber(String number){
+        Departement result = null;
+        for(Departement departement : getAll()){
+            if (departement.getNumber().equals(number)){
+                result = departement;
+            }
+        }
+        return result;
+    }
 
-    public List<Departement> getByRegionId(int region_id){
+    public Departement getByPrefectureId(int prefecture_id){
+        Departement result = null;
+        for(Departement departement : getAll()){
+            if (departement.getPrefecture().getId() == prefecture_id){
+                result = departement;
+            }
+        }
+        return result;
+    }
+
+    public Departement getByPrefectureName(String prefecture_name){
+        Departement result = null;
+        for(Departement departement : getAll()){
+            if (departement.getPrefecture().getName().equals(prefecture_name)){
+                result = departement;
+            }
+        }
+        return result;
+    }
+
+    /*public List<Departement> getByRegionId(int region_id){
         List<Departement> result = new ArrayList<>();
         for(Departement departement : getAll()){
             if (departement.getRegion().getId() == region_id){
@@ -40,11 +64,11 @@ public class DepartementController {
             }
         }
         return result;
-    }
-
-    /*public void add(String name_, String id_, int pop_, double surf_, boolean sea_, int neigh_, Politic politic_){
-        departementService.save(new Departement(name_, id_, pop_, surf_, sea_, neigh_, politic_));
     }*/
+
+    public void add(Departement departement){
+        departementService.save(departement);
+    }
 
     public void deleteAll(){
         departementService.deleteAll();

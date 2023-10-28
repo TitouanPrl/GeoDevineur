@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -53,3 +54,4 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
         }
     }
 }
+*/

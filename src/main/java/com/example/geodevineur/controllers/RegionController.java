@@ -7,11 +7,12 @@ import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Region;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Service
 public class RegionController {
 
     @Autowired
@@ -44,8 +45,8 @@ public class RegionController {
         return getByDepartementId(departementController.getByPrefectureId(prefecture_id).getId());
     }*/
 
-    public void add(List<Departement> departements_, String name_, Cardinal card_){
-        regionService.save(new Region(departements_, name_, card_));
+    public void add(Region region){
+        regionService.save(region);
     }
 
     public void deleteAll(){

@@ -1,15 +1,14 @@
-,,,,,,,
-,Nom,Position,Cotier,Voisins,Politique
-,Auvergne-Rhône-Alpes,SE,0,5,LR
-,Bourgogne-Franche-Comté,NE,0,4,PS
-,Bretagne,NO,1,2,PS
-,Centre-Val de Loire,NO,0,6,PS
-,Corse,SE,1,0,FaC
-,Grand Est,NE,0,3,DVD
-,Hauts-de-France,NE,1,3,LR
-,Île-de-France,NE,0,5,LR
-,Normandie,NO,1,5,LC
-,Nouvelle-Aquitaine,SO,1,4,PS
-,Occitanie,SO,1,3,PS
-,Pays de la Loire,NO,1,4,LR
-,Provence-Alpes-Côte d'Azur,SE,1,2,RE
+,,,
+,Auvergne-Rhône-Alpes,SE
+,Bourgogne-Franche-Comté,NE
+,Bretagne,NO
+,Centre-Val de Loire,NO
+,Corse,SE
+,Grand Est,NE
+,Hauts-de-France,NE
+,Île-de-France,NE
+,Normandie,NO
+,Nouvelle-Aquitaine,SO
+,Occitanie,SO
+,Pays de la Loire,NO
+,Provence-Alpes-Côte d'Azur,SE

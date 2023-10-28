@@ -7,21 +7,18 @@ import lombok.Setter;
 @Entity
 public class Prefecture {
 
-    @Id
-    @Getter
+    @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Getter
-    @OneToOne
+    @Getter@Setter
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Departement.class)
     @JoinColumn(name = "departement_id")
     protected Departement departement;
 
-    @Getter
-    @Setter
+    @Getter@Setter
     protected String name;
-    @Getter
-    @Setter
+    @Getter@Setter
     protected int population;
 
     protected boolean possible = true;

@@ -2,33 +2,32 @@ package com.example.geodevineur.tables;
 
 import com.example.geodevineur.enumerations.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Region {
 
-
-    @Id
-    @Getter
+    @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Getter
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-    protected List<Departement> departements;
+    @Getter@Setter
+    @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    protected List<Departement> departements = new ArrayList<Departement>();
 
-    @Getter
+    @Getter@Setter
     protected String name;
-    @Getter
+    @Getter@Setter
     protected Cardinal cardinal;
 
     protected boolean possible = true;
     protected boolean potential = true;
 
-    public Region (List<Departement> departements_, String name_, Cardinal card_) {
-        departements = departements_;
+    public Region (String name_, Cardinal card_) {
         name = name_;
         cardinal = card_;
     }

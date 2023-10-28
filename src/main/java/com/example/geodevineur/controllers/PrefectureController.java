@@ -5,11 +5,12 @@ import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Service
 public class PrefectureController {
 
     @Autowired
@@ -25,25 +26,48 @@ public class PrefectureController {
         return prefectureService.findById(id).orElse(null);
     }
 
-    /*public Prefecture getByDepartementId(String departement_id){
-        return getAll().stream()
-                .filter(prefecture -> prefecture.getDepartement().getId().equals(departement_id))
-                .findFirst()
-                .orElse(null);
-    }*/
-
-    public List<Prefecture> getByRegionId(int region_id){
-        List<Prefecture> result = new ArrayList<>();
+    public Prefecture getByDepartementId(int departement_id){
+        Prefecture result = null;
         for(Prefecture prefecture : getAll()){
-            if (prefecture.getDepartement().getRegion().getId() == region_id){
-                result.add(prefecture);
+            if (prefecture.getDepartement().getId() == departement_id){
+                result = prefecture;
             }
         }
         return result;
     }
 
-    public void add(String name, int population){
-        prefectureService.save(new Prefecture(name, population));
+
+
+    public Prefecture getByDepartementName(String departement_name){
+        Prefecture result = null;
+        for(Prefecture prefecture : getAll()){
+            if (prefecture.getDepartement().getName().equals(departement_name)){
+                result = prefecture;
+            }
+        }
+        return result;
+    }
+
+    public Prefecture getByDepartementNumber(String departement_number){
+        Prefecture result = null;
+        for(Prefecture prefecture : getAll()){
+            if (prefecture.getDepartement().getNumber().equals(departement_number)){
+                result = prefecture;
+            }
+        }
+        return result;
+    }
+
+//    public List<Prefecture> getAllByRegionId(int region_id){
+//        List<Prefecture> result = new ArrayList<>();
+//        for(Departement departement : getAllByRegionId(region_id)){
+//            result.add(departement.getPrefecture());
+//        }
+//        return result;
+//    }
+
+    public void add(Prefecture prefecture){
+        prefectureService.save(prefecture);
     }
 
     public void deleteAll(){

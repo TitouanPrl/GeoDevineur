@@ -4,51 +4,49 @@ import com.example.geodevineur.enumerations.*;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 public class Departement {
 
-    @Getter
-    @Id
+    @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Getter
-    @ManyToOne
+    @Getter@Setter
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Region.class)
     @JoinColumn(name = "region_id")
     protected Region region;
 
-    @Getter
-    @OneToOne(mappedBy = "departement", cascade = CascadeType.ALL)
+    @Getter@Setter
+    @OneToOne(mappedBy = "departement", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Prefecture prefecture;
 
-    @Getter
+    @Getter@Setter
     protected String name;
-    @Getter
+    @Getter@Setter
     protected String number; //"01" -> "2A" -> "95";
-    @Getter
+    @Getter@Setter
     protected int population;
-    @Getter
+    @Getter@Setter
     protected double surface;
-    @Getter
+    @Getter@Setter
     protected boolean seaside;
-    @Getter
+    @Getter@Setter
     protected int neightbours;
-    @Getter
+    @Getter@Setter
     protected Politic politic;
-
+    
     protected boolean possible = true;
     protected boolean potential = true;
 
-    public Departement (Prefecture prefecture_,
-                        String name_,
+    public Departement (String name_,
                         String number_,
                         int pop_,
                         double surf_,
                         boolean sea_,
                         int neigh_,
                         Politic politic_) {
-        prefecture = prefecture_;
         name = name_;
         number = number_;
         population = pop_;

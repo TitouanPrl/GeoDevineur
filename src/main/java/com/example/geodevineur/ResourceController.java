@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur;
 
 import org.springframework.core.io.ClassPathResource;
@@ -24,3 +25,4 @@ public class ResourceController {
         }
     }
 }
+*/
