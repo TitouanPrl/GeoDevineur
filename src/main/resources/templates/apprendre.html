@@ -7,36 +7,14 @@
 </head>
 <body>
 <header>
-
     <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
             <a href="/" class="navbar-brand d-flex align-items-center">
                 <img class="" width="140" height="90" th:src="@{/resources/static/img/logo.png}" alt="">
                 <h2>GéoDevineur</h2>
             </a>
-
-            <div class="dropdown text-center align-items-center">
-                <h4 class="d-flex align-items-center" style="color: white">Quizz</h4>
-                <div class="dropdown-content d-quizz align-items-center text-center">
-                    <a href="quizz-departements" class="navbar-brand">
-                        <h5 class="d-flex align-items-center">Départements</h5>
-                    </a>
-                    <a href="quizz-regions" class="navbar-brand">
-                        <h5 class="d-flex align-items-center">Régions</h5>
-                    </a>
-                </div>
-            </div>
-            <div class="dropdown text-center align-items-center">
-                <h4 class="d-flex align-items-center" style="color: white">Apprendre</h4>
-                <div class="dropdown-content d-apprendre align-items-center text-center">
-                    <a href="apprendre-departements" class="navbar-brand">
-                        <h5 class="d-flex align-items-center">Départements</h5>
-                    </a>
-                    <a href="apprendre-regions" class="navbar-brand">
-                        <h5 class="d-flex align-items-center">Régions</h5>
-                    </a>
-                </div>
-            </div>
+            <a href="quizz" class="navbar-brand d-flex align-items-center"><h4>Quizz</h4></a>
+            <a href="apprendre" class="navbar-brand d-flex align-items-center"><h4>Apprendre</h4></a>
             <a href="regles" class="navbar-brand d-flex align-items-center"><h4>Règles</h4></a>
             <a href="scores" class="navbar-brand d-flex align-items-center"><h4>Meilleurs scores</h4></a>
         </div>

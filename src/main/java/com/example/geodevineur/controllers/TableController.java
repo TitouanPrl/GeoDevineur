@@ -1,4 +1,4 @@
-package com.example.geodevineur;
+package com.example.geodevineur.controllers;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

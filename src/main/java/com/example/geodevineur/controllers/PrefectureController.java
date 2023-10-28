@@ -1,4 +1,4 @@
-package com.example.geodevineur;
+package com.example.geodevineur.controllers;
 
 import com.example.geodevineur.repos.PrefectureRepository;
 import com.example.geodevineur.tables.Prefecture;
@@ -12,16 +12,16 @@ import java.util.List;
 public class PrefectureController {
 
     @Autowired
-    PrefectureRepository prefectureRepository;
+    PrefectureRepository prefectureService;
 
     public List<Prefecture> getAll(){
         List<Prefecture> result = new ArrayList<>();
-        prefectureRepository.findAll().forEach(result::add);
+        prefectureService.findAll().forEach(result::add);
         return result;
     }
 
     public Prefecture getById(int id){
-        return prefectureRepository.findById(id).orElse(null);
+        return prefectureService.findById(id).orElse(null);
     }
 
     public Prefecture getByDepartementId(String departement_id){
@@ -42,10 +42,10 @@ public class PrefectureController {
     }
 
     public void add(String name, int population){
-        prefectureRepository.save(new Prefecture(name,population));
+        prefectureService.save(new Prefecture(name,population));
     }
 
     public void deleteAll(){
-        prefectureRepository.deleteAll();
+        prefectureService.deleteAll();
     }
 }

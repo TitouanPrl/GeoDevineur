@@ -1,7 +1,6 @@
 package com.example.geodevineur;
-import com.example.geodevineur.tables.Region;
+import com.example.geodevineur.controllers.TableController;
 import com.example.geodevineur.tables.Departement;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +29,7 @@ public class MapController{
         this.model = model;
     }
 
-    @GetMapping("apprendre-departements")
+    @GetMapping("apprendre")
     public String apprendreDep(Model model) throws IOException, InterruptedException {
 
         setModel(model);
@@ -57,7 +56,7 @@ public class MapController{
         model.addAttribute("cotier","se trouve dans les terres");
         model.addAttribute("voisins","6");
         model.addAttribute("politique","RN");
-        return "apprendre-departements";
+        return "apprendre";
     }
     @PostMapping("setDepartement")
     public String setDepartement(String departement) throws IOException, InterruptedException {
@@ -104,7 +103,7 @@ public class MapController{
         //setInfosDepartement(departement);
 
         //colorizeDepartement(departement, rouge);
-        return "apprendre-departements";
+        return "apprendre";
     }
 
 

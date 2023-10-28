@@ -1,15 +1,16 @@
 package com.example.geodevineur.tables;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 public class Prefecture {
 
     @Id
+    @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected int id;
+
     @Getter
     protected String name;
     @Getter

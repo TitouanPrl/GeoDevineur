@@ -24,8 +24,7 @@ public class Departement {
     protected Prefecture prefecture;
 
     @Getter
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+
     protected int population;
     @Getter
     protected double surface;
@@ -33,7 +32,8 @@ public class Departement {
     @Getter
     protected int neightbours;
 
-    @Getter
+    @Getter@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected String id;
     @Getter
     protected Politic politic;

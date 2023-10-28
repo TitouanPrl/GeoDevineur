@@ -1,4 +1,4 @@
-package com.example.geodevineur;
+package com.example.geodevineur.controllers;
 
 import com.example.geodevineur.repos.ScoreRepository;
 import com.example.geodevineur.tables.Score;
