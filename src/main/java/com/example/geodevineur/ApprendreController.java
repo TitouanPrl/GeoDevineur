@@ -1,5 +1,5 @@
+/*
 package com.example.geodevineur;
-import com.example.geodevineur.controllers.TableController;
 import com.example.geodevineur.tables.Departement;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,8 @@ public class ApprendreController {
     @GetMapping("apprendre")
     public String apprendre(Model model) throws IOException, InterruptedException {
 
-        /*setModel(model);
+        */
+/*setModel(model);
 
         resetMapDepartementsColors();
         Thread.sleep(500);
@@ -53,7 +54,8 @@ public class ApprendreController {
         model.addAttribute("position","l'Est");
         model.addAttribute("cotier","se trouve dans les terres");
         model.addAttribute("voisins","6");
-        model.addAttribute("politique","RN");*/
+        model.addAttribute("politique","RN");*//*
+
         return "apprendre";
     }
     @PostMapping("setDepartement")
@@ -162,4 +164,4 @@ public class ApprendreController {
         return "apprendre-regions"; // renvoie le nom de votre fichier HTML
     }
 
-}
+}*/

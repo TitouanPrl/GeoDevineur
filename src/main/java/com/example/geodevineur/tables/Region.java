@@ -9,18 +9,18 @@ import lombok.Getter;
 @Entity
 public class Region {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @OneToMany
-    @JoinColumn(name = "departement_ids")
+    @Getter
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     protected List<Departement> departements;
 
     @Getter
     protected String name;
-
     @Getter
     protected Cardinal cardinal;
 

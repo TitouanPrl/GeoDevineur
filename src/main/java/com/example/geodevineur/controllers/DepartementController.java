@@ -25,12 +25,12 @@ public class DepartementController {
         return departementService.findById(id).orElse(null);
     }
 
-    public Departement getByPrefectureId(String prefecture_id){
+    /*public Departement getByPrefectureId(String prefecture_id){
         return getAll().stream()
                 .filter(departement -> departement.getId().equals(prefecture_id))
                 .findFirst()
                 .orElse(null);
-    }
+    }*/
 
     public List<Departement> getByRegionId(int region_id){
         List<Departement> result = new ArrayList<>();
@@ -42,9 +42,9 @@ public class DepartementController {
         return result;
     }
 
-    public void add(String name_, String id_, int pop_, double surf_, boolean sea_, int neigh_, Politic politic_){
+    /*public void add(String name_, String id_, int pop_, double surf_, boolean sea_, int neigh_, Politic politic_){
         departementService.save(new Departement(name_, id_, pop_, surf_, sea_, neigh_, politic_));
-    }
+    }*/
 
     public void deleteAll(){
         departementService.deleteAll();

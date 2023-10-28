@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.TableController;
@@ -20,3 +21,4 @@ public class QuizzController {
 
     }
 }
+*/
