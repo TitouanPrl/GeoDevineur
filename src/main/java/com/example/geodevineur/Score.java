@@ -1,4 +1,4 @@
-/*
+
 package com.example.geodevineur;
 
 import jakarta.persistence.Entity;

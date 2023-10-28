@@ -31,11 +31,11 @@ public class TableController {
     DeRegRepository service;
 
     /* Convertis et injecte le csv département dans la BDD */
-    @GetMapping("/uploadDpt")
+    @GetMapping("/uploadData")
     public String uploadDptements(Model model) {
         System.out.println("Uploading on DB ...");
 
-        //Clearing Database before upload
+        /* Clearing Database before upload */
         service.deleteAll();
 
         List<Departement> departementList = new ArrayList<Departement>();
@@ -116,28 +116,6 @@ public class TableController {
         return (x == 1);
     }
 
-    // /* On importe les CSV de données initiales */
-    // BufferedReader reader = new BufferedReader(new FileReader("../../../../ressources/static/csv/departements.csv"));
-    // CsvParserSettings setting = new CsvParserSettings();
-    // setting.setHeaderExtractionEnabled(true);
-    // CsvParser parser = new CsvParser(setting);
-    // parser.parseAllRecords(reader);
-    // List<com.univocity.parsers.common.record.Record> parseAllRecords = parser.parseAllRecords(reader);
-
-    // /* On convertit chaque entrée en objet */
-    // parseAllRecords.forEach(record -> {
-    //     Departement departement = new Departement(record.getString("Nom"),
-    //         Integer.parseInt(record.getString("Habitants")),
-    //         (double)Float.parseFloat(record.getString("Superficie")),
-    //         Cardinal.fromString(record.getString("Position")),
-    //         Boolean.parseBoolean(record.getString("Cotier")),
-    //         Integer.parseInt(record.getString("Voisins")),
-    //         record.getString("Numero"),
-    //         Politic.fromString(record.getString("Politique")));
-    //         departementList.add(departement);
-    // });
-
-    //
 }
 
 /* AJOUTER FCT POUR UPLOAD REGIONS */
