@@ -1,15 +1,16 @@
+/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
 
-import com.example.geodevineur.dep_reg.DepReg;
+import com.example.geodevineur.tables.Departement;
 
 
-public class IdCond<E extends DepReg> extends Condition<E> {
+public class IdCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;
     private boolean isLess; // If more, isLess is false
-    private String threshold;
+    private int threshold;
     private static final int maxId = 95;
 
     public IdCond (E e, E compare_) {
@@ -27,10 +28,10 @@ public class IdCond<E extends DepReg> extends Condition<E> {
     protected void setAttributes(E e) {
         if (compare != null) {
             threshold = compare.getId();
-            if (compareId(threshold, e.getId()) < 0) {
+            if (threshold < e.getId()) {
                 isLess = true;
                 return;
-            } else if (compareId(threshold, e.getId()) > 0) {
+            } else if (threshold > e.getId()) {
                 isLess = false;
                 return;
             }
@@ -59,3 +60,4 @@ public class IdCond<E extends DepReg> extends Condition<E> {
 
     }
 }
+*/
