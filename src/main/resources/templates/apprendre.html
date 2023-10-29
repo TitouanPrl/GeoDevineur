@@ -22,20 +22,22 @@
 </header>
 <div class="container" style="padding: 50px">
 
-    <label for="type-select"></label>
-    <select class="custom-select" id="type-select">
-        <option value="prefecture">Préfecture</option>
-        <option value="departement">Département</option>
-        <option value="region">Région</option>
-    </select>
+    <div class="container" style="float: right;width: 400px">
+        <label for="type-select"></label>
+        <select class="custom-select" id="type-select">
+            <option value="prefecture">Préfecture</option>
+            <option value="departement">Département</option>
+            <option value="region">Région</option>
+        </select>
 
-    <label for="main-select"></label>
-    <div th:remove="tag" th:utext="${selectContent}"></div>
+        <label for="main-select"></label>
+        <div th:remove="tag" th:utext="${selectContent}"></div>
+    </div>
 
     <div style="float: left" th:utext="${map}"></div>
-    <div style="float: right;padding: 100px" class="align-items-center text-center" th:utext="${infos}"></div>
+    <div style="float: right;padding: 50px" class="align-items-center text-center" th:utext="${infos}"></div>
 </div>
-<footer class="text-muted" style="padding-top: 500px;">
+<footer class="text-muted" style="padding-top: 625px">
     <div class="container text-center border-top">
         <p>Site créé dans le cadre d'un projet JEE</p>
         <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
