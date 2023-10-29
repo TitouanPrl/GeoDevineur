@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -19,6 +20,7 @@ public class DepartementController {
     public List<Departement> getAll(){
         List<Departement> result = new ArrayList<>();
         departementService.findAll().forEach(result::add);
+        Collections.sort(result);
         return result;
     }
 
@@ -81,6 +83,17 @@ public class DepartementController {
         for(Departement departement : getAll()){
             if (departement.getRegion().getName().equals(region_name)){
                 result.add(departement);
+            }
+        }
+        return result;
+    }
+
+    public boolean isValidName(String name){
+        boolean result = false;
+        for(Departement departement : getAll()){
+            if (departement.getName().equals(name)) {
+                result = true;
+                break;
             }
         }
         return result;

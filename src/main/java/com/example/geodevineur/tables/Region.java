@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class Region {
+public class Region implements Comparable<Region> {
 
     @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +50,11 @@ public class Region {
             total += departement.getSurface();
         }
         return (int) total;
+    }
+
+    @Override
+    public int compareTo(Region otherReg) {
+        return getName().compareTo(otherReg.getName());
     }
 
 }

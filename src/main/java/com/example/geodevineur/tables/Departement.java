@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class Departement {
+public class Departement implements Comparable<Departement> {
 
     @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +36,9 @@ public class Departement {
     protected int neightbours;
     @Getter@Setter
     protected Politic politic;
-    
+    @Getter@Setter
     protected boolean possible = true;
+    @Getter@Setter
     protected boolean potential = true;
 
     public Departement (String name_,
@@ -57,27 +58,14 @@ public class Departement {
     }
 
     public Departement() {
-
-    }
-
-    public void setPossible(boolean possible) {
-        this.possible = possible;
-    }
-
-    public void setPotential(boolean potential) {
-        this.potential = potential;
-    }
-
-    public boolean getPossible() {
-        return possible;
-    }
-
-    public boolean getPotential() {
-        return potential;
     }
 
     public boolean getSeaside() {
-        return seaside;
+        return this.seaside;
     }
 
+    @Override
+    public int compareTo(Departement otherDpt) {
+        return getName().compareTo(otherDpt.getName());
+    }
 }

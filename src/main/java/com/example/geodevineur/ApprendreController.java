@@ -1,6 +1,7 @@
 package com.example.geodevineur;
 import ch.qos.logback.core.joran.action.AppenderRefAction;
 import com.example.geodevineur.controllers.DepartementController;
+import com.example.geodevineur.controllers.EntityController;
 import com.example.geodevineur.controllers.PrefectureController;
 import com.example.geodevineur.controllers.RegionController;
 import com.example.geodevineur.tables.Departement;
@@ -30,12 +31,14 @@ public class ApprendreController {
 
     @Autowired
     PrefectureController prefectureController;
-
     @Autowired
     DepartementController departementController;
-
     @Autowired
     RegionController regionController;
+    @Autowired
+    EntityController entityController;
+    @Autowired
+    Format format;
 
     @Setter
     private Model model;
@@ -44,12 +47,14 @@ public class ApprendreController {
     @Getter@Setter
     private String type;
 
-    public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_) throws IOException {
+    public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_, EntityController entityController_, Format format_) throws IOException {
         this.model = null;
         this.type = "prefecture";
         this.prefectureController = prefectureController_;
         this.departementController = departementController_;
         this.regionController = regionController_;
+        this.entityController = entityController_;
+        this.format = format_;
         this.map = new Map("src/main/resources/static/img/france_departements.svg");
     }
 
@@ -79,8 +84,7 @@ public class ApprendreController {
                 break;
         }
 
-        StringBuilder selectContent = getSelectContent(type);
-        System.out.println(selectContent);
+        StringBuilder selectContent = getSelectContent(type,name);
 
         model.addAttribute("selectContent",selectContent);
         model.addAttribute("map",map.getContent());
@@ -92,16 +96,19 @@ public class ApprendreController {
     }
 
     @RequestMapping(value = "apprendre")
-    public String apprendreMain(Model model){
+    public String apprendreMain(Model model) throws IOException {
         System.out.println("dans apprendreMain");
-        model.addAttribute("selectContent", getSelectContent(type));
+        setType(null);
+        map.clear();
+        model.addAttribute("selectContent", getSelectContent(type,null));
         model.addAttribute("map",map.getContent());
         return "apprendre";
     }
 
     @RequestMapping(value = "apprendre", params = "type")
-    public String apprendreWithType(Model model, @RequestParam String type){
+    public String apprendreWithType(Model model, @RequestParam String type) throws IOException {
         System.out.println("dans apprendre with type");
+        map.clear();
         switch (type) {
             case "departement", "prefecture", "region":
                 setType(type);
@@ -111,14 +118,25 @@ public class ApprendreController {
                 setType(null);
                 break;
         }
-        model.addAttribute("selectContent", getSelectContent(type));
+        model.addAttribute("selectContent", getSelectContent(type,null));
         model.addAttribute("map",map.getContent());
         return "apprendre";
     }
 
-    public StringBuilder getSelectContent(String type){
+    @RequestMapping(value = "apprendre", params = "name")
+    public String apprendreWithName(Model mode, @RequestParam String name) throws IOException, InterruptedException {
+        return apprendre(model, entityController.getTypeByName(name), name);
+    }
+
+    public StringBuilder getSelectContent(String type, String name){
         StringBuilder selectContent = new StringBuilder();
-        selectContent.append("<select class=\"custom-select\">");
+        if(departementController.isValidName(name)){
+            selectContent.append("<select class=\"custom-select\" value=\"").append(name).append("\" id=\"entity-select\">");
+        } else {
+            selectContent.append("<select class=\"custom-select\" id=\"entity-select\">");
+        }
+
+        System.out.println(type);
         if(type != null && type.equals("region")){
             for(Region region : regionController.getAll()){
                 selectContent.append("<option value=\"").append(region.getName()).append("\">").append(region.getName()).append("</option>");
@@ -134,26 +152,6 @@ public class ApprendreController {
         }
         selectContent.append("</select>");
         return selectContent;
-    }
-
-    @PostMapping("setSelectType")
-    public String setSelectType(@RequestParam(name = "type") String type){
-        System.out.println("here with "+type);
-        switch(type){
-            case "prefecture":
-                setType(type);
-                break;
-            case "departement":
-                setType(type);
-                break;
-            case "region":
-                setType(type);
-                break;
-            default:
-                setType(null);
-        }
-        setType(type);
-        return "apprendre";
     }
 
     public StringBuilder setInfos(String type, String name) {
@@ -188,7 +186,7 @@ public class ApprendreController {
         StringBuilder htmlContent = new StringBuilder();
 
         htmlContent.append("<h3>").append(prefecture.getName()).append("</h3>");
-        htmlContent.append("<p>").append("Préfecture de ").append(Format.link(prefecture.getDepartement().getName())).append("</p>");
+        htmlContent.append("<p>").append("Préfecture de ").append(format.getLinkOf(prefecture.getDepartement().getName())).append("</p>");
         htmlContent.append("<p>").append("Elle comporte ").append(prefecture.getPopulation()).append(" habitants</p>");
 
         return htmlContent;
@@ -198,7 +196,7 @@ public class ApprendreController {
         StringBuilder htmlContent = new StringBuilder();
 
         htmlContent.append("<h3>").append(departement.getName()).append(" - ").append(departement.getNumber()).append("</h3>");
-        htmlContent.append("<p>").append("Département de ").append(Format.link(departement.getRegion().getName())).append("</p>");
+        htmlContent.append("<p>").append("Département de ").append(format.getLinkOf(departement.getRegion().getName())).append("</p>");
         htmlContent.append("<p>").append("Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants");
         htmlContent.append(" pour une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");
         if(departement.getSeaside()){
@@ -222,73 +220,4 @@ public class ApprendreController {
 
         return htmlContent;
     }
-
-    public String getType(String name){
-        String found = null;
-        for(Prefecture prefecture : prefectureController.getAll()){
-            if (prefecture.getName().equals(name)) {
-                found = "prefecture";
-                break;
-            }
-        }
-        for(Departement departement : departementController.getAll()){
-            if (departement.getName().equals(name)) {
-                found = "departement";
-                break;
-            }
-        }
-        for(Region region : regionController.getAll()){
-            if (region.getName().equals(name)) {
-                found = "region";
-                break;
-            }
-        }
-        return found;
-    }
-
-    public void colorizeDepartement(String departement, String color) throws IOException {
-        String fileName = "src/main/resources/static/img/france_departements.svg";
-        Path path = Path.of(fileName);
-        String cibleX = "_" + departement + "\"";
-        String content = Files.readString(path);
-        content = content.replace(cibleX, cibleX + " style=\"fill: " + color + ";\"");
-        Files.writeString(path,content);
-    }
-
-    public void resetMap() throws IOException {
-        String fileName = "src/main/resources/static/img/france_departements.svg";
-        Path path = Path.of(fileName);
-        String regex = "style=\"fill: (#[A-Fa-f0-9]{6}|[a-z]*);\" ";
-        String content = Files.readString(path);
-
-        content = content.replaceAll(regex, "");
-        Files.writeString(path,content);
-    }
-
-
-
-    //----------------------------------------------------
-
-    @GetMapping("apprendre-regions")
-    public String apprendreRegions(Model model) throws IOException, InterruptedException {
-
-        ArrayList<String> allRegions = new ArrayList<>(Arrays.asList("Ile-de-France","Nouvelle-Aquitaine","Corse","Bretagne","Hauts-de-France","Occitanie","Normandie","Grand Est","Pays de la Loire","Centre-Val de Loire","Bourgogne-Franche-Comté","Auvergne-Rhône-Alpes","Provence-Alpes-Côte d'Azur"));
-        ArrayList<String> allIDs = new ArrayList<String>(Arrays.asList("ileDeFrance","nouvelleAquitaine","corse","bretagne","hautsDeFrance","occitanie","normandie","grandEst","paysDeLaLoire","centreValDeLoire","bourgogneFrancheComte","auvergneRhoneAlpes","provenceAlpesCoteAzur"));
-
-        Collections.sort(allRegions);
-        Collections.sort(allIDs);
-
-        StringBuilder selectContent = new StringBuilder();
-        selectContent.append("<select class=\"custom-select\" name=\"regions\" id=\"region-select\">");
-        int i=0;
-        for (String nom : allRegions) {
-            selectContent.append("<option value=\"").append(allIDs.get(i)).append("\">").append(nom).append("</option>");
-            i++;
-        }
-        selectContent.append("</select>");
-        model.addAttribute("selectContent", selectContent);
-        model.addAttribute("allRegions", allRegions);
-        return "apprendre-regions"; // renvoie le nom de votre fichier HTML
-    }
-
 }

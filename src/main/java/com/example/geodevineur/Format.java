@@ -1,6 +1,23 @@
 package com.example.geodevineur;
 
+import com.example.geodevineur.controllers.EntityController;
+import com.example.geodevineur.tables.Departement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 public class Format {
+
+    @Autowired
+    EntityController entityController;
+
+    public Format(EntityController entityController_){
+        this.entityController = entityController_;
+    }
 
     public static String intToFormatedString(int nombre) {
         String nombreStr = Integer.toString(nombre);
@@ -15,9 +32,9 @@ public class Format {
         return resultat.toString();
     }
 
-    public static StringBuilder link(String name){
+    public StringBuilder getLinkOf(String name){
         StringBuilder htmlContent = new StringBuilder();
-        htmlContent.append("<a href=\"http://localhost:8080/apprendre?nom=").append(name).append("\">").append(name).append("</a>");
+        htmlContent.append("<a href=\"http://localhost:8080/apprendre?type=").append(entityController.getTypeByName(name)).append("&name=").append(name).append("\">").append(name).append("</a>");
         return htmlContent;
     }
 
