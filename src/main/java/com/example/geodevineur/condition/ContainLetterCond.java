@@ -10,6 +10,10 @@ public class ContainLetterCond<E extends Departement> extends Condition<E>{
     private Random random;
     private char letter;
 
+    public char getLetter() {
+        return letter;
+    }
+
     public ContainLetterCond(E e) {
         random = new Random();
         setAttributes(e);
