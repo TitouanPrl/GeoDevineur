@@ -1,9 +1,10 @@
+/*
 package com.example.geodevineur.condition;
 
-import com.example.geodevineur.dep_reg.DepReg;
 import com.example.geodevineur.enumerations.Cardinal;
+import com.example.geodevineur.tables.Region;
 
-public class CardinalCond<E extends DepReg> extends Condition<E>{
+public class CardinalCond<E extends Region> extends Condition<E>{
     private Cardinal cardinal;
 
     public CardinalCond (E e) {
@@ -18,3 +19,4 @@ public class CardinalCond<E extends DepReg> extends Condition<E>{
         return e.getCardinal() == cardinal;
     }
 }
+*/

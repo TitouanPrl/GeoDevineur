@@ -20,31 +20,34 @@
         </div>
     </div>
 </header>
-<div class="container">
+<div class="container" style="padding: 50px">
 
-    <p>Argumentation</p>
-    <div class="card mb-4 box-shadow">
-        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <div class="question card-title align-items-center bg-info text-center">
-            <h1 class="">Règles d'un Quizz</h1>
-        </div>
-        <div class="card-body   align-items-center">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <label for="type-select"></label>
+    <select id="type-select">
+        <option value="prefecture">Préfecture</option>
+        <option value="departement">Département</option>
+        <option value="region">Région</option>
+    </select>
+
+    <label for="main-select"></label>
+    <div th:remove="tag" th:utext="${selectContent}"></div>
 
 
-        </div>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        document.getElementById("type-select").addEventListener("change", function() {
+            const type = this.value;
+            $.ajax({
+                url: '/setSelectType',
+                type: 'POST',
+                data: { type: type }
+            });
+        });
+    </script>
+
+    <div th:utext="${map}"></div>
+    <div th:remove="tag" th:utext="${infos}"></div>
 </div>
-<div class="container">
-    <p><strong>Quel est le but de ce site ?</strong></p>
-    <p>Etre incolable sur les régions et les départements du beau pays qu'est la France</p>
-    <p><strong>Quel est le but de ce site ?</strong></p>
-    <p>Etre incolable sur les régions et les départements du beau pays qu'est la France</p>
-    <p><strong>Quel est le but de ce site ?</strong></p>
-    <p>Etre incolable sur les régions et les départements du beau pays qu'est la France</p>
-</div>
-
-
 <footer class="text-muted border-top" style="padding-top: 15px">
     <div class="container text-center">
         <p>Site créé dans le cadre d'un projet JEE</p>

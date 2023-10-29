@@ -15,4 +15,17 @@ public enum Cardinal {
         if (input.equals("C")) return Cardinal.C;
         return null;
     }
+
+    public String toString(){
+        if (this.equals(Cardinal.N)) return "Nord";
+        if (this.equals(Cardinal.NE)) return "Nord-Est";
+        if (this.equals(Cardinal.E)) return "Est";
+        if (this.equals(Cardinal.SE)) return "Sud-Est";
+        if (this.equals(Cardinal.S)) return "Sud";
+        if (this.equals(Cardinal.SW)) return "Sud-Ouest";
+        if (this.equals(Cardinal.W)) return "Ouest";
+        if (this.equals(Cardinal.NW)) return "Nord-Ouest";
+        if (this.equals(Cardinal.C)) return "Centre";
+        return null;
+    }
 }

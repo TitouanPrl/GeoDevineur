@@ -9,9 +9,9 @@ CREATE TABLE REGION
   Cotier BOOLEAN,
   Voisins INT(2),
   Politique VARCHAR(55)
-) 
-AS 
-SELECT * 
+)
+AS
+SELECT *
 FROM CSVREAD('../csv/regions.csv');
 
 DROP TABLE IF EXISTS DEPARTEMENT;
@@ -26,9 +26,9 @@ CREATE TABLE DEPARTEMENT
   Cotier BOOLEAN,
   Voisins INT(2),
   Politique VARCHAR(55)
-) 
-AS 
-SELECT * 
+)
+AS
+SELECT *
 FROM CSVREAD('../csv/departements.csv');
 
 CREATE TABLE SCORE

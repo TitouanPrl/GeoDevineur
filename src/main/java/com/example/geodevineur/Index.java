@@ -18,13 +18,8 @@ public class Index{
         return "scores";
     }
 
-    @GetMapping("quizz-departements")
+    @GetMapping("quizz")
     public String quizzDepartements(Model model) {
-        return "quizz-departements";
-    }
-
-    @GetMapping("quizz-regions")
-    public String quizzRegions(Model model) {
-        return "quizz-regions";
+        return "quizz";
     }
 }
