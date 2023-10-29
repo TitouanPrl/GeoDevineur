@@ -6,6 +6,9 @@ import com.example.geodevineur.controllers.RegionController;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
+import jakarta.servlet.annotation.WebServlet;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,20 +36,20 @@ public class ApprendreController {
     @Autowired
     RegionController regionController;
 
+    @Setter
     private Model model;
 
     private Map map;
+    @Getter@Setter
+    private String type;
 
     public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_) throws IOException {
         this.model = null;
+        this.type = null;
         this.prefectureController = prefectureController_;
         this.departementController = departementController_;
         this.regionController = regionController_;
         this.map = new Map("src/main/resources/static/img/france_departements.svg");
-    }
-
-    public void setModel(Model model){
-        this.model = model;
     }
 
     @GetMapping("apprendre")
@@ -96,6 +99,26 @@ public class ApprendreController {
 
 */
 
+        return "apprendre";
+    }
+
+    @PostMapping("setSelectType")
+    public String setSelectType(@RequestParam(name = "type") String type){
+        System.out.println("here with "+type);
+        switch(type){
+            case "prefecture":
+                setType(type);
+                break;
+            case "departement":
+                setType(type);
+                break;
+            case "region":
+                setType(type);
+                break;
+            default:
+                setType(null);
+        }
+        setType(type);
         return "apprendre";
     }
 

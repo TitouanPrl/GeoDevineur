@@ -21,43 +21,30 @@
     </div>
 </header>
 <div class="container" style="padding: 50px">
-    <!--<label for="departement-select"></label>
 
+    <label for="type-select"></label>
+    <select id="type-select">
+        <option value="prefecture">Préfecture</option>
+        <option value="departement">Département</option>
+        <option value="region">Région</option>
+    </select>
+
+    <label for="main-select"></label>
     <div th:remove="tag" th:utext="${selectContent}"></div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        if (window.PerformanceNavigationTiming) {
-            document.getElementById("departement-select").value = "00"
+        document.getElementById("type-select").addEventListener("change", function() {
+            const type = this.value;
             $.ajax({
-                url: '/setDepartement',
+                url: '/setSelectType',
                 type: 'POST',
-                data: { departement: "00" },
-                success(data) {
-                    document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
-                    document.getElementById("dep-on-map").alt = "00";
-                }
+                data: { type: type }
             });
-        }
-
-        document.getElementById("departement-select").addEventListener("change", function() {
-            const dep = this.value;
-            $.ajax({
-                url: '/setDepartement',
-                type: 'POST',
-                data: { departement: dep },
-                success(data) {
-                    document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
-                    document.getElementById("dep-on-map").alt = dep;
-                }});
         });
     </script>
 
-    <div class="container border-top text-center" style="padding: 50px">
-        &lt;!&ndash; Changer le nom de l'image par rapport à l'id du departement &ndash;&gt;
-        <img class="align-items-center" id="dep-on-map" src="resources/static/img/france_departements.svg" width="400" height="430" alt="Carte de la France">
-    </div>-->
     <div th:utext="${map}"></div>
     <div th:remove="tag" th:utext="${infos}"></div>
 </div>
