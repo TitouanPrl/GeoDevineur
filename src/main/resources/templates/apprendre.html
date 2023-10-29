@@ -32,29 +32,7 @@
     <label for="main-select"></label>
     <div th:remove="tag" th:utext="${selectContent}"></div>
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        if (window.PerformanceNavigationTiming) {
-            const type = (new URLSearchParams(window.location.search)).get("type")
-            const name = (new URLSearchParams(window.location.search)).get("name")
-            document.getElementById("entity-select").value = name;
-            if(type === "region" || type === "departement"){
-                document.getElementById("type-select").value = type;
-            } else {
-                document.getElementById("type-select").value = "prefecture";
-            }
-        }
-        document.getElementById("type-select").addEventListener("change", function() {
-            window.location.assign("apprendre?type="+this.value);
-        });
-        document.getElementById("entity-select").addEventListener("change", function() {
-            const type = document.getElementById("type-select").value;
-            window.location.assign("apprendre?type="+type+"&name="+this.value);
-        });
-    </script>
-
-    <div th:utext="${map}"></div>
+    <div style="width: 100px" th:utext="${map}"></div>
     <div th:remove="tag" th:utext="${infos}"></div>
 </div>
 <footer class="text-muted border-top" style="padding-top: 15px">
@@ -64,4 +42,23 @@
     </div>
 </footer>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    if (window.PerformanceNavigationTiming) {
+        const type = (new URLSearchParams(window.location.search)).get("type")
+        document.getElementById("entity-select").value = (new URLSearchParams(window.location.search)).get("name");
+        if(type === "region" || type === "departement"){
+            document.getElementById("type-select").value = type;
+        } else {
+            document.getElementById("type-select").value = "prefecture";
+        }
+    }
+    document.getElementById("type-select").addEventListener("change", function() {
+        window.location.assign("apprendre?type="+this.value);
+    });
+    document.getElementById("entity-select").addEventListener("change", function() {
+        const type = document.getElementById("type-select").value;
+        window.location.assign("apprendre?type="+type+"&name="+this.value);
+    });
+</script>
 </html>
