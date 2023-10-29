@@ -26,6 +26,15 @@ public class PrefectureController {
         return prefectureService.findById(id).orElse(null);
     }
 
+    public Prefecture getByName(String name) {
+        Prefecture result = null;
+        for(Prefecture prefecture : getAll()){
+            if (prefecture.getName().equals(name)){
+                result = prefecture;
+            }
+        }
+        return result;
+    }
     public Prefecture getByDepartementId(int departement_id){
         Prefecture result = null;
         for(Prefecture prefecture : getAll()){

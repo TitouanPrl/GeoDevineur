@@ -36,5 +36,20 @@ public class Region {
 
     }
 
+    public int getPopulation(){
+        int total = 0;
+        for(Departement departement : departements){
+            total += departement.getPopulation();
+        }
+        return total;
+    }
+
+    public int getSurface(){
+        double total = 0;
+        for(Departement departement : departements){
+            total += departement.getSurface();
+        }
+        return (int) total;
+    }
 
 }

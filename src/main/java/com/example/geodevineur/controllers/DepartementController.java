@@ -36,6 +36,16 @@ public class DepartementController {
         return result;
     }
 
+    public Departement getByName(String name){
+        Departement result = null;
+        for(Departement departement : getAll()){
+            if (departement.getName().equals(name)){
+                result = departement;
+            }
+        }
+        return result;
+    }
+
     public Departement getByPrefectureId(int prefecture_id){
         Departement result = null;
         for(Departement departement : getAll()){

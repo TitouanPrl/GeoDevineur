@@ -1,10 +1,17 @@
-/*
 package com.example.geodevineur;
+import ch.qos.logback.core.joran.action.AppenderRefAction;
+import com.example.geodevineur.controllers.DepartementController;
+import com.example.geodevineur.controllers.PrefectureController;
+import com.example.geodevineur.controllers.RegionController;
 import com.example.geodevineur.tables.Departement;
+import com.example.geodevineur.tables.Prefecture;
+import com.example.geodevineur.tables.Region;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,10 +24,22 @@ import java.util.List;
 @Controller
 public class ApprendreController {
 
+    @Autowired
+    PrefectureController prefectureController;
+
+    @Autowired
+    DepartementController departementController;
+
+    @Autowired
+    RegionController regionController;
+
     private Model model;
 
-    public ApprendreController() {
+    public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_) {
         this.model = null;
+        this.prefectureController = prefectureController_;
+        this.departementController = departementController_;
+        this.regionController = regionController_;
     }
 
     public void setModel(Model model){
@@ -28,10 +47,17 @@ public class ApprendreController {
     }
 
     @GetMapping("apprendre")
-    public String apprendre(Model model) throws IOException, InterruptedException {
+    public String apprendre(Model model, @RequestParam(name = "nom", defaultValue = "null") String name) throws IOException, InterruptedException {
+        resetMap();
 
-        */
-/*setModel(model);
+        String type = getType(name);
+        System.out.println(name+"|"+type);
+        StringBuilder data = setInfos(type,name);
+        model.addAttribute("infos",data);
+
+        return "apprendre";
+
+/*
 
         resetMapDepartementsColors();
         Thread.sleep(500);
@@ -54,9 +80,10 @@ public class ApprendreController {
         model.addAttribute("position","l'Est");
         model.addAttribute("cotier","se trouve dans les terres");
         model.addAttribute("voisins","6");
-        model.addAttribute("politique","RN");*//*
+        model.addAttribute("politique","RN");
+*/
 
-        return "apprendre";
+        //return "apprendre";
     }
     @PostMapping("setDepartement")
     public String setDepartement(String departement) throws IOException, InterruptedException {
@@ -85,7 +112,7 @@ public class ApprendreController {
         String legerRouge = "#ffcccb";//"#ACACAC";
         String rouge = "red";
 
-        resetMapDepartementsColors();
+        resetMap();
 
 
         for(ArrayList<String> region : regions) {
@@ -107,16 +134,94 @@ public class ApprendreController {
     }
 
 
-    public void setInfosDepartement(String departement) {
-//        DepReg dep = tableController.getDpt(departement);
-//
-//        model.addAttribute("superficie",dep.getSurface());
-//        model.addAttribute("habitants",dep.getPopulation());
-//        model.addAttribute("position",dep.getCardinal());
-//        model.addAttribute("cotier",dep.getSeaside());
-//        model.addAttribute("voisins",dep.getNeightbours());
-//        model.addAttribute("politique",dep.getPolitic());
+    public StringBuilder setInfos(String type, String name) {
+        StringBuilder htmlContent = new StringBuilder();
 
+        switch(type){
+            case "prefecture":
+                Prefecture prefecture = prefectureController.getByName(name);
+                if(prefecture != null){
+                    htmlContent = getPrefectureInfos(prefecture);
+                }
+                break;
+            case "departement":
+                Departement departement = departementController.getByName(name);
+                if(departement != null){
+                    htmlContent = getDepartementInfos(departement);
+                }
+                break;
+            case "region":
+                Region region = regionController.getByName(name);
+                if(region != null){
+                    htmlContent = getRegionInfos(region);
+                }
+                break;
+            default:
+                break;
+        }
+        return htmlContent;
+    }
+
+    public StringBuilder getPrefectureInfos(Prefecture prefecture){
+        StringBuilder htmlContent = new StringBuilder();
+
+        htmlContent.append("<h3>").append(prefecture.getName()).append("</h3>");
+        htmlContent.append("<p>").append("Préfecture de ").append(Format.link(prefecture.getDepartement().getName())).append("</p>");
+        htmlContent.append("<p>").append("Elle comporte ").append(prefecture.getPopulation()).append(" habitants</p>");
+
+        return htmlContent;
+    }
+
+    public StringBuilder getDepartementInfos(Departement departement){
+        StringBuilder htmlContent = new StringBuilder();
+
+        htmlContent.append("<h3>").append(departement.getName()).append("</h3>");
+        htmlContent.append("<p>").append("Département de ").append(Format.link(departement.getRegion().getName())).append("</p>");
+        htmlContent.append("<p>").append("Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants");
+        htmlContent.append(" pour une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");
+        if(departement.getSeaside()){
+            htmlContent.append("<p>Il est cotier</p>");
+        } else {
+            htmlContent.append("<p>Il n'est pas pas cotier</p>");
+        }
+        htmlContent.append("<p>Il possède ").append(departement.getNeightbours()).append(" départements voisins</p>");
+        htmlContent.append("<p>Il vote ").append(departement.getPolitic().toString()).append(" en majorité</p>");
+
+        return htmlContent;
+    }
+
+    public StringBuilder getRegionInfos(Region region){
+        StringBuilder htmlContent = new StringBuilder();
+
+        htmlContent.append("<h3>").append(region.getName()).append("</h3>");
+        htmlContent.append("<p>").append("Région du ").append(region.getCardinal().toString()).append(" de la France</p>");
+        htmlContent.append("<p>").append("Elle comporte ").append(Format.intToFormatedString(region.getPopulation())).append(" habitants</p>");
+        htmlContent.append(" pour une superficie de ").append(Format.intToFormatedString(region.getSurface())).append(" km²</p>");
+
+        return htmlContent;
+    }
+
+    public String getType(String name){
+        String found = null;
+        for(Prefecture prefecture : prefectureController.getAll()){
+            if (prefecture.getName().equals(name)) {
+                found = "prefecture";
+                break;
+            }
+        }
+        for(Departement departement : departementController.getAll()){
+            if (departement.getName().equals(name)) {
+                found = "departement";
+                break;
+            }
+        }
+        for(Region region : regionController.getAll()){
+            if (region.getName().equals(name)) {
+                found = "region";
+                break;
+            }
+        }
+        return found;
     }
 
     public void colorizeDepartement(String departement, String color) throws IOException {
@@ -128,7 +233,7 @@ public class ApprendreController {
         Files.writeString(path,content);
     }
 
-    public void resetMapDepartementsColors() throws IOException {
+    public void resetMap() throws IOException {
         String fileName = "src/main/resources/static/img/france_departements.svg";
         Path path = Path.of(fileName);
         String regex = "style=\"fill: (#[A-Fa-f0-9]{6}|[a-z]*);\" ";
@@ -164,4 +269,4 @@ public class ApprendreController {
         return "apprendre-regions"; // renvoie le nom de votre fichier HTML
     }
 
-}*/
+}

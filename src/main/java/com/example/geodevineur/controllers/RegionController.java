@@ -4,6 +4,7 @@ import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.enumerations.Politic;
 import com.example.geodevineur.repos.RegionRepository;
 import com.example.geodevineur.tables.Departement;
+import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,16 @@ public class RegionController {
 
     public Region getById(int id){
         return regionService.findById(id).orElse(null);
+    }
+
+    public Region getByName(String name) {
+        Region result = null;
+        for(Region region : getAll()){
+            if (region.getName().equals(name)){
+                result = region;
+            }
+        }
+        return result;
     }
 
     /*public Region getByDepartementId(String departement_id){

@@ -20,40 +20,46 @@
         </div>
     </div>
 </header>
-<div class="col-md-4 container" style="padding: 1%">
-    <div class="card mb-4 box-shadow">
-        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <!-- Quand répondu : changement couleur + attribut 'disabled' au bouton du form + -->
-        <!-- valeur de la saisie texte correspond à reponse + nombre de departement correspondants dans balise i -->
-        <div class="question card-title align-items-center bg-success text-center">
-            <h3 class="border-bottom border-dark "><strong>Question n°1</strong></h3>
-            <h1>Il a plus de 300 000 habitants</h1>
-        </div>
-        <div class="card-body align-items-center">
-            <form action="quizz.html" method="get" class="align-items-center text-center">
-                <input class="" type="text" name="answer" value="Landes"><br><br>
-                <i class="card-subtitle border-top">43 correspondants</i>
-            </form>
+<div class="container" style="padding: 50px">
+    <!--<label for="departement-select"></label>
 
-        </div>
-    </div>
+    <div th:remove="tag" th:utext="${selectContent}"></div>
 
-    <div class="card mb-4 box-shadow">
-        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <div class="question card-title align-items-center bg-primary text-center">
-            <h3 class="border-bottom border-dark "><strong>Question n°2</strong></h3>
-            <h1>Il a 6 départements voisins</h1>
-        </div>
-        <div class="card-body   align-items-center">
-            <form act   ion="quizz.html" method="get" class="align-items-center text-center">
-                <input class="" type="text" name="answer">
-                <input class="btn-success" type="submit" value="Valider"><br><br>
-                <i class="card-subtitle border-top"></i>
-            </form>
 
-        </div>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        if (window.PerformanceNavigationTiming) {
+            document.getElementById("departement-select").value = "00"
+            $.ajax({
+                url: '/setDepartement',
+                type: 'POST',
+                data: { departement: "00" },
+                success(data) {
+                    document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
+                    document.getElementById("dep-on-map").alt = "00";
+                }
+            });
+        }
 
+        document.getElementById("departement-select").addEventListener("change", function() {
+            const dep = this.value;
+            $.ajax({
+                url: '/setDepartement',
+                type: 'POST',
+                data: { departement: dep },
+                success(data) {
+                    document.getElementById("dep-on-map").src = "resources/static/img/france_departements.svg?random="+new Date().getTime();
+                    document.getElementById("dep-on-map").alt = dep;
+                }});
+        });
+    </script>
+
+    <div class="container border-top text-center" style="padding: 50px">
+        &lt;!&ndash; Changer le nom de l'image par rapport à l'id du departement &ndash;&gt;
+        <img class="align-items-center" id="dep-on-map" src="resources/static/img/france_departements.svg" width="400" height="430" alt="Carte de la France">
+    </div>-->
+
+    <div th:remove="tag" th:utext="${infos}"></div>
 </div>
 <footer class="text-muted border-top" style="padding-top: 15px">
     <div class="container text-center">

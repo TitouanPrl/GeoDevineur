@@ -167,20 +167,24 @@ public class UploadData {
         List<PrefectureBis<Prefecture,String>> allPrefecturesBis = readPrefecturesCSV();
 
         for(Region region : allRegions){
+            //On veut recup tout les departements de la region
             List<Departement> departementsOfRegion = new ArrayList<>();
 
-
+            //On boucle sur tous les departements du csv
             for(DepartementBis<Departement,String> depBis : allDepartementsBis){
+                //Si la region du departement du csv est la bonne
                 if(depBis.regionName.equals(region.getName())){
                     departementsOfRegion.add(depBis.departement);
-
+                    //Et de la meme maniere on recupere la prefecture de ce departement
                     for(PrefectureBis<Prefecture,String> prefBis : allPrefecturesBis){
                         if(prefBis.departementName.equals(depBis.departement.getName())){
+                            //On crée le lien entre chaque departement et sa prefecture
                             saveOneToOne(prefBis.prefecture,depBis.departement);
                         }
                     }
                 }
             }
+            //On crée le lien entre les departements et leur region
             saveManyToOne(departementsOfRegion,region);
             regionController.add(region);
         }
