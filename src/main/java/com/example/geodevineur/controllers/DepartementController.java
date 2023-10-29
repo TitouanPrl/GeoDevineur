@@ -66,7 +66,7 @@ public class DepartementController {
         return result;
     }
 
-    /*public List<Departement> getByRegionId(int region_id){
+    public List<Departement> getByRegionId(int region_id){
         List<Departement> result = new ArrayList<>();
         for(Departement departement : getAll()){
             if (departement.getRegion().getId() == region_id){
@@ -74,7 +74,17 @@ public class DepartementController {
             }
         }
         return result;
-    }*/
+    }
+
+    public List<Departement> getByRegionName(String region_name){
+        List<Departement> result = new ArrayList<>();
+        for(Departement departement : getAll()){
+            if (departement.getRegion().getName().equals(region_name)){
+                result.add(departement);
+            }
+        }
+        return result;
+    }
 
     public void add(Departement departement){
         departementService.save(departement);

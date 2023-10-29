@@ -45,16 +45,13 @@ public class RegionController {
         return result;
     }
 
-    /*public Region getByDepartementId(String departement_id){
-        return getAll().stream()
-                .filter(region -> region.getId().equals(departementController.getById(departement_id).getRegion().getId()))
-                .findFirst()
-                .orElse(null);
-    }*/
+    public Region getByDepartementId(int departement_id) {
+        return departementController.getById(departement_id).getRegion();
+    }
 
-    /*public Region getByPrefectureId(String prefecture_id){
-        return getByDepartementId(departementController.getByPrefectureId(prefecture_id).getId());
-    }*/
+    public Region getByDepartementName(String deaprtement_name) {
+        return departementController.getByName(deaprtement_name).getRegion();
+    }
 
     public void add(Region region){
         regionService.save(region);

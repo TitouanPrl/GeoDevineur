@@ -67,14 +67,6 @@ public class PrefectureController {
         return result;
     }
 
-//    public List<Prefecture> getAllByRegionId(int region_id){
-//        List<Prefecture> result = new ArrayList<>();
-//        for(Departement departement : getAllByRegionId(region_id)){
-//            result.add(departement.getPrefecture());
-//        }
-//        return result;
-//    }
-
     public void add(Prefecture prefecture){
         prefectureService.save(prefecture);
     }
