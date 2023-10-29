@@ -117,8 +117,8 @@ public class UploadData {
                         values[2], //Nom
                         values[3], //Number
                         Integer.parseInt(values[4]), //Population
-                        round((double) Float.parseFloat(values[5]),2), //Superficie
-                        IntToBoolean(Integer.parseInt(values[7])), //Cotier
+                        Format.round((double) Float.parseFloat(values[5]),2), //Superficie
+                        Format.IntToBoolean(Integer.parseInt(values[7])), //Cotier
                         Integer.parseInt(values[8]), //Voisins
                         Politic.fromString(values[9])); //Politique
                 //Cardinal pas utilisé
@@ -233,16 +233,5 @@ public class UploadData {
         return "bdd";
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
 
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
-
-    public static Boolean IntToBoolean(int x){
-        return (x == 1);
-    }
 }

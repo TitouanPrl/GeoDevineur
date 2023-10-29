@@ -35,11 +35,14 @@ public class ApprendreController {
 
     private Model model;
 
-    public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_) {
+    private Map map;
+
+    public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_) throws IOException {
         this.model = null;
         this.prefectureController = prefectureController_;
         this.departementController = departementController_;
         this.regionController = regionController_;
+        this.map = new Map("src/main/resources/static/img/france_departements.svg");
     }
 
     public void setModel(Model model){
@@ -48,19 +51,36 @@ public class ApprendreController {
 
     @GetMapping("apprendre")
     public String apprendre(Model model, @RequestParam(name = "nom", defaultValue = "null") String name) throws IOException, InterruptedException {
-        resetMap();
+
+        String prefectureColor = "#414141";
+        String departementColor = "#00561b";
+        String regionColor = "#062b16";
 
         String type = getType(name);
         System.out.println(name+"|"+type);
         StringBuilder data = setInfos(type,name);
+
+        map.clear();
+
+        switch (type) {
+            case "departement":
+                map.colorizeDepartement(departementController.getByName(name), departementColor);
+                break;
+            case "region":
+                map.colorizeRegion(regionController.getByName(name), regionColor);
+                break;
+            case "prefecture":
+                map.colorizeDepartement(departementController.getByPrefectureName(name), prefectureColor);
+                break;
+            default:
+                break;
+        }
+
+        model.addAttribute("map",map.getContent());
         model.addAttribute("infos",data);
 
-        return "apprendre";
 
 /*
-
-        resetMapDepartementsColors();
-        Thread.sleep(500);
 
         //Get les departements dans la bdd
         //List<Departement> allDepartements = tableController.getAllDpt();
@@ -73,66 +93,11 @@ public class ApprendreController {
             i++;
         }
         selectContent.append("</select>");
-        model.addAttribute("selectContent", selectContent);
-        model.addAttribute("allDepartements", allDepartements);
-        model.addAttribute("superficie","7500");
-        model.addAttribute("habitants","420 000");
-        model.addAttribute("position","l'Est");
-        model.addAttribute("cotier","se trouve dans les terres");
-        model.addAttribute("voisins","6");
-        model.addAttribute("politique","RN");
+
 */
 
-        //return "apprendre";
-    }
-    @PostMapping("setDepartement")
-    public String setDepartement(String departement) throws IOException, InterruptedException {
-        System.out.println(departement);
-        if (departement.length() == 1){
-            departement = "0" + departement;
-        }
-        System.out.println("here with "+departement);
-
-        ArrayList<String> nouvelleAquitaine = new ArrayList<String>(Arrays.asList("16","17","19","23","24","33","40","47","64","79","86","87"));
-        ArrayList<String> bretagne = new ArrayList<String>(Arrays.asList("22","29","35","56"));
-        ArrayList<String> hautsDeFrance = new ArrayList<String>(Arrays.asList("02","59","60","62","80"));
-        ArrayList<String> occitanie = new ArrayList<String>(Arrays.asList("09","11","12","30","31","32","34","46","48","65","66","81","82"));
-        ArrayList<String> normandie = new ArrayList<String>(Arrays.asList("14","27","50","61","76"));
-        ArrayList<String> ileDeFrance = new ArrayList<String>(Arrays.asList("75","92","93","94","77","78","91","95"));
-        ArrayList<String> grandEst = new ArrayList<String>(Arrays.asList("08","10","51","52","54","55","57","67","68","88"));
-        ArrayList<String> paysDeLaLoire = new ArrayList<String>(Arrays.asList("44","49","53","72","85"));
-        ArrayList<String> centreValDeLoire = new ArrayList<String>(Arrays.asList("18","28","36","37","41","45"));
-        ArrayList<String> bourgogneFrancheComte = new ArrayList<String>(Arrays.asList("21","25","39","58","70","71","89","90"));
-        ArrayList<String> auvergneRhoneAlpes = new ArrayList<String>(Arrays.asList("01","03","07","15","26","38","42","43","63","69","73","74"));
-        ArrayList<String> provenceAlpesCoteAzur = new ArrayList<String>(Arrays.asList("04","05","06","13","83","84"));
-        ArrayList<String> corse = new ArrayList<String>(Arrays.asList("2a","2b"));
-
-        ArrayList<ArrayList<String>> regions = new ArrayList<ArrayList<String>>(Arrays.asList(ileDeFrance,nouvelleAquitaine,corse,bretagne,hautsDeFrance,occitanie,normandie,grandEst,paysDeLaLoire,centreValDeLoire,bourgogneFrancheComte,auvergneRhoneAlpes,provenceAlpesCoteAzur));
-
-        String legerRouge = "#ffcccb";//"#ACACAC";
-        String rouge = "red";
-
-        resetMap();
-
-
-        for(ArrayList<String> region : regions) {
-            if (region.contains(departement)) {
-                for (String dep : region) {
-                    if (dep.equals(departement)){
-                        colorizeDepartement(dep, rouge);
-                    } else {
-                        colorizeDepartement(dep, legerRouge);
-                    }
-                }
-            }
-        }
-        Thread.sleep(500);
-        //setInfosDepartement(departement);
-
-        //colorizeDepartement(departement, rouge);
         return "apprendre";
     }
-
 
     public StringBuilder setInfos(String type, String name) {
         StringBuilder htmlContent = new StringBuilder();
@@ -175,7 +140,7 @@ public class ApprendreController {
     public StringBuilder getDepartementInfos(Departement departement){
         StringBuilder htmlContent = new StringBuilder();
 
-        htmlContent.append("<h3>").append(departement.getName()).append("</h3>");
+        htmlContent.append("<h3>").append(departement.getName()).append(" - ").append(departement.getNumber()).append("</h3>");
         htmlContent.append("<p>").append("Département de ").append(Format.link(departement.getRegion().getName())).append("</p>");
         htmlContent.append("<p>").append("Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants");
         htmlContent.append(" pour une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");

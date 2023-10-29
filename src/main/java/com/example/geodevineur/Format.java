@@ -20,4 +20,17 @@ public class Format {
         htmlContent.append("<a href=\"http://localhost:8080/apprendre?nom=").append(name).append("\">").append(name).append("</a>");
         return htmlContent;
     }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+    public static Boolean IntToBoolean(int x){
+        return (x == 1);
+    }
 }
