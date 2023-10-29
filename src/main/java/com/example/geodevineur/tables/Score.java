@@ -6,6 +6,9 @@ import lombok.Getter;
 
 import java.sql.Time;
 
+import jakarta.persistence.Entity;
+
+/* Classe représentant les scores du leaderboard */
 @Entity
 public class Score {
 
@@ -15,7 +18,7 @@ public class Score {
     @Getter
     private final Time temps;
 
-    public Score (String pseudo_, Time temps_) {
+    public Score(String pseudo_, Time temps_) {
         pseudo = pseudo_;
         temps = temps_;
     }
