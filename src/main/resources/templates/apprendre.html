@@ -23,7 +23,7 @@
 <div class="container" style="padding: 50px">
 
     <label for="type-select"></label>
-    <select id="type-select">
+    <select class="custom-select" id="type-select">
         <option value="prefecture">Préfecture</option>
         <option value="departement">Département</option>
         <option value="region">Région</option>
@@ -35,13 +35,17 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        if (window.PerformanceNavigationTiming) {
+            const type = (new URLSearchParams(window.location.search)).get("type")
+            if(type == "region" || type == "departement"){
+
+            } else {
+                document.getElementById("type-select").value = "prefecture";
+            }
+
+        }
         document.getElementById("type-select").addEventListener("change", function() {
-            const type = this.value;
-            $.ajax({
-                url: '/setSelectType',
-                type: 'POST',
-                data: { type: type }
-            });
+            window.location.assign("apprendre?type="+this.value);
         });
     </script>
 

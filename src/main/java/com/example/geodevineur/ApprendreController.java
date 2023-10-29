@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -39,27 +40,26 @@ public class ApprendreController {
     @Setter
     private Model model;
 
-    private Map map;
+    private final Map map;
     @Getter@Setter
     private String type;
 
     public ApprendreController(PrefectureController prefectureController_, DepartementController departementController_, RegionController regionController_) throws IOException {
         this.model = null;
-        this.type = null;
+        this.type = "prefecture";
         this.prefectureController = prefectureController_;
         this.departementController = departementController_;
         this.regionController = regionController_;
         this.map = new Map("src/main/resources/static/img/france_departements.svg");
     }
 
-    @GetMapping("apprendre")
-    public String apprendre(Model model, @RequestParam(name = "nom", defaultValue = "null") String name) throws IOException, InterruptedException {
+    @RequestMapping(value = "apprendre", params = {"type","name"})
+    public String apprendre(Model model, @RequestParam String type, @RequestParam String name) throws IOException, InterruptedException {
 
         String prefectureColor = "#414141";
         String departementColor = "#00561b";
         String regionColor = "#062b16";
 
-        String type = getType(name);
         System.out.println(name+"|"+type);
         StringBuilder data = setInfos(type,name);
 
@@ -79,27 +79,61 @@ public class ApprendreController {
                 break;
         }
 
+        StringBuilder selectContent = getSelectContent(type);
+        System.out.println(selectContent);
+
+        model.addAttribute("selectContent",selectContent);
         model.addAttribute("map",map.getContent());
         model.addAttribute("infos",data);
 
 
-/*
-
-        //Get les departements dans la bdd
-        //List<Departement> allDepartements = tableController.getAllDpt();
-
-        StringBuilder selectContent = new StringBuilder();
-        selectContent.append("<select class=\"custom-select\" name=\"departements\" id=\"departement-select\">");
-        int i=0;
-        for (Departement depReg : allDepartements) {
-            selectContent.append("<option value=\"").append(depReg.getId()).append("\">").append(depReg.getId()).append(" - ").append(depReg.getName()).append("</option>");
-            i++;
-        }
-        selectContent.append("</select>");
-
-*/
 
         return "apprendre";
+    }
+
+    @RequestMapping(value = "apprendre")
+    public String apprendreMain(Model model){
+        System.out.println("dans apprendreMain");
+        model.addAttribute("selectContent", getSelectContent(type));
+        model.addAttribute("map",map.getContent());
+        return "apprendre";
+    }
+
+    @RequestMapping(value = "apprendre", params = "type")
+    public String apprendreWithType(Model model, @RequestParam String type){
+        System.out.println("dans apprendre with type");
+        switch (type) {
+            case "departement", "prefecture", "region":
+                setType(type);
+                break;
+            default:
+                System.out.println("laaa avec "+type);
+                setType(null);
+                break;
+        }
+        model.addAttribute("selectContent", getSelectContent(type));
+        model.addAttribute("map",map.getContent());
+        return "apprendre";
+    }
+
+    public StringBuilder getSelectContent(String type){
+        StringBuilder selectContent = new StringBuilder();
+        selectContent.append("<select class=\"custom-select\">");
+        if(type != null && type.equals("region")){
+            for(Region region : regionController.getAll()){
+                selectContent.append("<option value=\"").append(region.getName()).append("\">").append(region.getName()).append("</option>");
+            }
+        } else if(type != null && type.equals("departement")){
+            for(Departement departement : departementController.getAll()){
+                selectContent.append("<option value=\"").append(departement.getName()).append("\">").append(departement.getName()).append("</option>");
+            }
+        } else {
+            for(Prefecture prefecture : prefectureController.getAll()){
+                selectContent.append("<option value=\"").append(prefecture.getName()).append("\">").append(prefecture.getName()).append("</option>");
+            }
+        }
+        selectContent.append("</select>");
+        return selectContent;
     }
 
     @PostMapping("setSelectType")
