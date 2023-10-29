@@ -34,8 +34,13 @@ public class Format {
 
     public StringBuilder getLinkOf(String name){
         StringBuilder htmlContent = new StringBuilder();
-        htmlContent.append("<a href=\"http://localhost:8080/apprendre?type=").append(entityController.getTypeByName(name)).append("&name=").append(name).append("\">").append(name).append("</a>");
+        htmlContent.append("<a class=\"\" href=\"http://localhost:8080/apprendre?type=").append(entityController.getTypeByName(name)).append("&name=").append(name).append("\">").append(name).append("</a>");
         return htmlContent;
+    }
+
+    public String getGenreByName(String name){
+        String result = "le"; //la, les
+        return result;
     }
 
     public static double round(double value, int places) {

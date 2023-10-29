@@ -65,7 +65,6 @@ public class ApprendreController {
         String departementColor = "#00561b";
         String regionColor = "#062b16";
 
-        System.out.println(name+"|"+type);
         StringBuilder data = setInfos(type,name);
 
         map.clear();
@@ -90,14 +89,11 @@ public class ApprendreController {
         model.addAttribute("map",map.getContent());
         model.addAttribute("infos",data);
 
-
-
         return "apprendre";
     }
 
     @RequestMapping(value = "apprendre")
     public String apprendreMain(Model model) throws IOException {
-        System.out.println("dans apprendreMain");
         setType(null);
         map.clear();
         model.addAttribute("selectContent", getSelectContent(type,null));
@@ -107,14 +103,12 @@ public class ApprendreController {
 
     @RequestMapping(value = "apprendre", params = "type")
     public String apprendreWithType(Model model, @RequestParam String type) throws IOException {
-        System.out.println("dans apprendre with type");
         map.clear();
         switch (type) {
             case "departement", "prefecture", "region":
                 setType(type);
                 break;
             default:
-                System.out.println("laaa avec "+type);
                 setType(null);
                 break;
         }
@@ -136,7 +130,6 @@ public class ApprendreController {
             selectContent.append("<select class=\"custom-select\" id=\"entity-select\">");
         }
 
-        System.out.println(type);
         if(type != null && type.equals("region")){
             for(Region region : regionController.getAll()){
                 selectContent.append("<option value=\"").append(region.getName()).append("\">").append(region.getName()).append("</option>");

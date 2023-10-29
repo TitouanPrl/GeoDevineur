@@ -32,6 +32,4 @@ public class EntityController {
         }
         return type;
     }
-
-
 }

@@ -32,11 +32,11 @@
     <label for="main-select"></label>
     <div th:remove="tag" th:utext="${selectContent}"></div>
 
-    <div style="width: 100px" th:utext="${map}"></div>
-    <div th:remove="tag" th:utext="${infos}"></div>
+    <div style="float: left" th:utext="${map}"></div>
+    <div style="float: right;padding: 100px" class="align-items-center text-center" th:utext="${infos}"></div>
 </div>
-<footer class="text-muted border-top" style="padding-top: 15px">
-    <div class="container text-center">
+<footer class="text-muted" style="padding-top: 500px;">
+    <div class="container text-center border-top">
         <p>Site créé dans le cadre d'un projet JEE</p>
         <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
     </div>
