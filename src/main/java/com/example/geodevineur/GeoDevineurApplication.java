@@ -25,14 +25,17 @@ public class GeoDevineurApplication {
     }
 
     /* Génération aléatoire de la question (restreignant le champs des possibles) */
-    public Condition questionChoice(Departement solution, int possibilites) {
-        /* On choisit le type de question */
+    public Condition<DepReg> questionChoice(Departement solution, int possibilites) {
+        /* On choisit aléatoirement le type de question */
         Random random = new Random();
         int randomInt = random.nextInt(9);
 
-        Condition cond;
+        Condition<DepReg> cond;
 
         switch (randomInt) {
+            /* Puis on définit l'argument de sorte à ce que la question restreigne le champs des possibles
+             * Si ce n'est pas possible, alors on choisit une autre question
+             */
             /* Cardinal */
             case 0:
                 Cardinal c = solution.getCardinal();
@@ -49,16 +52,16 @@ public class GeoDevineurApplication {
             
             /* Contient telle lettre */
             case 1:
-            /* On prend un caractère du nom au hasard */
-            /* A REVOIR vu que fait aussi dans la condition */
-                int taille = solution.getName().length();
-                random = new Random();
-                randomInt = random.nextInt(taille);
-                char lettre = solution.getName().toCharArray()[randomInt];
+            /* On prend un caractère du nom au hasard 
+             * AU LIEU DE PRENDRE AU HASARD IL FAUDRAIT EN PRENDRE UN QUI RESTREINT
+             * PASSER EN PARAM DES CONDITIONS LE NB DE POSSIBILITES ?
+            */
+            ContainLetterCond<DepReg> letterCond = new ContainLetterCond<DepReg>(solution);
+            char letter = letterCond.getLetter();
 
-                /* compter le nb de département qui ont cette lettre */
+                /* compter le nb de département qui ont cette lettre dans la BDD */
                 if (nbMatch < possibilites) {
-                    return new ContainLetterCond<DepReg>(solution);
+                    return letterCond;
                 }
 
                 else {
@@ -68,9 +71,9 @@ public class GeoDevineurApplication {
                 break;
 
             /* Num du département */
+            /* PAS CAPTE LE SYSTEME DE CHOIX DE MAEL */
             case 2:
-                Cardinal c = solution.getCardinal();
-                /* compter le nb de département qui ont ce cardinal */
+                /* compter le nb de département qui sont inférieurs/supérieurs à ce num */
                 if (nbMatch < possibilites) {
                     return new CardinalCond<DepReg>(solution);
                 }
@@ -84,8 +87,7 @@ public class GeoDevineurApplication {
             /* Nb char */
             /* VOIR COMMENT DEFINIR LES PALLIERS */
             case 3:
-                Cardinal c = solution.getCardinal();
-                /* compter le nb de département qui ont ce cardinal */
+                /* compter le nb de département qui ont plus ou moins que X lettres */
                 if (nbMatch < possibilites) {
                     return new CardinalCond<DepReg>(solution);
                 }
@@ -98,7 +100,7 @@ public class GeoDevineurApplication {
 
             /* Nb voisins */
             case 4:
-            /* MAEL PAS FAIT PAREIL ? */
+            /* PAS CAPTE LE SYSTEME DE CHOIX DE MAEL */
                 int voisins = solution.getNeightbours();
                 /* compter le nb de département qui ont ce nb de voisins */
                 if (nbMatch < possibilites) {
@@ -126,10 +128,9 @@ public class GeoDevineurApplication {
                 break;
 
             /* Population */
-            /* VOIR COMMENT DEFINIR LES PALLIERS */
+            /* PAS CAPTE LE SYSTEME DE CHOIX DE MAEL */
             case 6:
-                Cardinal c = solution.getCardinal();
-                /* compter le nb de département qui ont ce cardinal */
+                /* compter le nb de département qui match le palier */
                 if (nbMatch < possibilites) {
                     return new CardinalCond<DepReg>(solution);
                 }
@@ -155,10 +156,9 @@ public class GeoDevineurApplication {
                 break;
 
             /* Surface */
-            /* VOIR COMMENT DEFINIR LES PALLIERS */
+            /* PAS CAPTE LE SYSTEME DE CHOIX DE MAEL */
             case 8:
-                Cardinal c = solution.getCardinal();
-                /* compter le nb de département qui ont ce cardinal */
+                /* compter le nb de département qui match ce palier */
                 if (nbMatch < possibilites) {
                     return new CardinalCond<DepReg>(solution);
                 }
