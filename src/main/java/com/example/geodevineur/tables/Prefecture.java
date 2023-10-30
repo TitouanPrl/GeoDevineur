@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class Prefecture {
+public class Prefecture implements Comparable<Prefecture> {
 
     @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +47,10 @@ public class Prefecture {
 
     public boolean getPotential() {
         return potential;
+    }
+
+    @Override
+    public int compareTo(Prefecture otherPrf) {
+        return getName().compareTo(otherPrf.getName());
     }
 }

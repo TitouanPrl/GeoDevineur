@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,6 +29,7 @@ public class RegionController {
     public List<Region> getAll(){
         List<Region> result = new ArrayList<>();
         regionService.findAll().forEach(result::add);
+        Collections.sort(result);
         return result;
     }
 
@@ -51,6 +53,17 @@ public class RegionController {
 
     public Region getByDepartementName(String deaprtement_name) {
         return departementController.getByName(deaprtement_name).getRegion();
+    }
+
+    public boolean isValidName(String name){
+        boolean result = false;
+        for(Region region : getAll()){
+            if (region.getName().equals(name)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     public void add(Region region){

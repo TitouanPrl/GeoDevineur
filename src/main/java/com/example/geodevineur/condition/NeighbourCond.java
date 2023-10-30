@@ -1,4 +1,3 @@
-/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -12,7 +11,7 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
     private boolean isLess; // If more, isLess is false
     private int threshold;
     private static final int maxNeighbours = 10;
-    
+
     public NeighbourCond (E e, E compare_) {
         random = new Random();
         setAttributes(e);
@@ -54,4 +53,3 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
         }
     }
 }
-*/

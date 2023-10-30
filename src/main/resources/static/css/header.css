@@ -34,13 +34,13 @@
 }
 
 a {
-    display: flex;
+    /*display: flex;*/
     justify-content: space-between;
     align-items: center;
-    padding: 8px;
+    /*padding: 8px;*/
     text-decoration: none;
     color: red;
-    vertical-align: center;
+    /*vertical-align: center;*/
 }
 
 a h5:hover, a h4:hover, a h1:hover, a h2:hover {

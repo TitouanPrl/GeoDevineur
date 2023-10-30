@@ -22,37 +22,45 @@
 </header>
 <div class="container" style="padding: 50px">
 
-    <label for="type-select"></label>
-    <select id="type-select">
-        <option value="prefecture">Préfecture</option>
-        <option value="departement">Département</option>
-        <option value="region">Région</option>
-    </select>
+    <div class="container" style="float: right;width: 400px">
+        <label for="type-select"></label>
+        <select class="custom-select" id="type-select">
+            <option value="prefecture">Préfecture</option>
+            <option value="departement">Département</option>
+            <option value="region">Région</option>
+        </select>
 
-    <label for="main-select"></label>
-    <div th:remove="tag" th:utext="${selectContent}"></div>
+        <label for="main-select"></label>
+        <div th:remove="tag" th:utext="${selectContent}"></div>
+    </div>
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        document.getElementById("type-select").addEventListener("change", function() {
-            const type = this.value;
-            $.ajax({
-                url: '/setSelectType',
-                type: 'POST',
-                data: { type: type }
-            });
-        });
-    </script>
-
-    <div th:utext="${map}"></div>
-    <div th:remove="tag" th:utext="${infos}"></div>
+    <div style="float: left" th:utext="${map}"></div>
+    <div style="float: right;padding: 50px" class="align-items-center text-center" th:utext="${infos}"></div>
 </div>
-<footer class="text-muted border-top" style="padding-top: 15px">
-    <div class="container text-center">
+<footer class="text-muted" style="padding-top: 625px">
+    <div class="container text-center border-top">
         <p>Site créé dans le cadre d'un projet JEE</p>
         <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
     </div>
 </footer>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    if (window.PerformanceNavigationTiming) {
+        const type = (new URLSearchParams(window.location.search)).get("type")
+        document.getElementById("entity-select").value = (new URLSearchParams(window.location.search)).get("name");
+        if(type === "region" || type === "departement"){
+            document.getElementById("type-select").value = type;
+        } else {
+            document.getElementById("type-select").value = "prefecture";
+        }
+    }
+    document.getElementById("type-select").addEventListener("change", function() {
+        window.location.assign("apprendre?type="+this.value);
+    });
+    document.getElementById("entity-select").addEventListener("change", function() {
+        const type = document.getElementById("type-select").value;
+        window.location.assign("apprendre?type="+type+"&name="+this.value);
+    });
+</script>
 </html>
