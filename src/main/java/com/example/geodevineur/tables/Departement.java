@@ -76,8 +76,4 @@ public class Departement {
         return potential;
     }
 
-    public boolean getSeaside() {
-        return seaside;
-    }
-
 }

@@ -1,4 +1,3 @@
-/*
 package com.example.geodevineur.condition;
 import com.example.geodevineur.tables.Departement;
 
@@ -11,11 +10,10 @@ public class SeasideCond<E extends Departement> extends Condition<E>{
     }
 
     protected void setAttributes(E e) {
-        seaside = e.getSeaside();
+        seaside = e.isSeaside();
     }
 
     public boolean checksCondition(E e) {
-        return e.getSeaside() == seaside;
+        return e.isSeaside() == seaside;
     }
 }
-*/

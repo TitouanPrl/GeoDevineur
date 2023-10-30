@@ -167,7 +167,7 @@ public class ApprendreController {
         htmlContent.append("<p>").append("Département de ").append(Format.link(departement.getRegion().getName())).append("</p>");
         htmlContent.append("<p>").append("Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants");
         htmlContent.append(" pour une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");
-        if(departement.getSeaside()){
+        if(departement.isSeaside()){
             htmlContent.append("<p>Il est cotier</p>");
         } else {
             htmlContent.append("<p>Il n'est pas pas cotier</p>");
