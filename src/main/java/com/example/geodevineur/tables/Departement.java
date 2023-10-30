@@ -36,9 +36,8 @@ public class Departement implements Comparable<Departement> {
     protected int neightbours;
     @Getter@Setter
     protected Politic politic;
-    @Getter@Setter
+
     protected boolean possible = true;
-    @Getter@Setter
     protected boolean potential = true;
 
     public Departement (String name_,
@@ -64,8 +63,28 @@ public class Departement implements Comparable<Departement> {
         return this.seaside;
     }
 
+    public void setPossible(boolean possible) {
+        this.possible = possible;
+    }
+
+    public void setPotential(boolean potential) {
+        this.potential = potential;
+    }
+
+    public boolean getPossible() {
+        return possible;
+    }
+
+    public boolean getPotential() {
+        return potential;
+    }
+
     @Override
     public int compareTo(Departement otherDpt) {
         return getName().compareTo(otherDpt.getName());
+    }
+
+    public Cardinal getCardinal(){
+        return getRegion().getCardinal();
     }
 }

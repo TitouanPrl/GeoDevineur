@@ -1,24 +1,61 @@
-/*
-package com.example.geodevineur;
+/*package com.example.geodevineur.condition;
 
-import com.example.geodevineur.controllers.TableController;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.Random;
 
-@Controller
-public class QuizzController {
+import com.example.geodevineur.tables.Departement;
 
-    private final TableController tableController;
 
-    public QuizzController(TableController tableController) {
-        this.tableController = tableController;
+public class IdCond<E extends Departement> extends Condition<E> {
+    private Random random;
+    private E compare;
+    private boolean isLess; // If more, isLess is false
+    private int threshold;
+    private static final int maxId = 95;
+
+    public IdCond (E e, E compare_) {
+        random = new Random();
+        setAttributes(e);
+        double probaCompare = .3;
+        double rand = random.nextDouble();
+        if (rand < probaCompare) {
+            compare = compare_;
+        } else {
+            compare = null;
+        }
     }
 
-    @GetMapping("nextStep")
-    public void nextStep(Model model){
+    protected void setAttributes(E e) {
+        if (compare != null) {
+            threshold = compare.getId();
+            if (threshold < e.getId()) {
+                isLess = true;
+                return;
+            } else if (threshold > e.getId()) {
+                isLess = false;
+                return;
+            }
+        }
 
+        Integer number = random.nextInt(IdCond.maxId) + 1;
+        if (number == 20) {
+            threshold = "2A";
+        } else {
+            threshold = number.toString();
+        }
+    }
+
+    public boolean checksCondition(E e) {
+        if (isLess) {
+            return compareId(e.getId(), threshold) < 0;
+        } else {
+            return compareId(e.getId(), threshold) > 0;
+        }
+    }
+
+    private int compareId(String id1, String id2) {
+        if (Character.compare(id1.charAt(0), id2.charAt(0)) != 0)
+            return Character.compare(id1.charAt(0), id2.charAt(0));
+        return Character.compare(id1.charAt(1), id2.charAt(1));
 
     }
-}
-*/
+}*/

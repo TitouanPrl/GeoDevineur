@@ -38,9 +38,16 @@ public class Format {
         return htmlContent;
     }
 
-    public String getGenreByName(String name){
-        String result = "le"; //la, les
-        return result;
+    public String getGenreByName(String name, String letter ){ //letter=d ou l
+        String result = ""; //la, les
+        String last_char = name.substring(name.length() - 1);
+        if(last_char.equals("s")){
+            return letter+"es";
+        } else if(last_char.equals("e") && letter.equals("l")){
+            return "la";
+        } else {
+            return "le";
+        }
     }
 
     public static double round(double value, int places) {

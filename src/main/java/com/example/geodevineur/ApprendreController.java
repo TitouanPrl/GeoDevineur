@@ -179,8 +179,8 @@ public class ApprendreController {
         StringBuilder htmlContent = new StringBuilder();
 
         htmlContent.append("<h3>").append(prefecture.getName()).append("</h3><br>");
-        htmlContent.append("<p>").append("Préfecture de ").append(format.getLinkOf(prefecture.getDepartement().getName())).append("</p>");
-        htmlContent.append("<p>").append("Elle comporte ").append(prefecture.getPopulation()).append(" habitants</p>");
+        htmlContent.append("<p>Département : ").append(format.getLinkOf(prefecture.getDepartement().getName())).append("</p>");
+        htmlContent.append("<p>Elle comporte ").append(Format.intToFormatedString(prefecture.getPopulation())).append(" habitants</p>");
 
         return htmlContent;
     }
@@ -189,8 +189,9 @@ public class ApprendreController {
         StringBuilder htmlContent = new StringBuilder();
 
         htmlContent.append("<h3>").append(departement.getName()).append(" - ").append(departement.getNumber()).append("</h3><br>");
-        htmlContent.append("<p>").append("Département de ").append(format.getLinkOf(departement.getRegion().getName())).append("</p>");
-        htmlContent.append("<p>").append("Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants</p>");
+        htmlContent.append("<p>Préfecture : ").append(format.getLinkOf(departement.getPrefecture().getName())).append("</p>");
+        htmlContent.append("<p>Région : ").append(format.getLinkOf(departement.getRegion().getName())).append("</p>");
+        htmlContent.append("<p>Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants</p>");
         htmlContent.append("<p>Il a une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");
         if(departement.getSeaside()){
             htmlContent.append("<p>Il se situe en bord de mer</p>");
@@ -207,8 +208,8 @@ public class ApprendreController {
         StringBuilder htmlContent = new StringBuilder();
 
         htmlContent.append("<h3>").append(region.getName()).append("</h3><br>");
-        htmlContent.append("<p>").append("Région du ").append(region.getCardinal().toString()).append(" de la France</p>");
-        htmlContent.append("<p>").append("Elle comporte ").append(Format.intToFormatedString(region.getPopulation())).append(" habitants</p>");
+        htmlContent.append("<p>Région du ").append(region.getCardinal().toString()).append(" de la France</p>");
+        htmlContent.append("<p>Elle comporte ").append(Format.intToFormatedString(region.getPopulation())).append(" habitants</p>");
         htmlContent.append("<p>Elle a une superficie de ").append(Format.intToFormatedString(region.getSurface())).append(" km²</p><br>");
         htmlContent.append("<p>Elle contient les départements suivants :</p><p>");
         int i = 0;
