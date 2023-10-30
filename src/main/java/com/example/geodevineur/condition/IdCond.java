@@ -1,5 +1,4 @@
-/*
-package com.example.geodevineur.condition;
+/*package com.example.geodevineur.condition;
 
 import java.util.Random;
 
@@ -59,5 +58,4 @@ public class IdCond<E extends Departement> extends Condition<E> {
         return Character.compare(id1.charAt(1), id2.charAt(1));
 
     }
-}
-*/
+}*/
