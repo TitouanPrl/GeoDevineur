@@ -1,30 +1,40 @@
 package com.example.geodevineur.tables;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Time;
 
-import jakarta.persistence.Entity;
-
-/* Classe représentant les scores du leaderboard */
 @Entity
 public class Score {
 
-    @Id
-    @Getter
-    private final String pseudo;
-    @Getter
-    private final Time temps;
+    @Id@Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected int id;
 
-    public Score(String pseudo_, Time temps_) {
-        pseudo = pseudo_;
-        temps = temps_;
+    @Getter@Setter
+    protected String name;
+    @Getter@Setter
+    protected String password;
+    @Getter@Setter
+    protected int score;
+    @Getter@Setter
+    protected int version;
+
+    public Score(String name_, String password_, int score_) {
+        name = name_;
+        password = password_;
+        score = score_;
+        version = 1;
     }
 
     public Score() {
-        temps = null;
-        pseudo = null;
+
     }
+
+    public Boolean isValidPassword(String password){
+        return (getPassword().equals(password));
+    }
+
 }
