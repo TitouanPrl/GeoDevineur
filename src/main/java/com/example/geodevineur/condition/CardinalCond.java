@@ -2,7 +2,6 @@ package com.example.geodevineur.condition;
 
 import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.tables.Departement;
-import com.example.geodevineur.tables.Region;
 
 public class CardinalCond<E extends Departement> extends Condition<E>{
     private Cardinal cardinal;
@@ -12,11 +11,11 @@ public class CardinalCond<E extends Departement> extends Condition<E>{
     }
 
     protected void setAttributes(E e) {
-        cardinal = e.getCardinal();
+        cardinal = e.getRegion().getCardinal();
     }
 
     public boolean checksCondition(E e) {
-        return e.getCardinal() == cardinal;
+        return e.getRegion().getCardinal() == cardinal;
     }
 }
 
