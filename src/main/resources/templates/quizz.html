@@ -35,7 +35,8 @@
                 <label for="password">Password</label>
                 <input type="text" class="form-control" id="password" placeholder="Saisissez votre code confidentiel">
             </div>
-            <input type="hidden" id="score" value="1850">
+            <input type="hidden" id="seconds" value="100">
+            <input type="hidden" id="nb" value="7">
             <button type="submit" class="btn btn-primary">Enregistrer</button>
         </form>
     </div>
@@ -58,28 +59,15 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function proceedForm(){
+    function proceedForm() {
         const pseudo = document.getElementById("pseudo").value;
         const password = document.getElementById("password").value;
-        const score = document.getElementById("score").value;
+        const nb = document.getElementById("nb").value;
+        const seconds = document.getElementById("seconds").value;
 
-        $.ajax({
-            url: '/addScore',
-            type: 'POST',
-            data: {pseudo: "ok"}
-            , // Données du formulaire à envoyer (si nécessaire).
-            success: function(response) {
-            // Réponse réussie de l'API.
-            console.log("Réponse du serveur : " + response);
-            // Vous pouvez traiter la réponse ici, par exemple, mettre à jour votre interface utilisateur.
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // En cas d'erreur.
-            console.log("Erreur : " + textStatus, errorThrown);
-        }
-        });
+        window.location.assign("http://localhost:8080/addScore?pseudo="+pseudo+"&password="+password+"&seconds="+seconds+"&nb="+nb);
+        alert('done');
     }
 
     document.getElementById("add").addEventListener("click", function() {
@@ -105,6 +93,7 @@
     // Fermer le modal lorsqu'on clique sur la croix
     document.getElementById("closeModal").addEventListener("click", function() {
         const modal = document.getElementById("myModal");
+        window.location.assign("http://localhost:8080/quizz")
         modal.style.display = "none";
     });
 

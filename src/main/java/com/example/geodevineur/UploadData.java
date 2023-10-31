@@ -3,11 +3,13 @@ package com.example.geodevineur;
 import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.controllers.PrefectureController;
 import com.example.geodevineur.controllers.RegionController;
+import com.example.geodevineur.controllers.ScoreController;
 import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.enumerations.Politic;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
+import com.example.geodevineur.tables.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,17 +29,18 @@ public class UploadData {
 
     @Autowired
     RegionController regionController;
-
-    @Autowired
-    PrefectureController prefectureController;
-
     @Autowired
     DepartementController departementController;
+    @Autowired
+    PrefectureController prefectureController;
+    @Autowired
+    ScoreController scoreController;
 
-    public UploadData(RegionController regionController_, DepartementController departementController_, PrefectureController prefectureController_){
+    public UploadData(RegionController regionController_, DepartementController departementController_, PrefectureController prefectureController_, ScoreController scoreController_){
         this.regionController = regionController_;
         this.departementController = departementController_;
         this.prefectureController = prefectureController_;
+        this.scoreController = scoreController_;
     }
 
     public void deleteAll(){
@@ -187,6 +191,7 @@ public class UploadData {
             //On crée le lien entre les departements et leur region
             saveManyToOne(departementsOfRegion,region);
             regionController.add(region);
+            scoreController.add(new Score("toto", "", 100));
         }
 
         //-------------------------------------------------------------------------

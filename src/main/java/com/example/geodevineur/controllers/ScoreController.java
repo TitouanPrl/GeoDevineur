@@ -43,7 +43,7 @@ public class ScoreController {
     public Score getByName(String name){
         Score result = null;
         for(Score score : getAll()){
-            if(score.getName().equals(name)){
+            if(score.getPseudo().equals(name)){
                 result = score;
             }
         }
@@ -51,6 +51,10 @@ public class ScoreController {
     }
 
     public Boolean proceed(String pseudo, String password, Time temps, int nb_questions){
+        System.out.println("pseudo:"+pseudo);
+        System.out.println("pwd:"+password);
+        System.out.println("seconds:"+temps.toString());
+        System.out.println("nb:"+nb_questions);
         int score = Format.calculScore(temps, nb_questions);
         Score scoreOfPseudo = getByName(pseudo);
         boolean status = true;
@@ -58,26 +62,24 @@ public class ScoreController {
             //Un score avec ce pseudo existe deja
             if(scoreOfPseudo.getPassword().equals(password)){
                 //edit la valeur du scoreOfPseudo
-                update(scoreOfPseudo, score);
+                scoreOfPseudo.update(score);
             } else {
                 status = false;
             }
         } else {
-            add(pseudo, password, score);
+            add(new Score(pseudo,password,score));
         }
         return status;
     }
 
-    public void add(String pseudo, String password, int score){
-        scoreService.save(new Score(pseudo,password,score));
-    }
+    public void add(Score score){
+        System.out.println("dans ADD");
+        System.out.println(score.getPseudo());
+        System.out.println(score.getPassword());
+        System.out.println(score.getScore());
+        System.out.println("-------");
 
-    public void update(Score scoreToEdit, int new_score){
-        //On calcule la nouvelle moyenne des scores
-        //int final_score = (scoreToEdit.getScore()*scoreToEdit.getVersion() + new_score) / (scoreToEdit.getVersion()+1);
-        //On ajoute le nouveau score à l'ancien
-        scoreToEdit.setScore(scoreToEdit.getScore()+new_score);
-        scoreToEdit.setVersion(scoreToEdit.getVersion()+1);
+        scoreService.save(score);
     }
 
     public Boolean delete(Integer id){
@@ -89,5 +91,4 @@ public class ScoreController {
     public void deleteAll(){
         scoreService.deleteAll();
     }
-
 }

@@ -14,7 +14,7 @@ public class Score {
     protected int id;
 
     @Getter@Setter
-    protected String name;
+    protected String pseudo;
     @Getter@Setter
     protected String password;
     @Getter@Setter
@@ -22,8 +22,8 @@ public class Score {
     @Getter@Setter
     protected int version;
 
-    public Score(String name_, String password_, int score_) {
-        name = name_;
+    public Score(String pseudo_, String password_, int score_) {
+        pseudo = pseudo_;
         password = password_;
         score = score_;
         version = 1;
@@ -31,6 +31,11 @@ public class Score {
 
     public Score() {
 
+    }
+
+    public void update(int score){
+        setScore(getScore()+score);
+        setVersion(getVersion()+1);
     }
 
     public Boolean isValidPassword(String password){
