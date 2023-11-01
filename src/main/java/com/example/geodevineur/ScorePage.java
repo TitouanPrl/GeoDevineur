@@ -36,21 +36,15 @@ public class ScorePage {
         List<Score> allScores = scoreController.getAll();
         StringBuilder htmlContent = new StringBuilder();
 
-        htmlContent.append("<ul style=\"border: 1px\">");
+        htmlContent.append("<ul>");
         for(Score score : allScores){
             htmlContent.append("<li>");
             htmlContent.append(score.getScore()).append(" | ").append(score.getPseudo()).append(" (").append(score.getVersion()).append(" tentatives)");
-            htmlContent.append("<input type=\"button\" id=\"").append(score.getId()).append("\" value=\"Supprimer\">");
+            htmlContent.append("<input type=\"button\" class=\"btn\" id=\"").append(score.getPseudo()).append("\" value=\"Supprimer\" onclick=\"deleteBtn(id)\">");
             htmlContent.append("</li>");
         }
         htmlContent.append("</ul>");
         model.addAttribute("allScores", htmlContent);
         return "scores";
-    }
-
-    public StringBuilder getPopUp(){
-        StringBuilder htmlContent = new StringBuilder();
-
-        return htmlContent;
     }
 }

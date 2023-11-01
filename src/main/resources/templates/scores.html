@@ -25,13 +25,27 @@
     <div class="modal-content">
         <span class="close" id="closeModal" onclick="closeModal()">&times;</span>
         <h2 id="status"></h2>
+        <form id="deleteForm" hidden="hidden">
+            <h3 id="scorePseudo"></h3>
+            <input type="text" id="password" placeholder="Code confidentiel">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
     </div>
 </div>
 <div class="container">
     <div th:remove="tag" th:utext="${allScores}"></div>
 </div>
 <script>
-    // Fonction pour vérifier si l'URL contient "fin=true"
+
+    function deleteBtn(name){
+        const modal = document.getElementById("ScoreStatus");
+        modal.style.display = "block";
+        document.getElementById("deleteForm").hidden = false;
+        document.getElementById("status").hidden = true;
+        document.getElementById("scorePseudo").textContent = "Suppression du score de : " + name;
+    }
+
+    // Fonction pour vérifier si l'URL contient le status passé en parametre
     function urlStatued(status) {
         const params = new URLSearchParams(window.location.search);
         return params.get("status") === status;
@@ -58,7 +72,7 @@
     // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
     function closeModal(){
         const modal = document.getElementById("ScoreStatus");
-        window.location.assign("http://localhost:8080/scores")
+        cleanURL();
         modal.style.display = "none";
     }
 
@@ -69,6 +83,11 @@
         if(window.event) keynum = event.keyCode;
         else if(event.which) keynum = event.which;
         if (keynum === 27) closeModal();
+    }
+
+    //Enleve tous les parametres de l'url
+    function cleanURL(){
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     // Appeler la fonction pour afficher le modal au chargement de la page

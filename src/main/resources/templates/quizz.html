@@ -93,7 +93,7 @@
     // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
     function closeModal(){
         const modal = document.getElementById("formScoreModal");
-        window.location.assign("http://localhost:8080/quizz")
+        cleanURL();
         modal.style.display = "none";
     }
 
@@ -104,6 +104,11 @@
         if(window.event) keynum = event.keyCode;
         else if(event.which) keynum = event.which;
         if (keynum === 27) closeModal();
+    }
+
+    //Enleve tous les parametres de l'url
+    function cleanURL(){
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     // Appeler la fonction pour afficher le modal au chargement de la page
