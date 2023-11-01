@@ -1,6 +1,7 @@
 package com.example.geodevineur;
 
 import com.example.geodevineur.tables.Departement;
+import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
 import lombok.Getter;
 
@@ -34,5 +35,9 @@ public class Map {
 
     public void colorizeRegion(Region region, String color){
         colorizeDepartements(region.getDepartements(), color);
+    }
+
+    public void colorizePrefecture(Prefecture prefecture, String color){
+
     }
 }

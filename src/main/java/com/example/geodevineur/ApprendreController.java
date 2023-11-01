@@ -77,7 +77,7 @@ public class ApprendreController {
                 map.colorizeRegion(regionController.getByName(name), regionColor);
                 break;
             case "prefecture":
-                map.colorizeDepartement(departementController.getByPrefectureName(name), prefectureColor);
+                map.colorizePrefecture(prefectureController.getByName(name), prefectureColor);
                 break;
             default:
                 break;
