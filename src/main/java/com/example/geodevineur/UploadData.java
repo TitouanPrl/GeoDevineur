@@ -191,8 +191,8 @@ public class UploadData {
             //On crée le lien entre les departements et leur region
             saveManyToOne(departementsOfRegion,region);
             regionController.add(region);
-            scoreController.add(new Score("toto", "", 100));
         }
+        scoreController.add(new Score("toto", "", 100));
 
         //-------------------------------------------------------------------------
 

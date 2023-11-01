@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.PreparedStatement;
 import java.sql.Time;
 
 @Entity
-public class Score {
+public class Score implements Comparable<Score>{
 
     @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,12 +35,27 @@ public class Score {
     }
 
     public void update(int score){
+        System.out.println("---avant---");
+        System.out.println(getPseudo());
+        System.out.println(getScore());
+        System.out.println(getVersion());
+        System.out.println("------------");
         setScore(getScore()+score);
         setVersion(getVersion()+1);
+        System.out.println("---apres---");
+        System.out.println(getPseudo());
+        System.out.println(getScore());
+        System.out.println(getVersion());
+        System.out.println("------------");
+
     }
 
     public Boolean isValidPassword(String password){
         return (getPassword().equals(password));
     }
 
+    @Override
+    public int compareTo(Score otherScore) {
+        return Integer.compare(getScore(), otherScore.getScore());
+    }
 }

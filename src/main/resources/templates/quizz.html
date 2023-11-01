@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/modal.css}">
 </head>
-<body>
+<body onkeydown="checkKey(event)">
 <header>
     <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
@@ -22,9 +22,9 @@
     </div>
 </header>
 <button id="add">AJOUTER</button>
-<div class="modal" id="myModal">
+<div class="modal" id="formScoreModal">
     <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
+        <span class="close" id="closeModal" onclick="closeModal()">&times;</span>
         <h2>Bien joué, vous avez fait un score de <b>1300</b></h2>
         <form id="saveScore" onsubmit="proceedForm()">
             <div class="form-group">
@@ -66,7 +66,7 @@
         const nb = document.getElementById("nb").value;
         const seconds = document.getElementById("seconds").value;
 
-        window.location.assign("http://localhost:8080/addScore?pseudo="+pseudo+"&password="+password+"&seconds="+seconds+"&nb="+nb);
+        window.location.assign("http://localhost:8080/scores?pseudo="+pseudo+"&password="+password+"&seconds="+seconds+"&nb="+nb);
         alert('done');
     }
 
@@ -84,18 +84,27 @@
 
     // Fonction pour afficher le modal si l'URL contient "fin=true"
     function displayModal() {
-        const modal = document.getElementById("myModal");
+        const modal = document.getElementById("formScoreModal");
         if (urlContainsFin()) {
             modal.style.display = "block";
         }
     }
 
-    // Fermer le modal lorsqu'on clique sur la croix
-    document.getElementById("closeModal").addEventListener("click", function() {
-        const modal = document.getElementById("myModal");
+    // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
+    function closeModal(){
+        const modal = document.getElementById("formScoreModal");
         window.location.assign("http://localhost:8080/quizz")
         modal.style.display = "none";
-    });
+    }
+
+    //Verification que la touche pressée est Echap
+    function checkKey(event){
+        let keynum;
+        //Recuperation de la touche suivant les differents naviguateur
+        if(window.event) keynum = event.keyCode;
+        else if(event.which) keynum = event.which;
+        if (keynum === 27) closeModal();
+    }
 
     // Appeler la fonction pour afficher le modal au chargement de la page
     displayModal();

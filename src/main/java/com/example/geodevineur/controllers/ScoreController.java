@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -22,7 +22,8 @@ public class ScoreController {
     public List<Score> getAll(){
         List<Score> result = new ArrayList<>();
         scoreService.findAll().forEach(result::add);
-        //à voir pour sort par les meilleurs
+        Collections.sort(result);
+        Collections.reverse(result);
         return result;
     }
 
@@ -50,42 +51,59 @@ public class ScoreController {
         return result;
     }
 
-    public Boolean proceed(String pseudo, String password, Time temps, int nb_questions){
+    public String proceed(String pseudo, String password, int secondes, int nb_questions){
         System.out.println("pseudo:"+pseudo);
         System.out.println("pwd:"+password);
-        System.out.println("seconds:"+temps.toString());
+        System.out.println("seconds:"+secondes);
         System.out.println("nb:"+nb_questions);
-        int score = Format.calculScore(temps, nb_questions);
+        int random = (int) (10*Math.random());
+        int score = Format.calculScore(random*secondes, nb_questions);
+
         Score scoreOfPseudo = getByName(pseudo);
-        boolean status = true;
+        String status;
         if(scoreOfPseudo != null){
             //Un score avec ce pseudo existe deja
             if(scoreOfPseudo.getPassword().equals(password)){
                 //edit la valeur du scoreOfPseudo
-                scoreOfPseudo.update(score);
+                update(scoreOfPseudo, score);
+                status = "edited";
             } else {
-                status = false;
+                status = "error";
             }
         } else {
+            status = "added";
             add(new Score(pseudo,password,score));
         }
         return status;
     }
 
     public void add(Score score){
-        System.out.println("dans ADD");
-        System.out.println(score.getPseudo());
-        System.out.println(score.getPassword());
-        System.out.println(score.getScore());
-        System.out.println("-------");
-
         scoreService.save(score);
     }
 
-    public Boolean delete(Integer id){
+    public void update(Score score, int new_score){
+        score.update(new_score);
+        deleteById(score.getId());
+        scoreService.save(score);
+        //ICI CHANGER PAR MODIFIER
+    }
+
+    public Boolean deleteById(Integer id){
         Optional<Score> cible = scoreService.findById(id);
         cible.ifPresent(score -> scoreService.delete(score));
         return (cible.isPresent());
+    }
+
+    public Boolean deleteByPseudo(String pseudo){
+        List<Score> allScores = getAll();
+        boolean found = false;
+        for(Score score : allScores){
+            if(score.getPseudo().equals(pseudo)){
+                scoreService.delete(score);
+                found = true;
+            }
+        }
+        return found;
     }
 
     public void deleteAll(){

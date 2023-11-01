@@ -1,6 +1,7 @@
 package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.ScoreController;
+import com.example.geodevineur.tables.Score;
 import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
+import java.util.List;
 
 @Controller
 public class ScorePage {
@@ -22,16 +23,25 @@ public class ScorePage {
         this.scoreController = scoreController_;
     }
 
-    @RequestMapping(value = "addScore", params = {"pseudo","password","seconds","nb"})
+    @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
     public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
-        System.out.println("ici dans checkInfos");
-
-        int nb_questions = Integer.parseInt(nb);
-        int time = Integer.parseInt(seconds);
-
-        boolean status = scoreController.proceed(pseudo, password, new Time(0,0,time), nb_questions);
+        String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
         System.out.println("status = "+status);
         //set argument like : return "score?status="+status;
+        return "redirect:/scores?status="+status;
+    }
+
+    @RequestMapping(value = "scores")
+    public String scores(Model model){
+        List<Score> allScores = scoreController.getAll();
+        StringBuilder htmlContent = new StringBuilder();
+
+        htmlContent.append("<ul style=\"border: 1px\">");
+        for(Score score : allScores){
+            htmlContent.append("<li>").append(score.getScore()).append(" | ").append(score.getPseudo()).append(" (").append(score.getVersion()).append(" tentatives)").append("</li>");
+        }
+        htmlContent.append("</ul>");
+        model.addAttribute("allScores", htmlContent);
         return "scores";
     }
 

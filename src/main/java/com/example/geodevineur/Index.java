@@ -16,11 +16,6 @@ public class Index{
         return "regles";
     }
 
-    @GetMapping("scores")
-    public String scores(Model model) {
-        return "scores";
-    }
-
     @GetMapping("quizz")
     public String quizzDepartements(Model model) {
         return "quizz";
