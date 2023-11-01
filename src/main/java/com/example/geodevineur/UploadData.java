@@ -200,15 +200,6 @@ public class UploadData {
         return "bdd";
     }
 
-    @GetMapping("toto")
-    public String toto(Model model){
-        System.out.println(prefectureController.getAll().getFirst().getId());
-        String result2 = departementController.getByPrefectureId(7).getName();
-        String result = prefectureController.getAll().getFirst().getDepartement().getName() + " | " + result2;
-        model.addAttribute("status",result);
-        return "bdd";
-    }
-
     @GetMapping("test")
     public String test(Model mode){
         List<Departement> allDpts = new ArrayList<>();

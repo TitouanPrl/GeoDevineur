@@ -4,7 +4,10 @@ import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
 import lombok.Getter;
+import org.antlr.v4.runtime.misc.Pair;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +41,32 @@ public class Map {
     }
 
     public void colorizePrefecture(Prefecture prefecture, String color){
+        int[] location = getPrefectureLocation(prefecture);
+        this.content = this.content.replace("#fill", color);
+        this.content = this.content.replace("valueX", String.valueOf(location[0]));
+        this.content = this.content.replace("valueY", String.valueOf(location[1]));
+    }
 
+    //Retourne les coordonnees X et Y de la prefecture (stockées dans csv)
+    public int[] getPrefectureLocation(Prefecture prefecture){
+        int x = 0;
+        int y = 0;
+        String filePathCoordonnees = "src/main/resources/static/csv/coordonnees.csv";
+        try (BufferedReader brP = new BufferedReader(new FileReader(filePathCoordonnees))) {
+            String line;
+            line = brP.readLine(); /* On saute la première ligne */
+            while ((line = brP.readLine()) != null) {
+                /* On crée un tableau en utilisant le séparateur pour séparer les cases */
+                String[] values = line.split(",");
+                /* On cherche la ville qui nous interesse */
+                if(values[1].equals(prefecture.getName())){
+                    x = Integer.parseInt(values[2]);
+                    y = Integer.parseInt(values[3]);
+                }
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new int[] {x,y};
     }
 }
