@@ -52,10 +52,6 @@ public class ScoreController {
     }
 
     public String proceed(String pseudo, String password, int secondes, int nb_questions){
-        System.out.println("pseudo:"+pseudo);
-        System.out.println("pwd:"+password);
-        System.out.println("seconds:"+secondes);
-        System.out.println("nb:"+nb_questions);
         int random = (int) (10*Math.random());
         int score = Format.calculScore(random*secondes, nb_questions);
 

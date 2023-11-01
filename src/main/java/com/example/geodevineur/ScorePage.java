@@ -52,11 +52,11 @@ public class ScorePage {
         return "scores";
     }
 
+    //Check des infos pour ajouter/editer score apres fin quizz
     @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
     public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
         String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
         System.out.println("status = "+status);
-        //set argument like : return "score?status="+status;
         return "redirect:/scores?status="+status;
     }
 
