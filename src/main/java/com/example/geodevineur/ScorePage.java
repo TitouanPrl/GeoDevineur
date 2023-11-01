@@ -38,7 +38,10 @@ public class ScorePage {
 
         htmlContent.append("<ul style=\"border: 1px\">");
         for(Score score : allScores){
-            htmlContent.append("<li>").append(score.getScore()).append(" | ").append(score.getPseudo()).append(" (").append(score.getVersion()).append(" tentatives)").append("</li>");
+            htmlContent.append("<li>");
+            htmlContent.append(score.getScore()).append(" | ").append(score.getPseudo()).append(" (").append(score.getVersion()).append(" tentatives)");
+            htmlContent.append("<input type=\"button\" id=\"").append(score.getId()).append("\" value=\"Supprimer\">");
+            htmlContent.append("</li>");
         }
         htmlContent.append("</ul>");
         model.addAttribute("allScores", htmlContent);
