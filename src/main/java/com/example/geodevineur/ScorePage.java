@@ -23,14 +23,6 @@ public class ScorePage {
         this.scoreController = scoreController_;
     }
 
-    @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
-    public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
-        String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
-        System.out.println("status = "+status);
-        //set argument like : return "score?status="+status;
-        return "redirect:/scores?status="+status;
-    }
-
     @RequestMapping(value = "scores")
     public String scores(Model model){
         List<Score> allScores = scoreController.getAll();
@@ -46,5 +38,24 @@ public class ScorePage {
         htmlContent.append("</ul>");
         model.addAttribute("allScores", htmlContent);
         return "scores";
+    }
+
+    @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
+    public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
+        String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
+        System.out.println("status = "+status);
+        //set argument like : return "score?status="+status;
+        return "redirect:/scores?status="+status;
+    }
+
+    @RequestMapping(value = "scores", params = {"pseudo", "password"})
+    public String deleteScore(@RequestParam String pseudo, @RequestParam String password){
+        Score score = scoreController.getByName(pseudo);
+        String status = "Failure";
+        if(score != null && score.getPassword().equals(password)){
+            scoreController.deleteByPseudo(pseudo);
+            status = "Success";
+        }
+        return "redirect:/scores?status=delete"+status;//succes-failure
     }
 }
