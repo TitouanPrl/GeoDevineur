@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/scores.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/modal.css}">
 </head>
 <body onkeydown="checkKey(event)">
@@ -26,14 +27,14 @@
         <span class="close" id="closeModal" onclick="closeModal()">&times;</span>
         <h2 id="status"></h2>
         <form id="deleteForm" hidden="hidden" onsubmit="proceedForm()">
-            <h3 id="titleDelete"></h3>
+            <h3 id="titleDelete"></h3><br>
             <input type="text" id="password" placeholder="Code confidentiel">
             <input type="hidden" id="nameToDelete">
             <button type="submit" class="btn btn-danger">Supprimer</button>
         </form>
     </div>
 </div>
-<div class="container">
+<div class="container align-items-center text-center">
     <div th:remove="tag" th:utext="${allScores}"></div>
 </div>
 <script>

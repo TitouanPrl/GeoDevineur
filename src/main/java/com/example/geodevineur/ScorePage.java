@@ -28,14 +28,26 @@ public class ScorePage {
         List<Score> allScores = scoreController.getAll();
         StringBuilder htmlContent = new StringBuilder();
 
-        htmlContent.append("<ul>");
+        htmlContent.append("<table><caption>Meilleurs scores (Total ").append(allScores.size()).append(")<caption>");
+        htmlContent.append("<tr><th>Pos</th><th>Nom</th><th>Score</th><th>Quizz </th><th></th>");
+
+        int i=1;
         for(Score score : allScores){
-            htmlContent.append("<li>");
-            htmlContent.append(score.getScore()).append(" | ").append(score.getPseudo()).append(" (").append(score.getVersion()).append(" tentatives)");
-            htmlContent.append("<input type=\"button\" class=\"btn\" id=\"").append(score.getPseudo()).append("\" value=\"Supprimer\" onclick=\"deleteBtn(id)\">");
-            htmlContent.append("</li>");
+            htmlContent.append("<tr>");
+            switch(i){ //Notation differente pour les 3 premiers
+                case 1: htmlContent.append("<td>1er</td>");break;
+                case 2: htmlContent.append("<td>2nd</td>");break;
+                case 3: htmlContent.append("<td>3ème</td>");break;
+                default: htmlContent.append("<td>").append(i).append("</td>");break;
+            }
+            htmlContent.append("<td>").append(score.getPseudo()).append("</td>");
+            htmlContent.append("<td>").append(score.getScore()).append("</td>");
+            htmlContent.append("<td>").append(score.getVersion()).append("</td>");
+            htmlContent.append("<td><input type=\"button\" class=\"btn btn-danger\" id=\"").append(score.getPseudo()).append("\" value=\"Supprimer\" onclick=\"deleteBtn(id)\"></td>");
+            htmlContent.append("</tr>");
+            i++;
         }
-        htmlContent.append("</ul>");
+        htmlContent.append("</table>");
         model.addAttribute("allScores", htmlContent);
         return "scores";
     }
