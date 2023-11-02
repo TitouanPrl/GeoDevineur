@@ -1,5 +1,5 @@
 package com.example.geodevineur;
-import ch.qos.logback.core.joran.action.AppenderRefAction;
+
 import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.controllers.EntityController;
 import com.example.geodevineur.controllers.PrefectureController;
@@ -7,24 +7,15 @@ import com.example.geodevineur.controllers.RegionController;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
-import jakarta.servlet.annotation.WebServlet;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class ApprendreController {

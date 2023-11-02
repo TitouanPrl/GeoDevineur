@@ -1,11 +1,8 @@
 package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.EntityController;
-import com.example.geodevineur.tables.Departement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 
 @Component
 public class Format {
