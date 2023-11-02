@@ -67,7 +67,7 @@ public class QuizzController {
     }
 
     //Fonction principale appelée lors d'un clic sur Valider
-    //Elle verifie si la reponse est trouvée et sinon calcule la question suivante pour l'afficher 
+    //Elle verifie si la reponse est trouvée et sinon calcule la question suivante pour l'afficher
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
         //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
