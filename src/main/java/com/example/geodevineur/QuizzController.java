@@ -2,18 +2,14 @@ package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.tables.Departement;
-import jdk.jfr.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.yaml.snakeyaml.scanner.ScannerImpl;
 
-import java.sql.Time;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -74,15 +70,14 @@ public class QuizzController {
 
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
-        if(nextQ.equals(departementToFind.getName())){
+        //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
+        if(clearString(nextQ).equals(clearString(departementToFind.getName()))){
             //Le departement est trouvé
             int seconds = end();
-            System.out.println(seconds+"<-time");
             model.addAttribute("scoreModal",getScoreModal(seconds));
         } else {
             setStep(getStep()+1);
-            System.out.println("In nextQ, step="+getStep());
-
+            //Bail de conditions ici
             StringBuilder question = getQuestion();
             model.addAttribute("questionContent",question);
         }
@@ -91,8 +86,11 @@ public class QuizzController {
 
     public int end(){
         setStatus("finished");
-        System.out.println("endTime="+Instant.now());
         return (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
+    }
+
+    public String clearString(String value){
+        return value.replace(" ","").replace("-","").replace("'","").toLowerCase();
     }
 
     public StringBuilder getQuestion(){
@@ -166,6 +164,5 @@ public class QuizzController {
         System.out.println("depToFind="+getDepartementToFind().getName());
         System.out.println("time="+getStartTime());
         System.out.println("------------------------");
-
     }
 }
