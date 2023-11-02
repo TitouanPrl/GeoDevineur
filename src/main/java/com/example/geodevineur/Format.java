@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class Format {
@@ -61,5 +59,12 @@ public class Format {
 
     public static Boolean IntToBoolean(int x){
         return (x == 1);
+    }
+
+    public static int calculScore(int secondes, int nb_questions){
+        int max = 10000;
+        int a = 100;
+        int b = 50;
+        return (max - a * nb_questions - b * secondes);
     }
 }

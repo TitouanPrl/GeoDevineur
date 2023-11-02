@@ -1,30 +1,61 @@
 package com.example.geodevineur.tables;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.sql.PreparedStatement;
 import java.sql.Time;
 
-import jakarta.persistence.Entity;
-
-/* Classe représentant les scores du leaderboard */
 @Entity
-public class Score {
+public class Score implements Comparable<Score>{
 
-    @Id
-    @Getter
-    private final String pseudo;
-    @Getter
-    private final Time temps;
+    @Id@Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected int id;
 
-    public Score(String pseudo_, Time temps_) {
+    @Getter@Setter
+    protected String pseudo;
+    @Getter@Setter
+    protected String password;
+    @Getter@Setter
+    protected int score;
+    @Getter@Setter
+    protected int version;
+
+    public Score(String pseudo_, String password_, int score_) {
         pseudo = pseudo_;
-        temps = temps_;
+        password = password_;
+        score = score_;
+        version = 1;
     }
 
     public Score() {
-        temps = null;
-        pseudo = null;
+
+    }
+
+    public void update(int score){
+        System.out.println("---avant---");
+        System.out.println(getPseudo());
+        System.out.println(getScore());
+        System.out.println(getVersion());
+        System.out.println("------------");
+        setScore(getScore()+score);
+        setVersion(getVersion()+1);
+        System.out.println("---apres---");
+        System.out.println(getPseudo());
+        System.out.println(getScore());
+        System.out.println(getVersion());
+        System.out.println("------------");
+
+    }
+
+    public Boolean isValidPassword(String password){
+        return (getPassword().equals(password));
+    }
+
+    @Override
+    public int compareTo(Score otherScore) {
+        return Integer.compare(getScore(), otherScore.getScore());
     }
 }
