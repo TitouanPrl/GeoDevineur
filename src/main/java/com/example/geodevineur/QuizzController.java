@@ -26,35 +26,33 @@ public class QuizzController {
     @Getter@Setter
     private Instant startTime;
     @Getter@Setter
-    private String status; //waiting-running
+    private String status; //waiting-running   //a delete plus tard
     @Getter@Setter
     private Departement departementToFind;
     @Getter@Setter
     private int step;
     @Getter@Setter
-    private int score;
+    private int score; //a delete plus tard
 
     public QuizzController(DepartementController departementController_){
         this.departementController = departementController_;
         this.status = "waiting";
     }
 
-    public Cond titouan(Departement departement){
-        Cond result = null;
-
-        return result;
-    }
-
+    //Lien de redirection en cas d'absence d'arguments
     @RequestMapping(value = "quizz")
     public String redirect() {
         return "redirect:/quizz?waiting=true";
     }
+
+    //Affichage du bouton pour lancer le quizz si la page est en status waiting
     @RequestMapping(value = "quizz", params = "waiting")
     public String waiting(Model model) {
         model.addAttribute("startButton", getStartButton());
         return "quizz";
     }
 
+    //Initialisation du quizz (temps, cible, status, etape)
     @RequestMapping(value = "quizz", params = "start")
     public String start(){
         //Mise à 0 du chrono de durée du quizz
@@ -68,6 +66,8 @@ public class QuizzController {
         return "redirect:/quizz?nextQ=true";
     }
 
+    //Fonction principale appelée lors d'un clic sur Valider
+    //Elle verifie si la reponse est trouvée et sinon calcule la question suivante pour l'afficher 
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
         //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
@@ -84,18 +84,23 @@ public class QuizzController {
         return "quizz";
     }
 
+    //Declenché quand cible trouvé, met à jour le status et retourne la durée du quizz en secondes
     public int end(){
         setStatus("finished");
         return (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
     }
 
+    //Epure un chaine de caracteres en enlevant les {,|'| |-} les accents et transforme les majuscules en minuscules
     public String clearString(String value){
-        return value.replace(" ","").replace("-","").replace("'","").toLowerCase();
+        return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
     }
 
+    //Renvoie la question suivante
     public StringBuilder getQuestion(){
         return getTemplate("Le departement commence par un C");
     }
+
+    //Renvoie le template html de la question
     public StringBuilder getTemplate(String question){
         StringBuilder template = new StringBuilder();
         template.append("<div class=\"card mb-4 box-shadow\">");
@@ -114,6 +119,7 @@ public class QuizzController {
         return template;
     }
 
+    //Renvoie le template html de la modale de saisie de score (quand quizz terminé)
     public StringBuilder getScoreModal(int seconds){
         StringBuilder htmlContent = new StringBuilder();
         htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
@@ -139,6 +145,7 @@ public class QuizzController {
         return htmlContent;
     }
 
+    //Renvoie une chaine de caracteres avec des min/sec depuis des secondes (int)
     public String getTimeStringFromSeconds(int seconds){
         int minutes = 0;
         String sentence;
@@ -153,10 +160,13 @@ public class QuizzController {
         }
         return sentence;
     }
+
+    //Renvoie le template html du bouton de lancement du quizz
     public StringBuilder getStartButton(){
         return new StringBuilder("<button class=\"btn btn-success\" id=\"start\">DEMARRER</button>");
     }
 
+    //Procedure temporaire pour afficher les infos du quizz au moment de l'appel
     public void getQuizzStatus(){
         System.out.println("------QUIZZ-STATUS------");
         System.out.println("status="+getStatus());
