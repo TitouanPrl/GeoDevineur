@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class Index{
+    //Redirection sur la page d'accueil
     @GetMapping("/")
     public String index(Model model) {
         return "index";
     }
 
+    //Redirection sur la page de regles
     @GetMapping("regles")
     public String regles(Model model) {
         return "regles";
