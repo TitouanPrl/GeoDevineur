@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.yaml.snakeyaml.scanner.ScannerImpl;
 
 import java.sql.Time;
@@ -34,6 +35,8 @@ public class QuizzController {
     private Departement departementToFind;
     @Getter@Setter
     private int step;
+    @Getter@Setter
+    private int score;
 
     public QuizzController(DepartementController departementController_){
         this.departementController = departementController_;
@@ -46,7 +49,10 @@ public class QuizzController {
         return result;
     }
 
-
+    @RequestMapping(value = "quizz")
+    public String redirect() {
+        return "redirect:/quizz?waiting=true";
+    }
     @RequestMapping(value = "quizz", params = "waiting")
     public String waiting(Model model) {
         model.addAttribute("startButton", getStartButton());
@@ -67,47 +73,90 @@ public class QuizzController {
     }
 
     @RequestMapping(value = "quizz", params = "nextQ")
-    public String nextQ(Model model){
-        setStep(getStep()+1);
-        System.out.println("In nextQ, step="+getStep());
+    public String nextQ(Model model, @RequestParam String nextQ){
+        if(nextQ.equals(departementToFind.getName())){
+            //Le departement est trouvé
+            int seconds = end();
+            System.out.println(seconds+"<-time");
+            model.addAttribute("scoreModal",getScoreModal(seconds));
+        } else {
+            setStep(getStep()+1);
+            System.out.println("In nextQ, step="+getStep());
 
-        StringBuilder question = getQuestion();
-        System.out.println(question);
-        model.addAttribute("questionContent",question);
-
+            StringBuilder question = getQuestion();
+            model.addAttribute("questionContent",question);
+        }
         return "quizz";
+    }
+
+    public int end(){
+        setStatus("finished");
+        System.out.println("endTime="+Instant.now());
+        return (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
     }
 
     public StringBuilder getQuestion(){
         return getTemplate("Le departement commence par un C");
     }
-
-//    <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->\n" +
-//    <!-- Quand répondu : changement couleur + attribut 'disabled' au bouton du form + -->\n" +
-//    <!-- valeur de la saisie texte correspond à reponse + nombre de departement correspondants dans balise i -->\n"
     public StringBuilder getTemplate(String question){
         StringBuilder template = new StringBuilder();
         template.append("<div class=\"card mb-4 box-shadow\">");
         template.append("<div class=\"question card-title align-items-center bg-success text-center\">");
-        template.append("<h3 class=\"border-bottom border-dark \"><strong>Question n°1</strong></h3>");
+        template.append("<h3 class=\"border-bottom border-dark \"><strong>Question n°").append(getStep()).append("</strong></h3>");
         template.append("<h1>").append(question).append("</h1>");
         template.append("</div>");
         template.append("<div class=\"card-body align-items-center\">");
-        template.append("<form action=\"quizz.html\" method=\"get\" class=\"align-items-center text-center\">");
-        template.append("<input class=\"\" type=\"text\" name=\"answer\" value=\"Landes\"><br><br>");
-        template.append("<i class=\"card-subtitle border-top\">43 correspondants</i>");
+        template.append("<form action=\"quizz?nextQ=true\" method=\"get\" class=\"align-items-center text-center\">");
+        template.append("<input class=\"\" type=\"text\" name=\"nextQ\"><br><br>");
+        template.append("<input class=\"btn\" type=\"submit\" value=\"Valider\"><br><br>");
+        //template.append("<i class=\"card-subtitle border-top\">43 correspondants</i>");
         template.append("</form>");
         template.append("</div>");
         template.append("</div>");
         return template;
     }
 
-    public StringBuilder getStartButton(){
-        return new StringBuilder("<button class=\"btn btn-success\" id=\"start\">DEMARRER</button>");
+    public StringBuilder getScoreModal(int seconds){
+        StringBuilder htmlContent = new StringBuilder();
+        htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
+        htmlContent.append("<div class=\"modal-content\">");
+        htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
+        htmlContent.append("<h2>Bien joué, vous avez fait un score de <b>").append(Format.calculScore(seconds,getStep())).append("</b></h2>");
+        htmlContent.append("<i>Temps : <b>").append(getTimeStringFromSeconds(seconds)).append("</b>, Nombre de questions : <b>").append(getStep()).append("</b><br><br></i>");
+        htmlContent.append("<form id=\"saveScore\" onsubmit=\"proceedForm()\">");
+        htmlContent.append("<div class=\"form-group\">");
+        htmlContent.append("<label for=\"pseudo\">Pseudo</label>");
+        htmlContent.append("<input type=\"text\" class=\"form-control\" id=\"pseudo\" aria-describedby=\"emailHelp\" placeholder=\"Saisissez votre pseudo\" required>");
+        htmlContent.append("</div>");
+        htmlContent.append("<div class=\"form-group\">");
+        htmlContent.append("<label for=\"password\">Password</label>");
+        htmlContent.append("<input type=\"text\" class=\"form-control\" id=\"password\" placeholder=\"Saisissez votre code confidentiel\">");
+        htmlContent.append("</div>");
+        htmlContent.append("<input type=\"hidden\" id=\"seconds\" value=\"").append(seconds).append("\">");
+        htmlContent.append("<input type=\"hidden\" id=\"nb\" value=\"").append(getStep()).append("\">");
+        htmlContent.append("<button type=\"submit\" class=\"btn btn-primary\">Enregistrer</button>");
+        htmlContent.append("</form>");
+        htmlContent.append("</div>");
+        htmlContent.append("</div>");
+        return htmlContent;
     }
 
-    public void end(){
-        int seconds = (int) Duration.between(Instant.now(),getStartTime()).toSeconds();
+    public String getTimeStringFromSeconds(int seconds){
+        int minutes = 0;
+        String sentence;
+        while (seconds > 60){
+            minutes++;
+            seconds -= 60;
+        }
+        if(minutes == 0){
+            sentence = seconds+" secondes";
+        } else {
+            sentence = minutes+"min "+seconds+"secondes";
+        }
+        return sentence;
+    }
+    public StringBuilder getStartButton(){
+        return new StringBuilder("<button class=\"btn btn-success\" id=\"start\">DEMARRER</button>");
     }
 
     public void getQuizzStatus(){
@@ -115,7 +164,7 @@ public class QuizzController {
         System.out.println("status="+getStatus());
         System.out.println("step="+getStep());
         System.out.println("depToFind="+getDepartementToFind().getName());
-        System.out.println();
+        System.out.println("time="+getStartTime());
         System.out.println("------------------------");
 
     }

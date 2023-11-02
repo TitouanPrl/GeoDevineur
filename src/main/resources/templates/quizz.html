@@ -21,29 +21,13 @@
         </div>
     </div>
 </header>
-<button id="add">AJOUTER</button>
-<div th:remove="tag" th:utext="${startButton}"></div>
-<div class="modal" id="formScoreModal">
-    <div class="modal-content">
-        <span class="close" id="closeModal" onclick="closeModal()">&times;</span>
-        <h2>Bien joué, vous avez fait un score de <b>1300</b></h2>
-        <form id="saveScore" onsubmit="proceedForm()">
-            <div class="form-group">
-                <label for="pseudo">Pseudo</label>
-                <input type="text" class="form-control" id="pseudo" aria-describedby="emailHelp" placeholder="Saisissez votre pseudo" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="text" class="form-control" id="password" placeholder="Saisissez votre code confidentiel">
-            </div>
-            <input type="hidden" id="seconds" value="100">
-            <input type="hidden" id="nb" value="7">
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-        </form>
-    </div>
-</div>
-<div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}">
 
+<div th:remove="tag" th:utext="${startButton}"></div>
+<div th:remove="tag" th:utext="${scoreModal}"></div>
+
+<div class="container">
+    <div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}">
+    </div>
 </div>
 
 <script>
@@ -57,34 +41,19 @@
         alert('done');
     }
 
-    document.getElementById("add").addEventListener("click", function() {
-        window.location.assign("quizz?fin=true");
-    });
-
-    document.getElementById("start").addEventListener("click", function() {
-        window.location.assign("quizz?start=true");
-    });
-
     //----------MODAL−CALL------------------------------
 
-    // Fonction pour vérifier si l'URL contient "fin=true"
-    function urlContainsFin() {
+    // Fonction pour vérifier si l'URL contient une clé $word -> true
+    function urlContains(word) {
         const params = new URLSearchParams(window.location.search);
-        return params.get("fin") === "true";
+        return params.get(word) === "true";
     }
 
-    // Fonction pour vérifier si l'URL contient "nextQ=true"
-    function urlContainsNextQ() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get("nextQ") === "true";
-    }
 
     // Fonction pour afficher le modal si l'URL contient "fin=true"
     function displayModal() {
         const modal = document.getElementById("formScoreModal");
-        if (urlContainsFin()) {
-            modal.style.display = "block";
-        }
+        modal.style.display = "block";
     }
 
     // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
@@ -108,12 +77,11 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    if(urlContainsNextQ()){
-        //window.location.assign("http://localhost:8080/quizz");
+    if(urlContains("waiting")){
+        document.getElementById("start").addEventListener("click", function() {
+            window.location.assign("quizz?start=true");
+        });
     }
-
-    // Appeler la fonction pour afficher le modal au chargement de la page
-    displayModal();
 </script>
 <footer class="text-muted border-top" style="padding-top: 15px">
     <div class="container text-center">
