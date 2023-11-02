@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class DepartementController {
@@ -22,6 +23,11 @@ public class DepartementController {
         departementService.findAll().forEach(result::add);
         Collections.sort(result);
         return result;
+    }
+
+    //Retourne departement au hasard
+    public Departement getRandomOne(){
+        return getAll().get(new Random().nextInt(95));
     }
 
     public Departement getById(int id){
