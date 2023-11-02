@@ -15,9 +15,4 @@ public class Index{
     public String regles(Model model) {
         return "regles";
     }
-
-    @GetMapping("quizz")
-    public String quizzDepartements(Model model) {
-        return "quizz";
-    }
 }
