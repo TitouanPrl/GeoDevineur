@@ -10,7 +10,7 @@ public class SeasideCond<E extends Departement> extends Condition<E>{
     }
 
     protected void setAttributes(E e) {
-        seaside = e.isSeaside();
+        seaside = e.getSeaside();
     }
 
     public String getSentence() {
@@ -22,6 +22,6 @@ public class SeasideCond<E extends Departement> extends Condition<E>{
     }
 
     public boolean checksCondition(E e) {
-        return e.isSeaside() == seaside;
+        return e.getSeaside() == seaside;
     }
 }
