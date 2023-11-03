@@ -7,6 +7,5 @@ public abstract class Condition<E extends Departement> {
 
     public abstract boolean checksCondition(E e);
     protected abstract void setAttributes(E e);
-
     public abstract String getSentence();
 }

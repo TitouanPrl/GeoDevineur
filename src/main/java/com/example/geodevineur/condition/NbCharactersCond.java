@@ -18,6 +18,6 @@ public class NbCharactersCond<E extends Departement> extends Condition<E>{
     }
 
     public String getSentence(){
-        return "Le departement possede "+nbChar+" lettres";
+        return "Le département possède "+nbChar+" lettres";
     }
 }

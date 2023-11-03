@@ -45,9 +45,12 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
         }
     }
 
-    @Override
     public String getSentence() {
-        return null;
+        if(isLess){
+            return "Le département a moins de "+threshold+" voisins";
+        } else {
+            return "Le département a plus de "+threshold+" voisins";
+        }
     }
 
     public boolean checksCondition(E dep) {

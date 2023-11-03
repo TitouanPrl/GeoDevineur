@@ -25,7 +25,7 @@ public class ContainLetterCond<E extends Departement> extends Condition<E>{
 
     @Override
     public String getSentence() {
-        return null;
+        return "Le département contient la lettre '" + letter + "'";
     }
 
     public boolean checksCondition(E e) {
