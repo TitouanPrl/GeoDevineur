@@ -2,12 +2,9 @@ package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.ScoreController;
 import com.example.geodevineur.tables.Score;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,8 +20,35 @@ public class ScorePage {
         this.scoreController = scoreController_;
     }
 
+    //Fonction principale qui met à jour la page des scores avec tableau
     @RequestMapping(value = "scores")
     public String scores(Model model){
+        model.addAttribute("allScores", getScoresTable());
+        return "scores";
+    }
+
+    //Fonction qui procede à l'ajout (ou modification) d'un score par le joueur (apres realisation d'un quizz)
+    @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
+    public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
+        String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
+        System.out.println("status = "+status);
+        return "redirect:/scores?status="+status;
+    }
+
+    //Fonction qui gere la suppression d'un score par l'utilisateur
+    @RequestMapping(value = "scores", params = {"pseudo", "password"})
+    public String deleteScore(@RequestParam String pseudo, @RequestParam String password){
+        Score score = scoreController.getByName(pseudo);
+        String status = "Failure";
+        if(score != null && score.getPassword().equals(password)){
+            scoreController.deleteByPseudo(pseudo);
+            status = "Success";
+        }
+        return "redirect:/scores?status=delete"+status;//succes-failure
+    }
+
+    //Fonction qui renvoie le tableau des scores (depuis bdd) en html
+    public StringBuilder getScoresTable(){
         List<Score> allScores = scoreController.getAll();
         StringBuilder htmlContent = new StringBuilder();
 
@@ -48,26 +72,6 @@ public class ScorePage {
             i++;
         }
         htmlContent.append("</table>");
-        model.addAttribute("allScores", htmlContent);
-        return "scores";
-    }
-
-    //Check des infos pour ajouter/editer score apres fin quizz
-    @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
-    public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
-        String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
-        System.out.println("status = "+status);
-        return "redirect:/scores?status="+status;
-    }
-
-    @RequestMapping(value = "scores", params = {"pseudo", "password"})
-    public String deleteScore(@RequestParam String pseudo, @RequestParam String password){
-        Score score = scoreController.getByName(pseudo);
-        String status = "Failure";
-        if(score != null && score.getPassword().equals(password)){
-            scoreController.deleteByPseudo(pseudo);
-            status = "Success";
-        }
-        return "redirect:/scores?status=delete"+status;//succes-failure
+        return htmlContent;
     }
 }

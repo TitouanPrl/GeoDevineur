@@ -4,7 +4,6 @@ import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
 import lombok.Getter;
-import org.antlr.v4.runtime.misc.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,23 +22,29 @@ public class Map {
         this.filePath = filePath_;
         this.content = Files.readString(Path.of(filePath_));
     }
+
+    //Procedure servant à reinitialiser la carte à son contenu d'origine (fichier)
     public void clear() throws IOException {
         this.content = Files.readString(Path.of(this.filePath));
     }
 
+    //Procedure servant à colorer un departement sur la carte
     public void colorizeDepartement(Departement departement, String color){
         String cible = "_" + departement.getNumber().toLowerCase() + "\"";
         this.content = this.content.replace(cible, cible + " style=\"fill: " + color + ";\"");
     }
 
+    //Procedure servant à colorer plusieurs departements sur la carte
     public void colorizeDepartements(List<Departement> departements, String color) {
         departements.forEach(departement -> colorizeDepartement(departement,color));
     }
 
+    //Procedure servant à colorer une region (soit plusieurs departements) sur la carte
     public void colorizeRegion(Region region, String color){
         colorizeDepartements(region.getDepartements(), color);
     }
 
+    //Procedure servant à placer le point d'une prefecture sur la carte en utilisant ses coordonnées
     public void colorizePrefecture(Prefecture prefecture, String color){
         int[] location = getPrefectureLocation(prefecture);
         this.content = this.content.replace("#fill", color);

@@ -3,15 +3,12 @@ package com.example.geodevineur.condition;
 import java.util.Random;
 
 import com.example.geodevineur.tables.Departement;
-
+import lombok.Getter;
 
 public class ContainLetterCond<E extends Departement> extends Condition<E>{
-    private Random random;
+    private final Random random;
+    @Getter
     private char letter;
-
-    public char getLetter() {
-        return letter;
-    }
 
     public ContainLetterCond(E e) {
         random = new Random();
@@ -24,6 +21,11 @@ public class ContainLetterCond<E extends Departement> extends Condition<E>{
             selected = e.getName().charAt(a);
         } while ((selected == ' ') || (selected == '-') || (selected == '\''));
         letter = selected;
+    }
+
+    @Override
+    public String getSentence() {
+        return "Le département contient la lettre '" + letter + "'";
     }
 
     public boolean checksCondition(E e) {

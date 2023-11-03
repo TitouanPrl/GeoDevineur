@@ -14,6 +14,10 @@ public class PoliticCond<E extends Departement> extends Condition<E>{
         politic = e.getPolitic();
     }
 
+    public String getSentence() {
+        return "Le département vote " + politic.toString() + " en majorité";
+    }
+
     public boolean checksCondition(E e) {
         return e.getPolitic() == politic;
     }

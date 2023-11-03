@@ -14,6 +14,10 @@ public class CardinalCond<E extends Departement> extends Condition<E>{
         cardinal = e.getRegion().getCardinal();
     }
 
+    public String getSentence() {
+        return "Le département se situe au " + cardinal.toString();
+    }
+
     public boolean checksCondition(E e) {
         return e.getRegion().getCardinal() == cardinal;
     }

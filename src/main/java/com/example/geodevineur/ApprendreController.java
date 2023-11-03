@@ -1,5 +1,5 @@
 package com.example.geodevineur;
-import ch.qos.logback.core.joran.action.AppenderRefAction;
+
 import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.controllers.EntityController;
 import com.example.geodevineur.controllers.PrefectureController;
@@ -7,24 +7,15 @@ import com.example.geodevineur.controllers.RegionController;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;
-import jakarta.servlet.annotation.WebServlet;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class ApprendreController {
@@ -58,6 +49,7 @@ public class ApprendreController {
         this.map = new Map("src/main/resources/static/img/france_departements.svg");
     }
 
+    //Fonction principale qui met à jour la carte et les infos pour une entité de type et nom donnés
     @RequestMapping(value = "apprendre", params = {"type","name"})
     public String apprendre(Model model, @RequestParam String type, @RequestParam String name) throws IOException, InterruptedException {
 
@@ -92,6 +84,7 @@ public class ApprendreController {
         return "apprendre";
     }
 
+    //Fonction qui initialise (reset) la page apprendre, carte vierge, menus deroulants
     @RequestMapping(value = "apprendre")
     public String apprendreMain(Model model) throws IOException {
         setType(null);
@@ -101,6 +94,7 @@ public class ApprendreController {
         return "apprendre";
     }
 
+    //Fonction qui met à jour le 2nd menu select pour un type donné (dans le 1er menu select)
     @RequestMapping(value = "apprendre", params = "type")
     public String apprendreWithType(Model model, @RequestParam String type) throws IOException {
         map.clear();
@@ -117,11 +111,14 @@ public class ApprendreController {
         return "apprendre";
     }
 
+    //Fonction qui redirige sur un url au bon format en  cas de clé type absente
     @RequestMapping(value = "apprendre", params = "name")
     public String apprendreWithName(Model mode, @RequestParam String name) throws IOException, InterruptedException {
         return apprendre(model, entityController.getTypeByName(name), name);
     }
 
+    //Fonction qui renvoie le html du 2nd menu deroulant suivant le type d'entité
+    //exemple si le type est "region" cela renvoie un select sur toutes les regions
     public StringBuilder getSelectContent(String type, String name){
         StringBuilder selectContent = new StringBuilder();
         if(departementController.isValidName(name)){
@@ -147,6 +144,7 @@ public class ApprendreController {
         return selectContent;
     }
 
+    //Fonction qui gere les infos à recuperer de l'entité (car infos au format different pour chaque type reg/dep/pref)
     public StringBuilder setInfos(String type, String name) {
         StringBuilder htmlContent = new StringBuilder();
 
@@ -175,6 +173,7 @@ public class ApprendreController {
         return htmlContent;
     }
 
+    //Fonction qui renvoie les infos d'une prefecture au format html
     public StringBuilder getPrefectureInfos(Prefecture prefecture){
         StringBuilder htmlContent = new StringBuilder();
 
@@ -185,6 +184,7 @@ public class ApprendreController {
         return htmlContent;
     }
 
+    //Fonction qui renvoie les infos d'un departement au format html
     public StringBuilder getDepartementInfos(Departement departement){
         StringBuilder htmlContent = new StringBuilder();
 
@@ -204,6 +204,7 @@ public class ApprendreController {
         return htmlContent;
     }
 
+    //Fonction qui renvoie les infos d'une region au format html
     public StringBuilder getRegionInfos(Region region){
         StringBuilder htmlContent = new StringBuilder();
 

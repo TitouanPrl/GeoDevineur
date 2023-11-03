@@ -15,12 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,12 +41,15 @@ public class UploadData {
         this.scoreController = scoreController_;
     }
 
+    //Procedure servant à vider la base de donnée des pref/dep/ref
     public void deleteAll(){
         regionController.deleteAll();
         prefectureController.deleteAll();
         departementController.deleteAll();
     }
 
+    //Type temporaire contenant une prefecture et son departement (en string) pour l'insere aisement dans la bdd
+    //va etre fusionné avec l'autre temporaire
     public class PrefectureBis<Prefecture, String> {
         Prefecture prefecture;
         String departementName;
@@ -59,6 +60,8 @@ public class UploadData {
         }
     }
 
+    //Type temporaire contenant un departement et sa region (en string) pour l'insere aisement dans la bdd
+    //va etre fusionné avec l'autre temporaire
     public class DepartementBis<Departement, String> {
         Departement departement;
         String regionName;
@@ -69,18 +72,20 @@ public class UploadData {
         }
     }
 
+    //Procedure servant à créer le lien entre un departement et une prefecture simultannément
     @Transactional
     public void saveOneToOne(Prefecture prefecture, Departement departement){
         prefecture.setDepartement(departement);
         departement.setPrefecture(prefecture);
     }
-
+    //Procedure servant à créer le lien entre une region et ses departement simultannément
     @Transactional
     public void saveManyToOne(List<Departement> allDpts, Region region){
         region.setDepartements(allDpts);
         allDpts.forEach(departement -> departement.setRegion(region));
     }
 
+    //Fonction qui recupere la liste de toutes les regions contenues dans le csv regions.csv
     public List<Region> readRegionsCSV(){
         List<Region> allRegions = new ArrayList<>();
         String filePathRgs = "src/main/resources/static/csv/regions.csv";
@@ -106,6 +111,7 @@ public class UploadData {
         return allRegions;
     }
 
+    //Fonction qui recupere la liste de tous les departements contenues dans le csv departements.csv
     public List<DepartementBis<Departement,String>> readDepartementsCSV(){
         List<DepartementBis<Departement,String>> allDepartements = new ArrayList<>();
         String filePathDpts = "src/main/resources/static/csv/departements.csv";
@@ -136,6 +142,8 @@ public class UploadData {
         }
         return allDepartements;
     }
+
+    //Fonction qui recupere la liste de toutes les prefectures contenues dans le csv prefectures.csv
     public List<PrefectureBis<Prefecture,String>> readPrefecturesCSV(){
         List<PrefectureBis<Prefecture,String>> allPrefectures = new ArrayList<>();
         String filePathPrfs = "src/main/resources/static/csv/prefectures.csv";
@@ -161,6 +169,8 @@ public class UploadData {
         }
         return allPrefectures;
     }
+
+    //Fonction principale qui vide et remplis la BDD des departements/regions/prefectures depuis les csv
     @GetMapping("upload")
     public String upload(Model model){
 
@@ -199,35 +209,4 @@ public class UploadData {
         model.addAttribute("status","success");
         return "bdd";
     }
-
-    @GetMapping("test")
-    public String test(Model mode){
-        List<Departement> allDpts = new ArrayList<>();
-
-        Prefecture pref1 = new Prefecture();
-        pref1.setName("Pau");
-        pref1.setPopulation(2000);
-
-        Prefecture pref2 = new Prefecture();
-        pref2.setName("Bordeaux");
-        pref2.setPopulation(5000);
-
-        Departement dep1 = new Departement("Pyrenees-Atl","64",10000,750.8,false,3, Politic.LR);
-        Departement dep2 = new Departement("Gironde","31",50000,4800.5,true,4,Politic.RE);
-
-        allDpts.add(dep1);
-        allDpts.add(dep2);
-
-        Region reg = new Region("Nouvelle-Aquitaine",Cardinal.SW);
-
-        saveOneToOne(pref1, dep1);
-        saveOneToOne(pref2, dep2);
-        saveManyToOne(allDpts, reg);
-
-        regionController.add(reg);
-
-        return "bdd";
-    }
-
-
 }

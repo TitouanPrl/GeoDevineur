@@ -1,4 +1,3 @@
-/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -41,6 +40,14 @@ public class SurfaceCond<E extends Departement> extends Condition<E> {
         }
     }
 
+    public String getSentence() {
+        if(isLess){
+            return "Le département compte moins de "+threshold+" km²";
+        } else {
+            return "Le département compte plus de "+threshold+" km²";
+        }
+    }
+
     public boolean checksCondition(E e) {
         if (isLess) {
             return e.getSurface() < threshold;
@@ -49,4 +56,3 @@ public class SurfaceCond<E extends Departement> extends Condition<E> {
         }
     }
 }
-*/

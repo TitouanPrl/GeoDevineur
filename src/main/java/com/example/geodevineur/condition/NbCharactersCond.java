@@ -16,4 +16,8 @@ public class NbCharactersCond<E extends Departement> extends Condition<E>{
     public boolean checksCondition(E e) {
         return (e.getName().length() == nbChar);
     }
+
+    public String getSentence(){
+        return "Le département possède "+nbChar+" lettres";
+    }
 }

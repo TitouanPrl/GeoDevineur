@@ -1,9 +1,7 @@
 package com.example.geodevineur.controllers;
 
-import com.example.geodevineur.tables.Prefecture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Component
 public class EntityController {

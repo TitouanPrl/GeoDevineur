@@ -1,10 +1,9 @@
-/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
 
+import com.example.geodevineur.Format;
 import com.example.geodevineur.tables.Departement;
-
 
 public class PopulationCond<E extends Departement> extends Condition<E> {
     private Random random;
@@ -42,6 +41,14 @@ public class PopulationCond<E extends Departement> extends Condition<E> {
         }
     }
 
+    public String getSentence() {
+        if(isLess){
+            return "Le département a moins de " + Format.intToFormatedString(threshold) + " habitants";
+        } else {
+            return "Le département a plus de " + Format.intToFormatedString(threshold) + " habitants";
+        }
+    }
+
     public boolean checksCondition(E e) {
         if (isLess) {
             return e.getPopulation() < threshold;
@@ -50,4 +57,3 @@ public class PopulationCond<E extends Departement> extends Condition<E> {
         }
     }
 }
-*/

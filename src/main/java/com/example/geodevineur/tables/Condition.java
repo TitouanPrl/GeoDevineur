@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 
 @Entity
-public class Condition {
+public class Condition{
 
     @Id
     protected int id;

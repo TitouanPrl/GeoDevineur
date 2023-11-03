@@ -14,6 +14,10 @@ public class PrefectureCond<E extends Departement> extends Condition<E>{
         prefecture = e.getPrefecture();
     }
 
+    public String getSentence() {
+        return "Le département a pour préfecture "+prefecture.getName();
+    }
+
     public boolean checksCondition(E e) {
         return e.getPrefecture() == prefecture;
     }

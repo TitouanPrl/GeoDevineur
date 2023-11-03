@@ -14,6 +14,10 @@ public class RegionCond<E extends Departement> extends Condition<E>{
         region = e.getRegion();
     }
 
+    public String getSentence() {
+        return "Le département a pour région "+region.getName();
+    }
+
     public boolean checksCondition(E e) {
         return e.getRegion() == region;
     }
