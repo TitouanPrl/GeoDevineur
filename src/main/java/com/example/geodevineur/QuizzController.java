@@ -26,9 +26,9 @@ public class QuizzController {
     ConditionController conditionController;
 
     @Getter@Setter
-    private List<Condition<Departement>> conditions;
+    public List<Condition<Departement>> conditions;
     @Getter@Setter
-    private List<Departement> allDepartements;
+    public List<Departement> allDepartements;
     @Getter@Setter
     private Instant startTime;
     @Getter@Setter
@@ -73,7 +73,7 @@ public class QuizzController {
         setStep(0);
         setAllDepartements(departementController.getAll());
         getQuizzStatus();
-        return "redirect:/quizz?nextQ=true";
+        return "redirect:/quizz?nextQ=start";
     }
 
     //Fonction principale appelée lors d'un clic sur Valider
@@ -94,7 +94,8 @@ public class QuizzController {
             setStep(getStep()+1);
             Condition<Departement> cond = conditionController.getNextCond(getAllDepartements());
             conditions.add(cond);
-            System.out.println("NB possible : "+getNbPossible());
+            System.out.println("All possible :");
+            System.out.println("total possible : "+getNbPossible());
             System.out.println("new sentence : "+cond.getSentence());
             model.addAttribute("questionContent",getTemplate(cond.getSentence()));
         } else {
@@ -116,10 +117,10 @@ public class QuizzController {
 
     public int getNbPossible(){
         int i=0;
-        for(Departement d : departementController.getAll()){
+        for(Departement d : getAllDepartements()){
             if(d.getPossible()){
                 i++;
-                //System.out.println(d.getName());
+                System.out.println(d.getName());
             }
         }
         return i;
