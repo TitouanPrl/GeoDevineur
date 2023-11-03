@@ -89,7 +89,6 @@ public class QuizzController {
             Condition<Departement> cond = conditionController.getNextCond();
             conditions.add(cond);
             System.out.println("NB possible : "+getNbPossible());
-            System.out.println("NB potential : "+getNbPotential());
             System.out.println("new sentence : "+cond.getSentence());
             model.addAttribute("questionContent",getTemplate(cond.getSentence()));
         } else {
@@ -105,14 +104,6 @@ public class QuizzController {
                 i++;
                 //System.out.println(d.getName());
             }
-        }
-        return i;
-    }
-
-    public int getNbPotential(){
-        int i=0;
-        for(Departement d : departementController.getAll()){
-            if(d.getPotential()) i++;
         }
         return i;
     }
