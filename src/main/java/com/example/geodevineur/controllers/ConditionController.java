@@ -38,13 +38,15 @@ public class ConditionController {
 
         do {
             int randCond = random.nextInt(10);
-
+            randCond = 1;
+            System.out.println("here, rand="+randCond);
             switch (randCond) {
                 case 0:
                     cond = new CardinalCond<Departement>(chosen);
                     break;
                 case 1:
                     cond = new ContainLetterCond<Departement>(chosen);
+                    System.out.println("here, cond=null -> "+(cond == null));
                     break;
                 case 2:
                     cond = new NbCharactersCond<Departement>(chosen);
@@ -71,6 +73,7 @@ public class ConditionController {
                     cond = new SurfaceCond<Departement>(chosen, secondary);
                     break;
             }
+            System.out.println("cond == null -> ="+ (cond == null));
 
             //isCondGood will set the possible attribute of departements correctly
 

@@ -68,7 +68,10 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         setStep(0);
         getQuizzStatus();
-        //test();
+        Condition<Departement> cond = conditionController.getNextCond();
+        conditions.add(cond);
+        System.out.println(cond.toString());
+        System.out.println(conditions.getFirst().toString());
         //List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
         return "redirect:/quizz?nextQ=true";
     }

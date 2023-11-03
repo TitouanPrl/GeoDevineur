@@ -5,9 +5,8 @@ import java.util.Random;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
 
-
 public class ContainLetterCond<E extends Departement> extends Condition<E>{
-    private Random random;
+    private final Random random;
     @Getter
     private char letter;
 
