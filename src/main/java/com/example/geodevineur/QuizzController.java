@@ -78,6 +78,8 @@ public class QuizzController {
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
         //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
+        System.out.println("-----------");
+        System.out.println("Saisie : "+nextQ);
         if(clearString(nextQ).equals(clearString(departementToFind.getName()))){
             //Le departement est trouvé
             int seconds = end();
@@ -86,11 +88,10 @@ public class QuizzController {
             setStep(getStep()+1);
             Condition<Departement> cond = conditionController.getNextCond();
             conditions.add(cond);
-
-
-            System.out.println("sentece="+cond.getSentence());
-            StringBuilder question = getQuestion();
-            model.addAttribute("questionContent",question);
+            System.out.println("NB possible : "+getNbPossible());
+            System.out.println("NB potential : "+getNbPotential());
+            System.out.println("new sentence : "+cond.getSentence());
+            model.addAttribute("questionContent",getTemplate(cond.getSentence()));
         } else {
             return "regles";
         }
@@ -125,11 +126,6 @@ public class QuizzController {
     //Epure un chaine de caracteres en enlevant les {,|'| |-} les accents et transforme les majuscules en minuscules
     public String clearString(String value){
         return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
-    }
-
-    //Renvoie la question suivante
-    public StringBuilder getQuestion(){
-        return getTemplate("Le departement commence par un C");
     }
 
     //Renvoie le template html de la question
@@ -204,7 +200,6 @@ public class QuizzController {
         System.out.println("status="+getStatus());
         System.out.println("step="+getStep());
         System.out.println("depToFind="+getDepartementToFind().getName());
-        System.out.println("time="+getStartTime());
         System.out.println("------------------------");
     }
 }
