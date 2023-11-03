@@ -1,4 +1,3 @@
-/*
 package com.example.geodevineur.condition;
 
 import java.util.Random;
@@ -6,14 +5,14 @@ import java.util.Random;
 import com.example.geodevineur.tables.Departement;
 
 
-public class IdCond<E extends Departement> extends Condition<E> {
+public class NumberCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;
     private boolean isLess; // If more, isLess is false
-    private int threshold;
+    private String threshold;
     private static final int maxId = 95;
 
-    public IdCond (E e, E compare_) {
+    public NumberCond(E e, E compare_) {
         random = new Random();
         setAttributes(e);
         double probaCompare = .3;
@@ -27,29 +26,29 @@ public class IdCond<E extends Departement> extends Condition<E> {
 
     protected void setAttributes(E e) {
         if (compare != null) {
-            threshold = compare.getId();
-            if (threshold < e.getId()) {
+            threshold = compare.getNumber();
+            if (compareId(threshold,e.getNumber()) < 0) {
                 isLess = true;
                 return;
-            } else if (threshold > e.getId()) {
+            } else if (compareId(threshold,e.getNumber()) > 0) {
                 isLess = false;
                 return;
             }
         }
 
-        Integer number = random.nextInt(IdCond.maxId) + 1;
+        int number = random.nextInt(NumberCond.maxId) + 1;
         if (number == 20) {
             threshold = "2A";
         } else {
-            threshold = number.toString();
+            threshold = Integer.toString(number);
         }
     }
 
     public boolean checksCondition(E e) {
         if (isLess) {
-            return compareId(e.getId(), threshold) < 0;
+            return compareId(e.getNumber(), threshold) < 0;
         } else {
-            return compareId(e.getId(), threshold) > 0;
+            return compareId(e.getNumber(), threshold) > 0;
         }
     }
 
@@ -60,4 +59,3 @@ public class IdCond<E extends Departement> extends Condition<E> {
 
     }
 }
-*/
