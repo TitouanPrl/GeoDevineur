@@ -11,7 +11,7 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
     private boolean isLess; // If more, isLess is false
     private int threshold;
     private static final int maxNeighbours = 10;
-    
+
     public NeighbourCond (E e, E compare_) {
         random = new Random();
         setAttributes(e);
@@ -42,6 +42,14 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
             } else {
                 isLess = true;
             }
+        }
+    }
+
+    public String getSentence() {
+        if(isLess){
+            return "Le département a moins de "+threshold+" voisins";
+        } else {
+            return "Le département a plus de "+threshold+" voisins";
         }
     }
 
