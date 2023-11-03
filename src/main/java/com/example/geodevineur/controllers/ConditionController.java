@@ -80,6 +80,7 @@ public class ConditionController {
         int countPotential = 0;
 
         for (Departement dep : allDepartements) {
+            dep.setPotential(dep.getPossible());
             if (dep.getPossible()) {
                 countPossible++;
             }
