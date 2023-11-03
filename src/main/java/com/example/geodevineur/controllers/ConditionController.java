@@ -18,9 +18,8 @@ public class ConditionController {
         this.departementController = departementController_;
     }
 
-    public Condition<Departement> getNextCond() {
+    public Condition<Departement> getNextCond(List<Departement> allDepartements) {
         Random random = new Random();
-        List<Departement> allDepartements = departementController.getAll();
         int nbDep = allDepartements.size();
 
         Departement chosen;

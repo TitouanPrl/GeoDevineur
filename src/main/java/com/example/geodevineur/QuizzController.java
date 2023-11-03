@@ -28,6 +28,8 @@ public class QuizzController {
     @Getter@Setter
     private List<Condition<Departement>> conditions;
     @Getter@Setter
+    private List<Departement> allDepartements;
+    @Getter@Setter
     private Instant startTime;
     @Getter@Setter
     private String status; //waiting-running   //a delete plus tard
@@ -69,6 +71,7 @@ public class QuizzController {
         //TIrage au sort du departement à trouver
         setDepartementToFind(departementController.getRandomOne());
         setStep(0);
+        setAllDepartements(departementController.getAll());
         getQuizzStatus();
         return "redirect:/quizz?nextQ=true";
     }
@@ -80,13 +83,21 @@ public class QuizzController {
         //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
         System.out.println("-----------");
         System.out.println("Saisie : "+nextQ);
+
+        boolean checking = false;
+        for(Departement dep : getAllDepartements()){
+            if(dep.getName().equals(nextQ) && dep.getPossible()){
+                checking = true;
+            }
+        }
+
         if(clearString(nextQ).equals(clearString(departementToFind.getName()))){
             //Le departement est trouvé
             int seconds = end();
             model.addAttribute("scoreModal",getScoreModal(seconds));
-        } else if(getStep()==0 || departementController.getByName(nextQ).getPossible()) {
+        } else if(getStep()==0 || checking) {
             setStep(getStep()+1);
-            Condition<Departement> cond = conditionController.getNextCond();
+            Condition<Departement> cond = conditionController.getNextCond(getAllDepartements());
             conditions.add(cond);
             System.out.println("NB possible : "+getNbPossible());
             System.out.println("new sentence : "+cond.getSentence());

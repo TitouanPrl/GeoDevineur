@@ -37,9 +37,7 @@ public class Departement implements Comparable<Departement> {
     @Getter@Setter
     protected Politic politic;
 
-    @Getter@Setter
     protected boolean possible = true;
-    @Getter@Setter
     protected boolean potential = true;
 
     public Departement (String name_,
@@ -59,6 +57,26 @@ public class Departement implements Comparable<Departement> {
     }
 
     public Departement() {
+    }
+
+    public boolean getSeaside() {
+        return this.seaside;
+    }
+
+    public void setPossible(boolean possible) {
+        this.possible = possible;
+    }
+
+    public void setPotential(boolean potential) {
+        this.potential = potential;
+    }
+
+    public boolean getPossible() {
+        return possible;
+    }
+
+    public boolean getPotential() {
+        return potential;
     }
 
     @Override
