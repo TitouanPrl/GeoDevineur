@@ -41,6 +41,14 @@ public class PopulationCond<E extends Departement> extends Condition<E> {
         }
     }
 
+    public String getSentence() {
+        if(isLess){
+            return "Le departement a moins de "+threshold+" habitants";
+        } else {
+            return "Le departement a plus de "+threshold+" habitants";
+        }
+    }
+
     public boolean checksCondition(E e) {
         if (isLess) {
             return e.getPopulation() < threshold;

@@ -40,6 +40,14 @@ public class SurfaceCond<E extends Departement> extends Condition<E> {
         }
     }
 
+    public String getSentence() {
+        if(isLess){
+            return "Le departement a moins de "+threshold+" km²";
+        } else {
+            return "Le departement a plus de "+threshold+" km²";
+        }
+    }
+
     public boolean checksCondition(E e) {
         if (isLess) {
             return e.getSurface() < threshold;

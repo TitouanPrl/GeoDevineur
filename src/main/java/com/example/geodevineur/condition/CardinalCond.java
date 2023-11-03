@@ -14,6 +14,11 @@ public class CardinalCond<E extends Departement> extends Condition<E>{
         cardinal = e.getRegion().getCardinal();
     }
 
+    @Override
+    public String getSentence() {
+        return null;
+    }
+
     public boolean checksCondition(E e) {
         return e.getRegion().getCardinal() == cardinal;
     }

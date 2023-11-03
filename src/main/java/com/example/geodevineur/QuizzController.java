@@ -70,11 +70,6 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         setStep(0);
         getQuizzStatus();
-        Condition<Departement> cond = conditionController.getNextCond();
-        conditions.add(cond);
-        System.out.println("la:"+cond.toString());
-        System.out.println("la2:"+conditions.getFirst().toString());
-        //List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
         return "redirect:/quizz?nextQ=true";
     }
 
@@ -87,13 +82,38 @@ public class QuizzController {
             //Le departement est trouvé
             int seconds = end();
             model.addAttribute("scoreModal",getScoreModal(seconds));
-        } else {
+        } else if(getStep()==0 || departementController.getByName(nextQ).getPossible()) {
             setStep(getStep()+1);
-            //Bail de conditions ici
+            Condition<Departement> cond = conditionController.getNextCond();
+            conditions.add(cond);
+
+
+            System.out.println("sentece="+cond.getSentence());
             StringBuilder question = getQuestion();
             model.addAttribute("questionContent",question);
+        } else {
+            return "regles";
         }
         return "quizz";
+    }
+
+    public int getNbPossible(){
+        int i=0;
+        for(Departement d : departementController.getAll()){
+            if(d.getPossible()){
+                i++;
+                //System.out.println(d.getName());
+            }
+        }
+        return i;
+    }
+
+    public int getNbPotential(){
+        int i=0;
+        for(Departement d : departementController.getAll()){
+            if(d.getPotential()) i++;
+        }
+        return i;
     }
 
     //Declenché quand cible trouvé, met à jour le status et retourne la durée du quizz en secondes

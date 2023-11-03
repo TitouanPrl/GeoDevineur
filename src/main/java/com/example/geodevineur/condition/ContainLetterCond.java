@@ -23,6 +23,11 @@ public class ContainLetterCond<E extends Departement> extends Condition<E>{
         letter = selected;
     }
 
+    @Override
+    public String getSentence() {
+        return null;
+    }
+
     public boolean checksCondition(E e) {
         boolean res = false;
         String foreignName = e.getName();

@@ -45,6 +45,11 @@ public class NeighbourCond<E extends Departement> extends Condition<E> {
         }
     }
 
+    @Override
+    public String getSentence() {
+        return null;
+    }
+
     public boolean checksCondition(E dep) {
         if (isLess) {
             return dep.getNeightbours() < threshold;

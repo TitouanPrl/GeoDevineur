@@ -14,6 +14,11 @@ public class RegionCond<E extends Departement> extends Condition<E>{
         region = e.getRegion();
     }
 
+    @Override
+    public String getSentence() {
+        return null;
+    }
+
     public boolean checksCondition(E e) {
         return e.getRegion() == region;
     }

@@ -44,6 +44,14 @@ public class NumberCond<E extends Departement> extends Condition<E> {
         }
     }
 
+    public String getSentence() {
+        if(isLess){
+            return "Le numéro du departement est inférieur au "+threshold;
+        } else {
+            return "Le numéro du departement est superieur au "+threshold;
+        }
+    }
+
     public boolean checksCondition(E e) {
         if (isLess) {
             return compareId(e.getNumber(), threshold) < 0;

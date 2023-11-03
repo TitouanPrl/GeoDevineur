@@ -14,6 +14,11 @@ public class PrefectureCond<E extends Departement> extends Condition<E>{
         prefecture = e.getPrefecture();
     }
 
+    @Override
+    public String getSentence() {
+        return null;
+    }
+
     public boolean checksCondition(E e) {
         return e.getPrefecture() == prefecture;
     }
