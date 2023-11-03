@@ -60,6 +60,16 @@ public class Format {
         return (double) tmp / factor;
     }
 
+    public static int roundInt(int number, int step){
+        int result = 0;
+        while(number > step){
+            result++;
+            number -= step;
+        }
+        if(number > step/2) result++;
+        return result*step;
+    }
+
     public static Boolean IntToBoolean(int x){
         return (x == 1);
     }

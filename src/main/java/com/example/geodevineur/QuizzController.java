@@ -1,6 +1,7 @@
 package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.DepartementController;
+import com.example.geodevineur.couzi.Condition;
 import com.example.geodevineur.couzi.ConditionController;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 
 @Controller
 public class QuizzController {
@@ -68,6 +70,7 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         setStep(0);
         getQuizzStatus();
+        List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
         return "redirect:/quizz?nextQ=true";
     }
 

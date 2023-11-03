@@ -1,5 +1,6 @@
 package com.example.geodevineur.couzi;
 
+import com.example.geodevineur.Format;
 import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class Condition {
     @Getter@Setter
     private int delta; //5%-10%-25%-50%-0%(for binary)
 
+    private int sentence;
+
     public Condition(int delta_, String attribut_, Departement departement_){
         this.delta = delta_;
         this.attribut = attribut_;
@@ -39,10 +42,11 @@ public class Condition {
         String sentence;
         switch (getAttribut()){
             case "population":
+                System.out.println("delta="+delta);
                 if(isDeltaPositive()){
-                    sentence = "Le departement contient moins de " + newNeightbours() + " habitants";
+                    sentence = "Le departement contient moins de " + newPopulation() + " habitants";
                 } else {
-                    sentence = "Le departement contient plus de " + newNeightbours() + " habitants";
+                    sentence = "Le departement contient plus de " + newPopulation() + " habitants";
                 }
                 break;
             case "surface":
@@ -54,9 +58,9 @@ public class Condition {
                 break;
             case "neightbours":
                 if(isDeltaPositive()){
-                    sentence = "Le departement a moins de " + newNeightbours() + " voisins";
+                    sentence = "Le departement a au maximum " + newNeightbours() + " voisins";
                 } else {
-                    sentence = "Le departement a plus de " + newNeightbours() + " voisins";
+                    sentence = "Le departement a au minimum " + newNeightbours() + " voisins";
                 }
                 break;
             case "politic":
@@ -122,15 +126,17 @@ public class Condition {
     }
 
     public String newPopulation(){
-        return String.valueOf(getCible().getPopulation()*getDelta()/100);
+        int pop = Format.roundInt(getCible().getPopulation() + getCible().getPopulation()*getDelta()/100,1000);
+        return Format.intToFormatedString(pop);
     }
 
     public String newSurface(){
-        return String.valueOf(getCible().getSurface()*getDelta()/100);
+        double surface = Format.round(getCible().getSurface(),2);
+        return String.valueOf(surface + surface*getDelta()/100);
     }
 
     public String newNeightbours(){
-        return String.valueOf(getCible().getNeightbours()*getDelta()/100);
+        return String.valueOf(getCible().getNeightbours() + getCible().getNeightbours()*getDelta()/100);
     }
 
     public String newSeaside(){

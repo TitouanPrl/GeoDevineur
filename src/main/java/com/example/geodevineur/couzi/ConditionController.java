@@ -14,13 +14,18 @@ public class ConditionController {
 
     public List<Condition> getAllCondsOfDep(Departement departement){
         List<Condition> allConds = new ArrayList<>();
-        List<Integer> allDeltas = new ArrayList<>(Arrays.asList(-50,-25,-10,5,5,10,25,50));
         List<String> allAttributs = new ArrayList<>(Arrays.asList("population","surface","seaside","neightbours","politic"));
 
         for(String attribut : allAttributs){
             if(attribut.equals("population") || attribut.equals("surface") || attribut.equals("neightbours")){
-                for(int delta : allDeltas){
-                    allConds.add(new Condition(delta,attribut,departement));
+                if(attribut.equals("neightbours")){
+                    for(int delta : Arrays.asList(-50,-25,-10,10,25,50)){
+                        allConds.add(new Condition(delta,attribut,departement));
+                    }
+                } else {
+                    for(int delta : Arrays.asList(-50,-25,-10,-5,5,10,25,50)){
+                        allConds.add(new Condition(delta,attribut,departement));
+                    }
                 }
             } else if(attribut.equals("seaside") || attribut.equals("politic")){
                 allConds.add(new Condition(0,attribut,departement));
