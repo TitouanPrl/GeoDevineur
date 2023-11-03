@@ -70,7 +70,7 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         setStep(0);
         getQuizzStatus();
-        test();
+        //test();
         //List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
         return "redirect:/quizz?nextQ=true";
     }
@@ -172,7 +172,7 @@ public class QuizzController {
 
     //Renvoie le template html du bouton de lancement du quizz
     public StringBuilder getStartButton(){
-        return new StringBuilder("<button class=\"btn btn-success\" id=\"start\">DEMARRER</button>");
+        return new StringBuilder("<button class=\"btn btn-success btn-lg\" id=\"start\">DEMARRER</button>");
     }
 
     //Procedure temporaire pour afficher les infos du quizz au moment de l'appel

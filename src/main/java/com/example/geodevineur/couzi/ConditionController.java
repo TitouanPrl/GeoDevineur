@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.couzi;
 
 import com.example.geodevineur.enumerations.Politic;
@@ -41,3 +42,4 @@ public class ConditionController {
         }
     }
 }
+*/

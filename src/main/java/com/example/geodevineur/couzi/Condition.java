@@ -1,3 +1,4 @@
+/*
 package com.example.geodevineur.couzi;
 
 import com.example.geodevineur.Format;
@@ -143,3 +144,4 @@ public class Condition {
         return getCible().getPolitic().toString();
     }
 }
+*/
