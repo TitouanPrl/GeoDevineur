@@ -2,12 +2,14 @@ package com.example.geodevineur.couzi;
 
 import com.example.geodevineur.enumerations.Politic;
 import com.example.geodevineur.tables.Departement;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class ConditionController {
 
     public List<Condition> getAllCondsOfDep(Departement departement){

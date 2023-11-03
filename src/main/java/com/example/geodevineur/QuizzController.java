@@ -1,6 +1,7 @@
 package com.example.geodevineur;
 
 import com.example.geodevineur.controllers.DepartementController;
+import com.example.geodevineur.couzi.ConditionController;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,8 @@ public class QuizzController {
 
     @Autowired
     DepartementController departementController;
+    @Autowired
+    ConditionController conditionController;
 
     @Getter@Setter
     private Instant startTime;
@@ -34,8 +37,9 @@ public class QuizzController {
     @Getter@Setter
     private int score; //a delete plus tard
 
-    public QuizzController(DepartementController departementController_){
+    public QuizzController(DepartementController departementController_, ConditionController conditionController_){
         this.departementController = departementController_;
+        this.conditionController = conditionController_;
         this.status = "waiting";
     }
 
@@ -48,6 +52,7 @@ public class QuizzController {
     //Affichage du bouton pour lancer le quizz si la page est en status waiting
     @RequestMapping(value = "quizz", params = "waiting")
     public String waiting(Model model) {
+        conditionController.printAllCondsOfDep(departementController.getByName("Tarn"));
         model.addAttribute("startButton", getStartButton());
         return "quizz";
     }

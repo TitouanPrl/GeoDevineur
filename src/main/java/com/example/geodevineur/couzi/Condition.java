@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 public class Condition {
 
@@ -27,6 +27,11 @@ public class Condition {
         this.delta = delta_;
         this.attribut = attribut_;
         this.cible = departement_;
+        this.validateCond = new ArrayList<>();
+    }
+
+    public Condition(){
+
     }
 
 
@@ -72,8 +77,40 @@ public class Condition {
     }
 
     public boolean isDepartementValidating(Departement departement){
-        
-        return true;
+        boolean status;
+        switch (getAttribut()){
+            case "population":
+                if(isDeltaPositive()){
+                    status = (departement.getPopulation() <= getCible().getPopulation()*getDelta()/100);
+                } else {
+                    status = (departement.getPopulation() >= getCible().getPopulation()*getDelta()/100);
+                }
+                break;
+            case "surface":
+                if(isDeltaPositive()){
+                    status = (departement.getSurface() <= getCible().getSurface()*getDelta()/100);
+                } else {
+                    status = (departement.getSurface() >= getCible().getSurface()*getDelta()/100);
+                }
+                break;
+            case "neightbours":
+                if(isDeltaPositive()){
+                    status = (departement.getNeightbours() <= getCible().getNeightbours()*getDelta()/100);
+                } else {
+                    status = (departement.getNeightbours() >= getCible().getNeightbours()*getDelta()/100);
+                }
+                break;
+            case "politic":
+                status = (departement.getPolitic().equals(getCible().getPolitic()));
+                break;
+            case "seaside":
+                status = (departement.getSeaside() == getCible().getSeaside());
+                break;
+            default:
+                status = false;
+                break;
+        }
+        return status;
     }
 
     public boolean isDeltaPositive(){
