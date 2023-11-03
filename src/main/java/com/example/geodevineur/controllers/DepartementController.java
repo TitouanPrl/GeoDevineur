@@ -1,4 +1,4 @@
-package com.example.geodevineur.controller;
+package com.example.geodevineur.controllers;
 
 import com.example.geodevineur.repos.DepartementRepository;
 import com.example.geodevineur.tables.Departement;

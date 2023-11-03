@@ -1,10 +1,8 @@
 package com.example.geodevineur;
 
 import com.example.geodevineur.condition.Condition;
-import com.example.geodevineur.condition.ConditionController;
-import com.example.geodevineur.condition.NeighbourCond;
-import com.example.geodevineur.condition.PopulationCond;
-import com.example.geodevineur.controller.DepartementController;
+import com.example.geodevineur.controllers.ConditionController;
+import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.example.geodevineur.controller;
+package com.example.geodevineur.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
