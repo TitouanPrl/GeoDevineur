@@ -84,18 +84,13 @@ public class QuizzController {
         System.out.println("-----------");
         System.out.println("Saisie : "+nextQ);
 
-        boolean checking = false;
-        for(Departement dep : getAllDepartements()){
-            if(dep.getName().equals(nextQ) && dep.getPossible()){
-                checking = true;
-            }
-        }
+        Departement departementOfInput = getDepartementFromSInput(nextQ);
 
         if(clearString(nextQ).equals(clearString(departementToFind.getName()))){
             //Le departement est trouvé
             int seconds = end();
             model.addAttribute("scoreModal",getScoreModal(seconds));
-        } else if(getStep()==0 || checking) {
+        } else if(getStep()==0 || departementOfInput != null) {
             setStep(getStep()+1);
             Condition<Departement> cond = conditionController.getNextCond(getAllDepartements());
             conditions.add(cond);
@@ -103,9 +98,20 @@ public class QuizzController {
             System.out.println("new sentence : "+cond.getSentence());
             model.addAttribute("questionContent",getTemplate(cond.getSentence()));
         } else {
-            return "regles";
+            model.addAttribute("scoreModal",getLoseModal());
         }
         return "quizz";
+    }
+
+    public Departement getDepartementFromSInput(String input){
+        String name = clearString(input);
+        Departement cible = null;
+        for(Departement departement : departementController.getAll()){
+            if(clearString(departement.getName()).equals(name)){
+                cible = departement;
+            }
+        }
+        return cible;
     }
 
     public int getNbPossible(){
@@ -170,6 +176,17 @@ public class QuizzController {
         htmlContent.append("<input type=\"hidden\" id=\"nb\" value=\"").append(getStep()).append("\">");
         htmlContent.append("<button type=\"submit\" class=\"btn btn-primary\">Enregistrer</button>");
         htmlContent.append("</form>");
+        htmlContent.append("</div>");
+        htmlContent.append("</div>");
+        return htmlContent;
+    }
+
+    public StringBuilder getLoseModal(){
+        StringBuilder htmlContent = new StringBuilder();
+        htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
+        htmlContent.append("<div class=\"modal-content\">");
+        htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
+        htmlContent.append("<h2>Dommage vous avez perdu ...</h2>");
         htmlContent.append("</div>");
         htmlContent.append("</div>");
         return htmlContent;
