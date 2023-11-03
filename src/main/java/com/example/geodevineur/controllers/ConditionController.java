@@ -24,12 +24,10 @@ public class ConditionController {
         int nbDep = allDepartements.size();
 
         Departement chosen;
-
         do {
             int randIndex = random.nextInt(nbDep);
             chosen = allDepartements.get(randIndex);
         } while(!chosen.getPossible());
-
         Departement secondary;
         int randIndex = random.nextInt(nbDep);
         secondary = allDepartements.get(randIndex);
@@ -82,6 +80,7 @@ public class ConditionController {
         int countPotential = 0;
 
         for (Departement dep : allDepartements) {
+            dep.setPotential(dep.getPossible());
             if (dep.getPossible()) {
                 countPossible++;
             }
