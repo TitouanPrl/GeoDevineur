@@ -42,35 +42,34 @@ public class ConditionController {
             System.out.println("here, rand="+randCond);
             switch (randCond) {
                 case 0:
-                    cond = new CardinalCond<Departement>(chosen);
+                    cond = new CardinalCond<>(chosen);
                     break;
                 case 1:
-                    cond = new ContainLetterCond<Departement>(chosen);
-                    System.out.println("here, cond=null -> "+(cond == null));
+                    cond = new ContainLetterCond<>(chosen);
                     break;
                 case 2:
-                    cond = new NbCharactersCond<Departement>(chosen);
+                    cond = new NbCharactersCond<>(chosen);
                     break;
                 case 3:
-                    cond = new NeighbourCond<Departement>(chosen, secondary);
+                    cond = new NeighbourCond<>(chosen, secondary);
                     break;
                 case 4:
-                    cond = new PoliticCond<Departement>(chosen);
+                    cond = new PoliticCond<>(chosen);
                     break;
                 case 5:
-                    cond = new PopulationCond<Departement>(chosen, secondary);
+                    cond = new PopulationCond<>(chosen, secondary);
                     break;
                 case 6:
-                    cond = new NumberCond<Departement>(chosen, secondary);
+                    cond = new NumberCond<>(chosen, secondary);
                     break;
                 case 7:
-                    cond = new RegionCond<Departement>(chosen);
+                    cond = new RegionCond<>(chosen);
                     break;
                 case 8:
-                    cond = new SeasideCond<Departement>(chosen);
+                    cond = new SeasideCond<>(chosen);
                     break;
                 case 9:
-                    cond = new SurfaceCond<Departement>(chosen, secondary);
+                    cond = new SurfaceCond<>(chosen, secondary);
                     break;
             }
             System.out.println("cond == null -> ="+ (cond == null));

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,6 +41,7 @@ public class QuizzController {
     public QuizzController(DepartementController departementController_, ConditionController conditionController_){
         this.departementController = departementController_;
         this.conditionController = conditionController_;
+        this.conditions = new ArrayList<>();
         this.status = "waiting";
     }
 
@@ -70,8 +72,8 @@ public class QuizzController {
         getQuizzStatus();
         Condition<Departement> cond = conditionController.getNextCond();
         conditions.add(cond);
-        System.out.println(cond.toString());
-        System.out.println(conditions.getFirst().toString());
+        System.out.println("la:"+cond.toString());
+        System.out.println("la2:"+conditions.getFirst().toString());
         //List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
         return "redirect:/quizz?nextQ=true";
     }
