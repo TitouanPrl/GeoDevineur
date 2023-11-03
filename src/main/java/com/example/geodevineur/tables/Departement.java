@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public abstract class Departement implements Comparable<Departement> {
+public class Departement implements Comparable<Departement> {
 
     @Id@Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)

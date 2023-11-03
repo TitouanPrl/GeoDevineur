@@ -18,13 +18,19 @@ public class ConditionController {
         for(String attribut : allAttributs){
             if(attribut.equals("population") || attribut.equals("surface") || attribut.equals("neightbours")){
                 for(int delta : allDeltas){
-                    allConds.add(new Condition(delta,attribut));
+                    allConds.add(new Condition(delta,attribut,departement));
                 }
             } else if(attribut.equals("seaside") || attribut.equals("politic")){
-                allConds.add(new Condition(0,attribut));
+                allConds.add(new Condition(0,attribut,departement));
             }
         }
-        Condition politique = new Condition(0,"politic");
         return allConds;
+    }
+
+    public void printAllCondsOfDep(Departement departement){
+        List<Condition> allConds = getAllCondsOfDep(departement);
+        for(Condition condition : allConds){
+            System.out.println(condition.getSentence());
+        }
     }
 }
