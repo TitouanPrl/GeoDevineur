@@ -21,15 +21,11 @@
         </div>
     </div>
 </header>
-
-<div th:remove="tag" th:utext="${startButton}"></div>
-<div th:remove="tag" th:utext="${scoreModal}"></div>
-
 <div class="container">
-    <div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}">
-    </div>
+    <div th:remove="tag" th:utext="${scoreModal}"></div>
+    <div th:remove="tag" th:utext="${startButton}"></div>
+    <div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}"></div>
 </div>
-
 <script>
     function proceedForm() {
         const pseudo = document.getElementById("pseudo").value;

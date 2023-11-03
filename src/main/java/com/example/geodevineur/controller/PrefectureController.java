@@ -1,10 +1,8 @@
-package com.example.geodevineur.controllers;
+package com.example.geodevineur.controller;
 
 import com.example.geodevineur.repos.PrefectureRepository;
-import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

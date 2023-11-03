@@ -1,6 +1,6 @@
 package com.example.geodevineur;
 
-import com.example.geodevineur.controllers.EntityController;
+import com.example.geodevineur.controller.EntityController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

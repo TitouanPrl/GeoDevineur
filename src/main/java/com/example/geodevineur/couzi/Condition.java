@@ -1,13 +1,9 @@
 package com.example.geodevineur.couzi;
 
 import com.example.geodevineur.Format;
-import com.example.geodevineur.controllers.DepartementController;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;

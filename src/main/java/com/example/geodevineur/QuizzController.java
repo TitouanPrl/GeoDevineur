@@ -1,8 +1,10 @@
 package com.example.geodevineur;
 
-import com.example.geodevineur.controllers.DepartementController;
-import com.example.geodevineur.couzi.Condition;
-import com.example.geodevineur.couzi.ConditionController;
+import com.example.geodevineur.condition.Condition;
+import com.example.geodevineur.condition.ConditionController;
+import com.example.geodevineur.condition.NeighbourCond;
+import com.example.geodevineur.condition.PopulationCond;
+import com.example.geodevineur.controller.DepartementController;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,15 +21,13 @@ import java.util.List;
 @Controller
 public class QuizzController {
 
-    public class Cond{
-
-    }
-
     @Autowired
     DepartementController departementController;
     @Autowired
     ConditionController conditionController;
 
+    @Getter@Setter
+    private List<Condition<Departement>> conditions;
     @Getter@Setter
     private Instant startTime;
     @Getter@Setter
@@ -54,7 +54,7 @@ public class QuizzController {
     //Affichage du bouton pour lancer le quizz si la page est en status waiting
     @RequestMapping(value = "quizz", params = "waiting")
     public String waiting(Model model) {
-        conditionController.printAllCondsOfDep(departementController.getByName("Tarn"));
+        //conditionController.printAllCondsOfDep(departementController.getByName("Tarn"));
         model.addAttribute("startButton", getStartButton());
         return "quizz";
     }
@@ -70,7 +70,8 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         setStep(0);
         getQuizzStatus();
-        List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
+        test();
+        //List<Condition> allConditions = conditionController.getAllCondsOfDep(getDepartementToFind());
         return "redirect:/quizz?nextQ=true";
     }
 

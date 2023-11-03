@@ -1,9 +1,9 @@
 package com.example.geodevineur;
 
-import com.example.geodevineur.controllers.DepartementController;
-import com.example.geodevineur.controllers.EntityController;
-import com.example.geodevineur.controllers.PrefectureController;
-import com.example.geodevineur.controllers.RegionController;
+import com.example.geodevineur.controller.DepartementController;
+import com.example.geodevineur.controller.EntityController;
+import com.example.geodevineur.controller.PrefectureController;
+import com.example.geodevineur.controller.RegionController;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 import com.example.geodevineur.tables.Region;

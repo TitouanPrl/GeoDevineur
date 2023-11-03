@@ -1,17 +1,15 @@
-package com.example.geodevineur.controllers;
+package com.example.geodevineur.controller;
 
 import com.example.geodevineur.Format;
 import com.example.geodevineur.repos.ScoreRepository;
 import com.example.geodevineur.tables.Score;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ScoreController {

@@ -1,6 +1,6 @@
 package com.example.geodevineur;
 
-import com.example.geodevineur.controllers.ScoreController;
+import com.example.geodevineur.controller.ScoreController;
 import com.example.geodevineur.tables.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
