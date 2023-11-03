@@ -10,8 +10,11 @@ import com.example.geodevineur.condition.Condition;
 import com.example.geodevineur.condition.ContainLetterCond;
 import com.example.geodevineur.condition.NeighbourCond;
 import com.example.geodevineur.condition.PoliticCond;
+import com.example.geodevineur.condition.PrefectureCond;
+import com.example.geodevineur.condition.RegionCond;
 import com.example.geodevineur.condition.SeasideCond;
 import com.example.geodevineur.tables.Departement;
+import com.example.geodevineur.tables.Region;
 import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.enumerations.Politic;
 
@@ -27,7 +30,7 @@ public class GeoDevineurApplication {
     public Condition<Departement> questionChoice(Departement solution, int possibilites) {
         /* On choisit aléatoirement le type de question */
         Random random = new Random();
-        int randomInt = random.nextInt(9);
+        int randomInt = random.nextInt(11);
 
         Condition<Departement> cond;
 
@@ -160,6 +163,33 @@ public class GeoDevineurApplication {
                 /* compter le nb de département qui match ce palier */
                 if (nbMatch < possibilites) {
                     return new CardinalCond<Departement>(solution);
+                }
+
+                else {
+                    return questionChoice(solution, possibilites);
+                }
+                
+                break;
+
+            /* Region */
+            case 9:
+                /* compter le nb de département qui appartiennent à cette région */
+                if (nbMatch < possibilites) {
+                    return new RegionCond<Departement>(solution);
+                }
+
+                else {
+                    return questionChoice(solution, possibilites);
+                }
+                
+                break;
+
+            /* Préfecture 
+             * Question finale si le département n'est toujours pas trouvé
+            */
+            case 10:
+                if (possibilites == 1) {
+                    return new PrefectureCond<Departement>(solution);
                 }
 
                 else {
