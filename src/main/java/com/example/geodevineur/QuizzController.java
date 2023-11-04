@@ -44,13 +44,13 @@ public class QuizzController {
         this.conditions = new ArrayList<>();
     }
 
-    //Lien de redirection en cas d'absence d'arguments
+    /* Redirects if no arguments */
     @RequestMapping(value = "quizz")
     public String redirect() {
         return "redirect:/quizz?waiting=true";
     }
 
-    //Affichage du bouton pour lancer le quizz si la page est en status waiting
+    /* Prints starting button if page in waiting status */
     @RequestMapping(value = "quizz", params = "waiting")
     public String waiting(Model model) {
         //conditionController.printAllCondsOfDep(departementController.getByName("Tarn"));
@@ -58,35 +58,34 @@ public class QuizzController {
         return "quizz";
     }
 
-    //Initialisation du quizz (temps, cible, status, etape)
+    /* Initializes the quizz (time, target, status, step) */
     @RequestMapping(value = "quizz", params = "start")
     public String start(){
-        //Mise à 0 du chrono de durée du quizz
+        /* Sets the timer to 0 */
         setStartTime(Instant.now());
-        //TIrage au sort du departement à trouver
+        /* Sets randomly the department to find */
         setDepartementToFind(departementController.getRandomOne());
-        //Initialisation compteur d'etapes
+        /* Sets the step counter to 0 */
         setStep(0);
-        //Calcul de l'ensemble des condition du quizz, suivant le departement à trouver
+        /* Set the list of conditions for the quizz, according to the searched department */
         setConditions(conditionController.getRun(departementController.getAll(), getDepartementToFind()));
         //Logs du departements à trouver A DELETE
         System.out.println("Departement to find : "+getDepartementToFind().getName());
         return "redirect:/quizz?nextQ=start";
     }
 
-    //Fonction principale appelée lors d'un clic sur Valider
-    //Elle verifie si la reponse est trouvée et sinon calcule la question suivante pour l'afficher
     //LOGS A DELTE !!
+    /* Main fonction, verify if the solution is found and if no, set the next question */
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
-        //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
+        /* Comparing response and target (without the special chars) */
         System.out.println("-----------");
         System.out.println("Saisie : "+nextQ);
 
-        //Identification du departement saisie
+        /* Response written by the player */
         Departement departementOfInput = getDepartementFromSInput(nextQ);
 
-        //Check si le departement est celui à trouver
+        /* Comparison with the target */
         if(getStep() > 0 && departementOfInput != null && departementOfInput.getName().equals(getDepartementToFind().getName())) {
             int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
@@ -95,11 +94,11 @@ public class QuizzController {
             System.out.println(departementOfInput.getName()+" != "+departementToFind.getName());
         }
 
-        //On recupere la condition precedente, correspondant à departementOfInput
+        /* Getting the last condition */
         Condition<Departement> previousCond = null;
         if (getStep() > 0) previousCond = getConditions().get(getStep()-1);
 
-        //ON check si le departement saisie valide la condition
+        /* Checking if the department written matches the condition */
         if(previousCond == null || (departementOfInput != null && previousCond.checksCondition(departementOfInput))) {
             //logs à delete
             if(previousCond != null)
@@ -108,7 +107,7 @@ public class QuizzController {
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
-            //C'est perdu, on affiche la modale et fin du quizz
+            /* Lose, printing the end message */
             System.out.println(nextQ + (departementOfInput) + " didnt checked : "+previousCond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
@@ -116,7 +115,7 @@ public class QuizzController {
         return "quizz";
     }
 
-    //Recupere un departement (ou null sinon) depuis une string en l'epurant
+    /* Gets a department from a string and deletes its special chars */
     public Departement getDepartementFromSInput(String input){
         String name = clearString(input);
         Departement cible = null;
@@ -128,13 +127,13 @@ public class QuizzController {
         return cible;
     }
 
-    //Epure un chaine de caracteres en enlevant les {,|'| |-} les accents et transforme les majuscules en minuscules
+    /* Clear a string by deleting {,|'| |-}, accents, and turning capitals into small letters */
     public String clearString(String value){
         value = value.replace("é","e").replace("è","e").replace("î","i").replace("Î","i").replace("ô","o");
         return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
     }
 
-    //Renvoie le template html de la question
+    /* Returns html template of the question */
     public StringBuilder getTemplate(String question){
         StringBuilder template = new StringBuilder();
         template.append("<div class=\"card mb-4 box-shadow\">");
@@ -153,7 +152,7 @@ public class QuizzController {
         return template;
     }
 
-    //Renvoie le template html de la modale de saisie de score (quand quizz terminé)
+    /* Returns html template of the score interface */
     public StringBuilder getScoreModal(int seconds){
         StringBuilder htmlContent = new StringBuilder();
         htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
@@ -179,6 +178,7 @@ public class QuizzController {
         return htmlContent;
     }
 
+    /* Returns the html template for the lost interface */
     public StringBuilder getLoseModal(){
         StringBuilder htmlContent = new StringBuilder();
         htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
@@ -190,7 +190,7 @@ public class QuizzController {
         return htmlContent;
     }
 
-    //Renvoie une chaine de caracteres avec des min/sec depuis des secondes (int)
+    /* Converts seconds from int to string */
     public String getTimeStringFromSeconds(int seconds){
         int minutes = 0;
         String sentence;
@@ -206,7 +206,7 @@ public class QuizzController {
         return sentence;
     }
 
-    //Renvoie le template html du bouton de lancement du quizz
+    /* Returns html template for the button launching the quizz */
     public StringBuilder getStartButton(){
         return new StringBuilder("<button class=\"btn btn-success btn-lg\" id=\"start\">DEMARRER</button>");
     }

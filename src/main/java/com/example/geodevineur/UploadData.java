@@ -41,7 +41,7 @@ public class UploadData {
         this.scoreController = scoreController_;
     }
 
-    //Procedure servant à vider la base de donnée des pref/dep/ref
+    /*Clear the db */
     public void deleteAll(){
         regionController.deleteAll();
         prefectureController.deleteAll();
@@ -50,6 +50,7 @@ public class UploadData {
 
     //Type temporaire contenant une prefecture et son departement (en string) pour l'insere aisement dans la bdd
     //va etre fusionné avec l'autre temporaire
+    /* Tmp class to store string data and easily insert them into the db */
     public class PrefectureBis<Prefecture, String> {
         Prefecture prefecture;
         String departementName;
@@ -72,38 +73,37 @@ public class UploadData {
         }
     }
 
-    //Procedure servant à créer le lien entre un departement et une prefecture simultannément
+    /* Creates a link between a department and its prefecture */
     @Transactional
     public void saveOneToOne(Prefecture prefecture, Departement departement){
         prefecture.setDepartement(departement);
         departement.setPrefecture(prefecture);
     }
-    //Procedure servant à créer le lien entre une region et ses departement simultannément
+    /* Creates a link between a region and its departments */
     @Transactional
     public void saveManyToOne(List<Departement> allDpts, Region region){
         region.setDepartements(allDpts);
         allDpts.forEach(departement -> departement.setRegion(region));
     }
 
-    //Fonction qui recupere la liste de toutes les regions contenues dans le csv regions.csv
+    /* Gets the list of regions from the csv */
     public List<Region> readRegionsCSV(){
         List<Region> allRegions = new ArrayList<>();
         String filePathRgs = "src/main/resources/static/csv/regions.csv";
 
         try (BufferedReader brP = new BufferedReader(new FileReader(filePathRgs))) {
             String line;
-            line = brP.readLine(); /* On saute la première ligne */
+            line = brP.readLine(); /* Jumping the header line */
             while ((line = brP.readLine()) != null) {
-                /* On crée un tableau en utilisant le séparateur pour séparer les cases */
+                /* Creating an array using the separator to set the cases */
                 String[] values = line.split(",");
-                /* On accède aux éléments via le tableau */
+                /* Accessing the elements throught the array */
                 Region region = new Region(
-                        values[1], //Nom
-                        Cardinal.fromString(values[2])); //Cardinal
+                        values[1], /* Name */
+                        Cardinal.fromString(values[2])); /* Cardinal */
 
-                /* On ajoute l'élément à la liste */
+                /* Adding element to the list */
                 allRegions.add(region);
-                //System.out.println(values[1]+"|"+values[2]+"|"+values[3]);
             }
         }catch (IOException e) {
             e.printStackTrace();
@@ -111,30 +111,28 @@ public class UploadData {
         return allRegions;
     }
 
-    //Fonction qui recupere la liste de tous les departements contenues dans le csv departements.csv
+    /* Gets the list of departments from the csv */
     public List<DepartementBis<Departement,String>> readDepartementsCSV(){
         List<DepartementBis<Departement,String>> allDepartements = new ArrayList<>();
         String filePathDpts = "src/main/resources/static/csv/departements.csv";
 
         try (BufferedReader brP = new BufferedReader(new FileReader(filePathDpts))) {
             String line;
-            line = brP.readLine(); /* On saute la première ligne */
+            line = brP.readLine(); 
             while ((line = brP.readLine()) != null) {
-                /* On crée un tableau en utilisant le séparateur pour séparer les cases */
                 String[] values = line.split(",");
-                /* On accède aux éléments via le tableau */
                 Departement departement = new Departement(
-                        values[2], //Nom
-                        values[3], //Number
-                        Integer.parseInt(values[4]), //Population
-                        Format.round((double) Float.parseFloat(values[5]),2), //Superficie
-                        Format.IntToBoolean(Integer.parseInt(values[7])), //Cotier
-                        Integer.parseInt(values[8]), //Voisins
-                        Politic.fromString(values[9])); //Politique
+                        values[2], /* Name */
+                        values[3], /* Number of the department */
+                        Integer.parseInt(values[4]), /* Population */
+                        Format.round((double) Float.parseFloat(values[5]),2), /* Surface */
+                        Format.IntToBoolean(Integer.parseInt(values[7])), /* Seaside */
+                        Integer.parseInt(values[8]), /* Neighbours */
+                        Politic.fromString(values[9])); /* Politic */
                 //Cardinal pas utilisé
                 String regionName = values[1];
 
-                /* On ajoute l'élément à la liste */
+                /* Adding element to the list */
                 allDepartements.add(new DepartementBis<>(departement,regionName));
             }
         }catch (IOException e) {
@@ -143,25 +141,23 @@ public class UploadData {
         return allDepartements;
     }
 
-    //Fonction qui recupere la liste de toutes les prefectures contenues dans le csv prefectures.csv
+    /* Gets the list of prefectures from the csv */
     public List<PrefectureBis<Prefecture,String>> readPrefecturesCSV(){
         List<PrefectureBis<Prefecture,String>> allPrefectures = new ArrayList<>();
         String filePathPrfs = "src/main/resources/static/csv/prefectures.csv";
 
         try (BufferedReader brP = new BufferedReader(new FileReader(filePathPrfs))) {
             String lineP;
-            lineP = brP.readLine(); /* On saute la première ligne */
+            lineP = brP.readLine(); 
             while ((lineP = brP.readLine()) != null) {
-                /* On crée un tableau en utilisant le séparateur pour séparer les cases */
                 String[] values = lineP.split(",");
-                /* On accède aux éléments via le tableau */
                 Prefecture prefecture = new Prefecture(
-                        values[1], //Nom
-                        Integer.parseInt(values[3])); //Population
+                        values[1], /* Names */
+                        Integer.parseInt(values[3])); /* Population */
 
                 String departementName = values[2];
 
-                /* On ajoute l'élément à la liste */
+                /* Adding element to the list */
                 allPrefectures.add(new PrefectureBis<>(prefecture,departementName));
             }
         }catch (IOException e) {
@@ -170,7 +166,7 @@ public class UploadData {
         return allPrefectures;
     }
 
-    //Fonction principale qui vide et remplis la BDD des departements/regions/prefectures depuis les csv
+    /* Main fonction, clear and fill up the db from the csv */
     @GetMapping("upload")
     public String upload(Model model){
 
@@ -180,25 +176,22 @@ public class UploadData {
         List<DepartementBis<Departement,String>> allDepartementsBis = readDepartementsCSV();
         List<PrefectureBis<Prefecture,String>> allPrefecturesBis = readPrefecturesCSV();
 
+        /* We get all the departments of the region */
         for(Region region : allRegions){
-            //On veut recup tout les departements de la region
             List<Departement> departementsOfRegion = new ArrayList<>();
 
-            //On boucle sur tous les departements du csv
             for(DepartementBis<Departement,String> depBis : allDepartementsBis){
-                //Si la region du departement du csv est la bonne
                 if(depBis.regionName.equals(region.getName())){
                     departementsOfRegion.add(depBis.departement);
-                    //Et de la meme maniere on recupere la prefecture de ce departement
                     for(PrefectureBis<Prefecture,String> prefBis : allPrefecturesBis){
                         if(prefBis.departementName.equals(depBis.departement.getName())){
-                            //On crée le lien entre chaque departement et sa prefecture
+                            /* Creating the link between department and prefecture */
                             saveOneToOne(prefBis.prefecture,depBis.departement);
                         }
                     }
                 }
             }
-            //On crée le lien entre les departements et leur region
+            /* Creating the link between department and region */
             saveManyToOne(departementsOfRegion,region);
             regionController.add(region);
         }

@@ -3,6 +3,7 @@ package com.example.geodevineur.enumerations;
 public enum Cardinal {
     W, NW, N, NE, E, SE, S, SW, C;
 
+    /* Converts a position from string to Cardinal type */
     public static Cardinal fromString(String input) {
         if (input.equals("N")) return Cardinal.N;
         if (input.equals("NE")) return Cardinal.NE;
@@ -16,6 +17,7 @@ public enum Cardinal {
         return null;
     }
 
+    /* Prints a Cardinal type to string */
     public String toString(){
         if (this.equals(Cardinal.N)) return "Nord";
         if (this.equals(Cardinal.NE)) return "Nord-Est";

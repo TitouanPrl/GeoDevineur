@@ -23,28 +23,28 @@ public class Map {
         this.content = Files.readString(Path.of(filePath_));
     }
 
-    //Procedure servant à reinitialiser la carte à son contenu d'origine (fichier)
+    /* Resets the map to its original state */
     public void clear() throws IOException {
         this.content = Files.readString(Path.of(this.filePath));
     }
 
-    //Procedure servant à colorer un departement sur la carte
+    /* Colours a department on the map */
     public void colorizeDepartement(Departement departement, String color){
         String cible = "_" + departement.getNumber().toLowerCase() + "\"";
         this.content = this.content.replace(cible, cible + " style=\"fill: " + color + ";\"");
     }
 
-    //Procedure servant à colorer plusieurs departements sur la carte
+    /* Colours several department on the map */
     public void colorizeDepartements(List<Departement> departements, String color) {
         departements.forEach(departement -> colorizeDepartement(departement,color));
     }
 
-    //Procedure servant à colorer une region (soit plusieurs departements) sur la carte
+    /* Colours a region on the map */
     public void colorizeRegion(Region region, String color){
         colorizeDepartements(region.getDepartements(), color);
     }
 
-    //Procedure servant à placer le point d'une prefecture sur la carte en utilisant ses coordonnées
+    /* Place a dot representing a prefecture on the map */
     public void colorizePrefecture(Prefecture prefecture, String color){
         int[] location = getPrefectureLocation(prefecture);
         this.content = this.content.replace("#fill", color);
@@ -52,18 +52,18 @@ public class Map {
         this.content = this.content.replace("valueY", String.valueOf(location[1]));
     }
 
-    //Retourne les coordonnees X et Y de la prefecture (stockées dans csv)
+    /* Returns X and Y coordinates of a prefecture according to the csv */
     public int[] getPrefectureLocation(Prefecture prefecture){
         int x = 0;
         int y = 0;
         String filePathCoordonnees = "src/main/resources/static/csv/coordonnees.csv";
         try (BufferedReader brP = new BufferedReader(new FileReader(filePathCoordonnees))) {
             String line;
-            line = brP.readLine(); /* On saute la première ligne */
+            line = brP.readLine(); /* Jumping first line */
             while ((line = brP.readLine()) != null) {
-                /* On crée un tableau en utilisant le séparateur pour séparer les cases */
+                /* Creating an array using the separator to set the cases */
                 String[] values = line.split(",");
-                /* On cherche la ville qui nous interesse */
+                /* Looking for the given city */
                 if(values[1].equals(prefecture.getName())){
                     x = Integer.parseInt(values[2]);
                     y = Integer.parseInt(values[3]);

@@ -20,14 +20,14 @@ public class ScorePage {
         this.scoreController = scoreController_;
     }
 
-    //Fonction principale qui met à jour la page des scores avec tableau
+    /* Updates the scores page */
     @RequestMapping(value = "scores")
     public String scores(Model model){
         model.addAttribute("allScores", getScoresTable());
         return "scores";
     }
 
-    //Fonction qui procede à l'ajout (ou modification) d'un score par le joueur (apres realisation d'un quizz)
+    /* Adds/updates a score at the end of a quizz */
     @RequestMapping(value = "scores", params = {"pseudo","password","seconds","nb"})
     public String checkInfos(@RequestParam String pseudo, @RequestParam String password, @RequestParam String seconds, @RequestParam String nb){
         String status = scoreController.proceed(pseudo, password, Integer.parseInt(seconds), Integer.parseInt(nb));
@@ -35,7 +35,7 @@ public class ScorePage {
         return "redirect:/scores?status="+status;
     }
 
-    //Fonction qui gere la suppression d'un score par l'utilisateur
+    /* Deletes a score */
     @RequestMapping(value = "scores", params = {"pseudo", "password"})
     public String deleteScore(@RequestParam String pseudo, @RequestParam String password){
         Score score = scoreController.getByName(pseudo);
@@ -47,7 +47,7 @@ public class ScorePage {
         return "redirect:/scores?status=delete"+status;//succes-failure
     }
 
-    //Fonction qui renvoie le tableau des scores (depuis bdd) en html
+    /* Gets the score array from the db and returns it in html */
     public StringBuilder getScoresTable(){
         List<Score> allScores = scoreController.getAll();
         StringBuilder htmlContent = new StringBuilder();
@@ -58,7 +58,7 @@ public class ScorePage {
         int i=1;
         for(Score score : allScores){
             htmlContent.append("<tr>");
-            switch(i){ //Notation differente pour les 3 premiers
+            switch(i){ 
                 case 1: htmlContent.append("<td>1er</td>");break;
                 case 2: htmlContent.append("<td>2nd</td>");break;
                 case 3: htmlContent.append("<td>3ème</td>");break;
