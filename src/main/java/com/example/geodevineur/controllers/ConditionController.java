@@ -18,9 +18,8 @@ public class ConditionController {
         this.departementController = departementController_;
     }
 
-    public Condition<Departement> getNextCond() {
+    public Condition<Departement> getNextCond(List<Departement> allDepartements) {
         Random random = new Random();
-        List<Departement> allDepartements = departementController.getAll();
         int nbDep = allDepartements.size();
 
         Departement chosen;
@@ -35,7 +34,7 @@ public class ConditionController {
         Condition<Departement> cond = null;
 
         do {
-            int randCond = random.nextInt(10);
+            int randCond = random.nextInt(11);
             switch (randCond) {
                 case 0:
                     cond = new CardinalCond<>(chosen);
@@ -66,6 +65,9 @@ public class ConditionController {
                     break;
                 case 9:
                     cond = new SurfaceCond<>(chosen, secondary);
+                    break;
+                case 10:
+                    cond = new PrefectureCond<>(chosen);
                     break;
             }
 
