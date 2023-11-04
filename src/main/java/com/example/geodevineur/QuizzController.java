@@ -32,8 +32,6 @@ public class QuizzController {
     @Getter@Setter
     private Instant startTime;
     @Getter@Setter
-    private String status; //waiting-running   //a delete plus tard
-    @Getter@Setter
     private Departement departementToFind;
     @Getter@Setter
     private int step;
@@ -44,7 +42,6 @@ public class QuizzController {
         this.departementController = departementController_;
         this.conditionController = conditionController_;
         this.conditions = new ArrayList<>();
-        this.status = "waiting";
     }
 
     //Lien de redirection en cas d'absence d'arguments
@@ -66,20 +63,20 @@ public class QuizzController {
     public String start(){
         //Mise à 0 du chrono de durée du quizz
         setStartTime(Instant.now());
-        //Changement statut du quizz à en cours
-        setStatus("running");
         //TIrage au sort du departement à trouver
         setDepartementToFind(departementController.getRandomOne());
-        List<Condition<Departement>> allConditions = conditionController.getRun(departementController.getAll(), getDepartementToFind());
+        //Initialisation compteur d'etapes
         setStep(0);
-        setConditions(allConditions);
-        setAllDepartements(departementController.getAll());
+        //Calcul de l'ensemble des condition du quizz, suivant le departement à trouver
+        setConditions(conditionController.getRun(departementController.getAll(), getDepartementToFind()));
+        //Logs à delete
         getQuizzStatus();
         return "redirect:/quizz?nextQ=start";
     }
 
     //Fonction principale appelée lors d'un clic sur Valider
     //Elle verifie si la reponse est trouvée et sinon calcule la question suivante pour l'afficher
+    //LOGS A DELTE !!
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
         //On compare la reponse avec la cible, en epurant les expressions (minuscule+pas d'accents+pas de '-',' ',''')
@@ -88,27 +85,31 @@ public class QuizzController {
 
         Departement departementOfInput = getDepartementFromSInput(nextQ);
 
-        if(clearString(nextQ).equals(clearString(departementToFind.getName()))) {
-            //Le departement est trouvé
-            int seconds = end();
+        //Check si le departement est celui à trouver
+        if(departementOfInput.getPossible()) {
+            int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
             return "quizz";
         }
 
+        //On recupere la condition precedente, correspondant à departementOfInput
         Condition<Departement> previousCond = null;
         if (getStep() > 0) previousCond = getConditions().get(getStep()-1);
 
-        Condition<Departement> cond = getConditions().get(getStep());
-
+        //ON check si le departement saisie valide la condition
         if(previousCond == null || previousCond.checksCondition(departementOfInput)) {
-            if(previousCond != null) System.out.println(departementOfInput.getName() + " juste checked : "+previousCond.getSentence());
-            System.out.println("new sentence : "+cond.getSentence());
+            //logs à delete
+            if(previousCond != null)
+                System.out.println(departementOfInput.getName() + " juste checked : "+previousCond.getSentence());
+
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
+            //C'est perdu, on affiche la modale et fin du quizz
             System.out.println(departementOfInput.getName() + " didnt checked : "+previousCond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
+
         return "quizz";
     }
 
@@ -121,23 +122,6 @@ public class QuizzController {
             }
         }
         return cible;
-    }
-
-    public int getNbPossible(){
-        int i=0;
-        for(Departement d : getAllDepartements()){
-            if(d.getPossible()){
-                i++;
-                System.out.println(d.getName());
-            }
-        }
-        return i;
-    }
-
-    //Declenché quand cible trouvé, met à jour le status et retourne la durée du quizz en secondes
-    public int end(){
-        setStatus("finished");
-        return (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
     }
 
     //Epure un chaine de caracteres en enlevant les {,|'| |-} les accents et transforme les majuscules en minuscules
@@ -225,7 +209,6 @@ public class QuizzController {
     //Procedure temporaire pour afficher les infos du quizz au moment de l'appel
     public void getQuizzStatus(){
         System.out.println("------QUIZZ-STATUS------");
-        System.out.println("status="+getStatus());
         System.out.println("step="+getStep());
         System.out.println("depToFind="+getDepartementToFind().getName());
         System.out.println("------------------------");
