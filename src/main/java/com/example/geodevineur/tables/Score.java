@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.PreparedStatement;
-import java.sql.Time;
-
 @Entity
 public class Score implements Comparable<Score>{
 

@@ -2,7 +2,6 @@ package com.example.geodevineur.controllers;
 
 import com.example.geodevineur.condition.*;
 import com.example.geodevineur.tables.Departement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
