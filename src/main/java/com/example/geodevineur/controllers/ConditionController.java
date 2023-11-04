@@ -12,22 +12,32 @@ import java.util.Random;
 @Service
 public class ConditionController {
 
-    @Autowired
-    private DepartementController departementController;
-
-    public ConditionController(DepartementController departementController_){
-        this.departementController = departementController_;
-    }
-
+    //Retourne la liste des conditions pour le quizz
+    // l'ensemble des conditions ne mene qu'a 1 seul de partement passé en param
+    //LOGS A DELETE
     public List<Condition<Departement>> getRun(List<Departement> allDepartements, Departement cible){
         List<Condition<Departement>> allConditions = new ArrayList<>();
+        List<Departement> allDepartementsTemp = allDepartements;
+        Condition<Departement> cond = null;
         while(getNbPossible(allDepartements) != 1){
             System.out.println("nb possible ="+getNbPossible(allDepartements));
-            Condition<Departement> cond = getNextCond(allDepartements, cible);
-            allConditions.add(cond);
-            System.out.println(cond.getSentence());
+            int tentatives = 0;
+            do {
+                tentatives++;
+                cond = getNextCond(allDepartementsTemp, cible, cond);
+            } while (cond == null && tentatives < 50);
+            if (cond == null){
+                //En cas d'impossibilité de trouver la condition suivante (qui affine et respecte certaines conditions)
+                //On recommence le process de 0
+                System.out.println("---RESTARTING-RUN-GENERATION------");
+                allConditions = new ArrayList<>();
+                allDepartementsTemp = allDepartements;
+            } else {
+                System.out.println(cond.getClass());
+                allConditions.add(cond);
+                System.out.println(cond.getSentence());
+            }
         }
-        int i=0;
         for(Departement dep : allDepartements){
             if(dep.getPossible()){
                 System.out.println("dernier restant "+dep.getName());
@@ -37,7 +47,8 @@ public class ConditionController {
         return allConditions;
     }
 
-    public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen) {
+    //Retourne la condition suivante afin d'affiner les possibilités
+    public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen, Condition<Departement> previousCond) {
         Random random = new Random();
         int nbDep = allDepartements.size();
 
@@ -46,8 +57,11 @@ public class ConditionController {
         secondary = allDepartements.get(randIndex);
 
         Condition<Departement> cond = null;
+        boolean rerun;
+        int tentative = 0;
 
         do {
+            tentative++;
             int randCond = random.nextInt(11);
             switch (randCond) {
                 case 0:
@@ -85,12 +99,24 @@ public class ConditionController {
                     break;
             }
 
+            if (previousCond == null)
+                rerun = (!isCondGood(cond, allDepartements));
+            else if (previousCond.getClass().equals(cond.getClass()))
+                rerun = true;
+            else
+                rerun = (!isCondGood(cond, allDepartements));
             //isCondGood will set the possible attribute of departements correctly
 
-        } while (!isCondGood(cond, allDepartements));
+            //En cas de boucle infinie car aucune condition trouvable pour correspondre on retourne null
+            if (tentative > 50){
+                rerun = false;
+                cond = null;
+            }
+        } while (rerun);
         return cond;
     }
 
+    //Renvoie si la condition est checkée par l'ensemble de la liste des departements
     private boolean isCondGood(Condition<Departement> cond, List<Departement> allDepartements) {
         int countPossible = 0;
         int countPotential = 0;
@@ -115,6 +141,7 @@ public class ConditionController {
         }
         return false;
     }
+
 
     public int getNbPossible(List<Departement> allDeps){
         int i=0;

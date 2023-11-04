@@ -55,8 +55,10 @@
     // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
     function closeModal(){
         const modal = document.getElementById("formScoreModal");
-        cleanURL();
-        modal.style.display = "none";
+        if(modal.style.display === "block"){
+            cleanURL();
+            modal.style.display = "none";
+        }
     }
 
     //Verification que la touche pressée est Echap
@@ -70,7 +72,8 @@
 
     //Enleve tous les parametres de l'url
     function cleanURL(){
-        window.history.replaceState({}, document.title, window.location.pathname);
+        window.history.replaceState({}, document.title, "quizz?waiting=true");
+        window.location.reload();
     }
 
     if(urlContains("waiting")){
