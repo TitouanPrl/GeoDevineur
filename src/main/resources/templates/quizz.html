@@ -55,8 +55,10 @@
     // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
     function closeModal(){
         const modal = document.getElementById("formScoreModal");
-        cleanURL();
-        modal.style.display = "none";
+        if(modal.style.display === "block"){
+            cleanURL();
+            modal.style.display = "none";
+        }
     }
 
     //Verification que la touche pressée est Echap

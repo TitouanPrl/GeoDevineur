@@ -69,8 +69,8 @@ public class QuizzController {
         setStep(0);
         //Calcul de l'ensemble des condition du quizz, suivant le departement à trouver
         setConditions(conditionController.getRun(departementController.getAll(), getDepartementToFind()));
-        //Logs à delete
-        getQuizzStatus();
+        //Logs du departements à trouver A DELETE
+        System.out.println("Departement to find : "+getDepartementToFind().getName());
         return "redirect:/quizz?nextQ=start";
     }
 
@@ -83,13 +83,16 @@ public class QuizzController {
         System.out.println("-----------");
         System.out.println("Saisie : "+nextQ);
 
+        //Identification du departement saisie
         Departement departementOfInput = getDepartementFromSInput(nextQ);
 
         //Check si le departement est celui à trouver
-        if(getStep() > 0 && departementOfInput.equals(getDepartementToFind())) {
+        if(getStep() > 0 && departementOfInput != null && departementOfInput.getName().equals(getDepartementToFind().getName())) {
             int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
             return "quizz";
+        } else if (getStep() > 0 && departementOfInput != null){
+            System.out.println(departementOfInput.getName()+" != "+departementToFind.getName());
         }
 
         //On recupere la condition precedente, correspondant à departementOfInput
@@ -97,22 +100,23 @@ public class QuizzController {
         if (getStep() > 0) previousCond = getConditions().get(getStep()-1);
 
         //ON check si le departement saisie valide la condition
-        if(previousCond == null || previousCond.checksCondition(departementOfInput)) {
+        if(previousCond == null || (departementOfInput != null && previousCond.checksCondition(departementOfInput))) {
             //logs à delete
             if(previousCond != null)
-                System.out.println(departementOfInput.getName() + " juste checked : "+previousCond.getSentence());
+                System.out.println(nextQ + " juste checked : "+previousCond.getSentence());
 
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
             //C'est perdu, on affiche la modale et fin du quizz
-            System.out.println(departementOfInput.getName() + " didnt checked : "+previousCond.getSentence());
+            System.out.println(nextQ + (departementOfInput) + " didnt checked : "+previousCond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
 
         return "quizz";
     }
 
+    //Recupere un departement (ou null sinon) depuis une string en l'epurant
     public Departement getDepartementFromSInput(String input){
         String name = clearString(input);
         Departement cible = null;
@@ -126,6 +130,7 @@ public class QuizzController {
 
     //Epure un chaine de caracteres en enlevant les {,|'| |-} les accents et transforme les majuscules en minuscules
     public String clearString(String value){
+        value = value.replace("é","e").replace("è","e").replace("î","i").replace("Î","i").replace("ô","o");
         return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
     }
 
@@ -204,13 +209,5 @@ public class QuizzController {
     //Renvoie le template html du bouton de lancement du quizz
     public StringBuilder getStartButton(){
         return new StringBuilder("<button class=\"btn btn-success btn-lg\" id=\"start\">DEMARRER</button>");
-    }
-
-    //Procedure temporaire pour afficher les infos du quizz au moment de l'appel
-    public void getQuizzStatus(){
-        System.out.println("------QUIZZ-STATUS------");
-        System.out.println("step="+getStep());
-        System.out.println("depToFind="+getDepartementToFind().getName());
-        System.out.println("------------------------");
     }
 }
