@@ -39,6 +39,8 @@ public class NumberCond<E extends Departement> extends Condition<E> {
         int number = random.nextInt(NumberCond.maxId) + 1;
         if (number == 20) {
             threshold = "2A";
+        } else if (number < 10) {
+            threshold = "0" + number;
         } else {
             threshold = Integer.toString(number);
         }

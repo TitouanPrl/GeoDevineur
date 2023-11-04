@@ -5,6 +5,7 @@ import com.example.geodevineur.tables.Departement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,15 +19,28 @@ public class ConditionController {
         this.departementController = departementController_;
     }
 
-    public Condition<Departement> getNextCond(List<Departement> allDepartements) {
+    public List<Condition<Departement>> getRun(List<Departement> allDepartements, Departement cible){
+        List<Condition<Departement>> allConditions = new ArrayList<>();
+        while(getNbPossible(allDepartements) != 1){
+            System.out.println("nb possible ="+getNbPossible(allDepartements));
+            Condition<Departement> cond = getNextCond(allDepartements, cible);
+            allConditions.add(cond);
+            System.out.println(cond.getSentence());
+        }
+        int i=0;
+        for(Departement dep : allDepartements){
+            if(dep.getPossible()){
+                System.out.println("dernier restant "+dep.getName());
+            }
+        }
+        System.out.println("total conds : "+allConditions.size());
+        return allConditions;
+    }
+
+    public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen) {
         Random random = new Random();
         int nbDep = allDepartements.size();
 
-        Departement chosen;
-        do {
-            int randIndex = random.nextInt(nbDep);
-            chosen = allDepartements.get(randIndex);
-        } while(!chosen.getPossible());
         Departement secondary;
         int randIndex = random.nextInt(nbDep);
         secondary = allDepartements.get(randIndex);
@@ -100,5 +114,15 @@ public class ConditionController {
             return true;
         }
         return false;
+    }
+
+    public int getNbPossible(List<Departement> allDeps){
+        int i=0;
+        for(Departement d : allDeps){
+            if(d.getPossible()){
+                i++;
+            }
+        }
+        return i;
     }
 }

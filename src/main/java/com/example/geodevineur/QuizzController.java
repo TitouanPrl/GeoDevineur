@@ -70,7 +70,10 @@ public class QuizzController {
         setStatus("running");
         //TIrage au sort du departement à trouver
         setDepartementToFind(departementController.getRandomOne());
+        List<Condition<Departement>> allConditions = conditionController.getRun(departementController.getAll(), getDepartementToFind());
+        //setDepartementToFind(departementController.getRandomOne());
         setStep(0);
+        setConditions(allConditions);
         setAllDepartements(departementController.getAll());
         getQuizzStatus();
         return "redirect:/quizz?nextQ=start";
@@ -85,20 +88,22 @@ public class QuizzController {
         System.out.println("Saisie : "+nextQ);
 
         Departement departementOfInput = getDepartementFromSInput(nextQ);
+        Condition<Departement> cond = null;
+        if(getStep() != 0) cond = getConditions().get(getStep()-1);
+        else cond = getConditions().get(0);
 
         if(clearString(nextQ).equals(clearString(departementToFind.getName()))){
             //Le departement est trouvé
             int seconds = end();
             model.addAttribute("scoreModal",getScoreModal(seconds));
-        } else if(getStep()==0 || departementOfInput != null) {
-            setStep(getStep()+1);
-            Condition<Departement> cond = conditionController.getNextCond(getAllDepartements());
-            conditions.add(cond);
-            System.out.println("All possible :");
+        } else if(getStep()==0 || cond.checksCondition(departementOfInput)) {
+            if(getStep() !=0) System.out.println(departementOfInput.getName() + " juste checked : "+cond.getSentence());
             System.out.println("total possible : "+getNbPossible());
             System.out.println("new sentence : "+cond.getSentence());
-            model.addAttribute("questionContent",getTemplate(cond.getSentence()));
+            model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
+            setStep(getStep()+1);
         } else {
+            if(getStep() !=0) System.out.println(departementOfInput.getName() + " didnt checked : "+cond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
         return "quizz";
