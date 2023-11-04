@@ -21,13 +21,25 @@ public class ConditionController {
 
     public List<Condition<Departement>> getRun(List<Departement> allDepartements, Departement cible){
         List<Condition<Departement>> allConditions = new ArrayList<>();
+        List<Departement> allDepartementsTemp = allDepartements;
+        Condition<Departement> cond = null;
         while(getNbPossible(allDepartements) != 1){
             System.out.println("nb possible ="+getNbPossible(allDepartements));
-            Condition<Departement> cond = getNextCond(allDepartements, cible);
-            allConditions.add(cond);
-            System.out.println(cond.getSentence());
+            int tentatives = 0;
+            do {
+                tentatives++;
+                cond = getNextCond(allDepartementsTemp, cible, cond);
+            } while (cond == null && tentatives < 50);
+            if (cond == null){
+                System.out.println("---RESTARTING-RUN-GENERATION------");
+                allConditions = new ArrayList<>();
+                allDepartementsTemp = allDepartements;
+            } else {
+                System.out.println(cond.getClass());
+                allConditions.add(cond);
+                System.out.println(cond.getSentence());
+            }
         }
-        int i=0;
         for(Departement dep : allDepartements){
             if(dep.getPossible()){
                 System.out.println("dernier restant "+dep.getName());
@@ -37,7 +49,7 @@ public class ConditionController {
         return allConditions;
     }
 
-    public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen) {
+    public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen, Condition<Departement> previousCond) {
         Random random = new Random();
         int nbDep = allDepartements.size();
 
@@ -46,8 +58,11 @@ public class ConditionController {
         secondary = allDepartements.get(randIndex);
 
         Condition<Departement> cond = null;
+        boolean rerun;
+        int tentative = 0;
 
         do {
+            tentative++;
             int randCond = random.nextInt(11);
             switch (randCond) {
                 case 0:
@@ -85,9 +100,19 @@ public class ConditionController {
                     break;
             }
 
-            //isCondGood will set the possible attribute of departements correctly
+            if (previousCond == null)
+                rerun = (!isCondGood(cond, allDepartements));
+            else if (previousCond.getClass().equals(cond.getClass()))
+                rerun = true;
+            else
+                rerun = (!isCondGood(cond, allDepartements));
 
-        } while (!isCondGood(cond, allDepartements));
+            //isCondGood will set the possible attribute of departements correctly
+            if (tentative > 50){
+                rerun = false;
+                cond = null;
+            }
+        } while (rerun);
         return cond;
     }
 

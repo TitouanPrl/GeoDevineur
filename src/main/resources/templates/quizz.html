@@ -70,7 +70,8 @@
 
     //Enleve tous les parametres de l'url
     function cleanURL(){
-        window.history.replaceState({}, document.title, window.location.pathname);
+        window.history.replaceState({}, document.title, "quizz?waiting=true");
+        window.location.reload();
     }
 
     if(urlContains("waiting")){

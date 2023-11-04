@@ -71,7 +71,6 @@ public class QuizzController {
         //TIrage au sort du departement à trouver
         setDepartementToFind(departementController.getRandomOne());
         List<Condition<Departement>> allConditions = conditionController.getRun(departementController.getAll(), getDepartementToFind());
-        //setDepartementToFind(departementController.getRandomOne());
         setStep(0);
         setConditions(allConditions);
         setAllDepartements(departementController.getAll());
@@ -88,22 +87,26 @@ public class QuizzController {
         System.out.println("Saisie : "+nextQ);
 
         Departement departementOfInput = getDepartementFromSInput(nextQ);
-        Condition<Departement> cond = null;
-        if(getStep() != 0) cond = getConditions().get(getStep()-1);
-        else cond = getConditions().get(0);
 
-        if(clearString(nextQ).equals(clearString(departementToFind.getName()))){
+        if(clearString(nextQ).equals(clearString(departementToFind.getName()))) {
             //Le departement est trouvé
             int seconds = end();
-            model.addAttribute("scoreModal",getScoreModal(seconds));
-        } else if(getStep()==0 || cond.checksCondition(departementOfInput)) {
-            if(getStep() !=0) System.out.println(departementOfInput.getName() + " juste checked : "+cond.getSentence());
-            System.out.println("total possible : "+getNbPossible());
+            model.addAttribute("scoreModal", getScoreModal(seconds));
+            return "quizz";
+        }
+
+        Condition<Departement> previousCond = null;
+        if (getStep() > 0) previousCond = getConditions().get(getStep()-1);
+
+        Condition<Departement> cond = getConditions().get(getStep());
+
+        if(previousCond == null || previousCond.checksCondition(departementOfInput)) {
+            if(previousCond != null) System.out.println(departementOfInput.getName() + " juste checked : "+previousCond.getSentence());
             System.out.println("new sentence : "+cond.getSentence());
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
-            if(getStep() !=0) System.out.println(departementOfInput.getName() + " didnt checked : "+cond.getSentence());
+            System.out.println(departementOfInput.getName() + " didnt checked : "+previousCond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
         return "quizz";
@@ -147,7 +150,7 @@ public class QuizzController {
         StringBuilder template = new StringBuilder();
         template.append("<div class=\"card mb-4 box-shadow\">");
         template.append("<div class=\"question card-title align-items-center bg-success text-center\">");
-        template.append("<h3 class=\"border-bottom border-dark \"><strong>Question n°").append(getStep()).append("</strong></h3>");
+        template.append("<h3 class=\"border-bottom border-dark \"><strong>Question n°").append(getStep()+1  ).append("</strong></h3>");
         template.append("<h1>").append(question).append("</h1>");
         template.append("</div>");
         template.append("<div class=\"card-body align-items-center\">");
