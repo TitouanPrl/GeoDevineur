@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/modal.css}">
 </head>
-<body>
+<body onkeydown="checkKey(event)">
 <header>
     <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
@@ -13,48 +14,74 @@
                 <img class="" width="140" height="90" th:src="@{/resources/static/img/logo.png}" alt="">
                 <h2>GéoDevineur</h2>
             </a>
-            <a href="quizz" class="navbar-brand d-flex align-items-center"><h4>Quizz</h4></a>
+            <a href="quizz?waiting=true" class="navbar-brand d-flex align-items-center"><h4>Quizz</h4></a>
             <a href="apprendre" class="navbar-brand d-flex align-items-center"><h4>Apprendre</h4></a>
             <a href="regles" class="navbar-brand d-flex align-items-center"><h4>Règles</h4></a>
             <a href="scores" class="navbar-brand d-flex align-items-center"><h4>Meilleurs scores</h4></a>
         </div>
     </div>
 </header>
-<div class="col-md-4 container" style="padding: 1%">
-    <div class="card mb-4 box-shadow">
-        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <!-- Quand répondu : changement couleur + attribut 'disabled' au bouton du form + -->
-        <!-- valeur de la saisie texte correspond à reponse + nombre de departement correspondants dans balise i -->
-        <div class="question card-title align-items-center bg-success text-center">
-            <h3 class="border-bottom border-dark "><strong>Question n°1</strong></h3>
-            <h1>Il a plus de 300 000 habitants</h1>
-        </div>
-        <div class="card-body align-items-center">
-            <form action="quizz.html" method="get" class="align-items-center text-center">
-                <input class="" type="text" name="answer" value="Landes"><br><br>
-                <i class="card-subtitle border-top">43 correspondants</i>
-            </form>
-
-        </div>
-    </div>
-
-    <div class="card mb-4 box-shadow">
-        <!-- bg-primary => bleu | bg-success => vert | bg-warning => rouge -->
-        <div class="question card-title align-items-center bg-primary text-center">
-            <h3 class="border-bottom border-dark "><strong>Question n°2</strong></h3>
-            <h1>Il a 6 départements voisins</h1>
-        </div>
-        <div class="card-body   align-items-center">
-            <form act   ion="quizz.html" method="get" class="align-items-center text-center">
-                <input class="" type="text" name="answer">
-                <input class="btn-success" type="submit" value="Valider"><br><br>
-                <i class="card-subtitle border-top"></i>
-            </form>
-
-        </div>
-    </div>
-
+<div class="container p-5">
+    <div th:remove="tag" th:utext="${scoreModal}"></div>
+    <div style="margin-left: 60%;margin-right: auto" th:remove="tag" th:utext="${startButton}"></div>
+    <div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}"></div>
 </div>
+<script>
+    function proceedForm() {
+        const pseudo = document.getElementById("pseudo").value;
+        const password = document.getElementById("password").value;
+        const nb = document.getElementById("nb").value;
+        const seconds = document.getElementById("seconds").value;
+
+        window.location.assign("http://localhost:8080/scores?pseudo="+pseudo+"&password="+password+"&seconds="+seconds+"&nb="+nb);
+        alert('done');
+    }
+
+    //----------MODAL−CALL------------------------------
+
+    // Fonction pour vérifier si l'URL contient une clé $word -> true
+    function urlContains(word) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(word) === "true";
+    }
+
+
+    // Fonction pour afficher le modal si l'URL contient "fin=true"
+    function displayModal() {
+        const modal = document.getElementById("formScoreModal");
+        modal.style.display = "block";
+    }
+
+    // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
+    function closeModal(){
+        const modal = document.getElementById("formScoreModal");
+        if(modal.style.display === "block"){
+            cleanURL();
+            modal.style.display = "none";
+        }
+    }
+
+    //Verification que la touche pressée est Echap
+    function checkKey(event){
+        let keynum;
+        //Recuperation de la touche suivant les differents naviguateur
+        if(window.event) keynum = event.keyCode;
+        else if(event.which) keynum = event.which;
+        if (keynum === 27) closeModal();
+    }
+
+    //Enleve tous les parametres de l'url
+    function cleanURL(){
+        window.history.replaceState({}, document.title, "quizz?waiting=true");
+        window.location.reload();
+    }
+
+    if(urlContains("waiting")){
+        document.getElementById("start").addEventListener("click", function() {
+            window.location.assign("quizz?start=true");
+        });
+    }
+</script>
 <footer class="text-muted border-top" style="padding-top: 15px">
     <div class="container text-center">
         <p>Site créé dans le cadre d'un projet JEE</p>
