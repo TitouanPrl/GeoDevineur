@@ -19,6 +19,7 @@ public class EntityController {
         this.prefectureController = prefectureController_;
     }
 
+    /* Checks the type of a string */
     public String getTypeByName(String name){
         String type = null;
         if(regionController.isValidName(name)){

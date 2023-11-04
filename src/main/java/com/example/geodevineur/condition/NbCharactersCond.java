@@ -2,6 +2,7 @@ package com.example.geodevineur.condition;
 
 import com.example.geodevineur.tables.Departement;
 
+/* Condition cheking the number of letters in a department name */
 public class NbCharactersCond<E extends Departement> extends Condition<E>{
     private int nbChar;
 

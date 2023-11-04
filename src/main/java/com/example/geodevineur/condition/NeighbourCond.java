@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.example.geodevineur.tables.Departement;
 
-
+/* Condition cheking the number of neighbours of the department */
 public class NeighbourCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;

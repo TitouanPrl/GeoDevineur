@@ -5,6 +5,7 @@ import java.util.Random;
 import com.example.geodevineur.tables.Departement;
 import lombok.Getter;
 
+/* Condition cheking if the department has a certain letter */
 public class ContainLetterCond<E extends Departement> extends Condition<E>{
     private final Random random;
     @Getter
@@ -16,6 +17,7 @@ public class ContainLetterCond<E extends Departement> extends Condition<E>{
     }
     protected void setAttributes(E e) {
         char selected;
+        /* Checking that the char is not a special one */
         do {
             int a = random.nextInt(e.getName().length());
             selected = e.getName().charAt(a);
@@ -23,7 +25,6 @@ public class ContainLetterCond<E extends Departement> extends Condition<E>{
         letter = selected;
     }
 
-    @Override
     public String getSentence() {
         return "Le département contient la lettre '" + letter + "'";
     }

@@ -2,7 +2,6 @@ package com.example.geodevineur.controllers;
 
 import com.example.geodevineur.condition.*;
 import com.example.geodevineur.tables.Departement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,9 +11,8 @@ import java.util.Random;
 @Service
 public class ConditionController {
 
-    //Retourne la liste des conditions pour le quizz
-    // l'ensemble des conditions ne mene qu'a 1 seul de partement passé en param
     //LOGS A DELETE
+    /* Return a list of condition for the quizz, the conditions lead finaly to only one department passed in parameter */
     public List<Condition<Departement>> getRun(List<Departement> allDepartements, Departement cible){
         List<Condition<Departement>> allConditions = new ArrayList<>();
         List<Departement> allDepartementsTemp = allDepartements;
@@ -26,9 +24,9 @@ public class ConditionController {
                 tentatives++;
                 cond = getNextCond(allDepartementsTemp, cible, cond);
             } while (cond == null && tentatives < 50);
+
+            /* If we can't find the next condition reducing the number of answers possible, we restart from the beginning */
             if (cond == null){
-                //En cas d'impossibilité de trouver la condition suivante (qui affine et respecte certaines conditions)
-                //On recommence le process de 0
                 System.out.println("---RESTARTING-RUN-GENERATION------");
                 allConditions = new ArrayList<>();
                 allDepartementsTemp = allDepartements;
@@ -47,7 +45,7 @@ public class ConditionController {
         return allConditions;
     }
 
-    //Retourne la condition suivante afin d'affiner les possibilités
+    /* Return the next condition to reduce the number of answers possible */
     public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen, Condition<Departement> previousCond) {
         Random random = new Random();
         int nbDep = allDepartements.size();
@@ -105,9 +103,9 @@ public class ConditionController {
                 rerun = true;
             else
                 rerun = (!isCondGood(cond, allDepartements));
-            //isCondGood will set the possible attribute of departements correctly
+            /* isCondGood will set the possible attribute of departements correctly */
 
-            //En cas de boucle infinie car aucune condition trouvable pour correspondre on retourne null
+            /* If we get an infinite loop because there is no next condition, we return null */
             if (tentative > 50){
                 rerun = false;
                 cond = null;
@@ -116,7 +114,7 @@ public class ConditionController {
         return cond;
     }
 
-    //Renvoie si la condition est checkée par l'ensemble de la liste des departements
+    /* Return if the whole list of departments match the condition */
     private boolean isCondGood(Condition<Departement> cond, List<Departement> allDepartements) {
         int countPossible = 0;
         int countPotential = 0;
@@ -132,7 +130,7 @@ public class ConditionController {
             }
         }
 
-        // verify if the condition restricts the number of departements left but not too much
+        /* Verify if the condition restricts the number of departements left but not too much */
         if (countPotential < countPossible && countPotential > countPossible / 3) {
             for (Departement dep : allDepartements) {
                 dep.setPossible(dep.getPotential());

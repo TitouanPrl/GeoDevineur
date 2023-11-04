@@ -17,6 +17,7 @@ public class ScoreController {
     @Autowired
     ScoreRepository scoreService;
 
+    /* Returns a list of all the scores */
     public List<Score> getAll(){
         List<Score> result = new ArrayList<>();
         scoreService.findAll().forEach(result::add);
@@ -25,6 +26,7 @@ public class ScoreController {
         return result;
     }
 
+    /* Returns the best score */
     public Score getBest(){
         Score best = null;
         for(Score score : getAll()){
@@ -35,10 +37,12 @@ public class ScoreController {
         return best;
     }
 
+    /* Returns a score by its id */
     public Score getById(Integer id){
         return scoreService.findById(id).orElse(null);
     }
 
+    /* Returns a score by its player name */
     public Score getByName(String name){
         Score result = null;
         for(Score score : getAll()){
@@ -49,16 +53,17 @@ public class ScoreController {
         return result;
     }
 
+    /* Add a score to the db, or update it if the pseudo already exists */
     public String proceed(String pseudo, String password, int secondes, int nb_questions){
         int random = (int) (10*Math.random());
         int score = Format.calculScore(random*secondes, nb_questions);
 
         Score scoreOfPseudo = getByName(pseudo);
         String status;
+        /* Checking if a score with this pseudo already exists */
         if(scoreOfPseudo != null){
-            //Un score avec ce pseudo existe deja
+            /* If the password matches, we edit the score */
             if(scoreOfPseudo.getPassword().equals(password)){
-                //edit la valeur du scoreOfPseudo
                 update(scoreOfPseudo, score);
                 status = "edited";
             } else {
@@ -82,12 +87,14 @@ public class ScoreController {
         //ICI CHANGER PAR MODIFIER
     }
 
+    /* Deletes a score by its id */
     public Boolean deleteById(Integer id){
         Optional<Score> cible = scoreService.findById(id);
         cible.ifPresent(score -> scoreService.delete(score));
         return (cible.isPresent());
     }
 
+    /* Deletes a score by its pseudo */
     public Boolean deleteByPseudo(String pseudo){
         List<Score> allScores = getAll();
         boolean found = false;

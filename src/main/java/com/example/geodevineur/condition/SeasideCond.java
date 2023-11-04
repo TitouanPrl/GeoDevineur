@@ -1,7 +1,7 @@
 package com.example.geodevineur.condition;
 import com.example.geodevineur.tables.Departement;
 
-
+/* Condition cheking if the department is on the seaside */
 public class SeasideCond<E extends Departement> extends Condition<E>{
     private boolean seaside;
 

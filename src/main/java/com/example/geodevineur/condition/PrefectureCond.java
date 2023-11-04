@@ -3,6 +3,7 @@ package com.example.geodevineur.condition;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Prefecture;
 
+/* Condition cheking the prefecture of the department */
 public class PrefectureCond<E extends Departement> extends Condition<E>{
     private Prefecture prefecture;
 

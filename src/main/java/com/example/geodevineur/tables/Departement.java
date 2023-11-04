@@ -25,12 +25,12 @@ public class Departement implements Comparable<Departement> {
     @Getter@Setter
     protected String name;
     @Getter@Setter
-    protected String number; //"01" -> "2A" -> "95";
+    protected String number; /*"01" -> "2A" -> "95" */
     @Getter@Setter
     protected int population;
     @Getter@Setter
     protected double surface;
-    @Getter@Setter
+    @Setter
     protected boolean seaside;
     @Getter@Setter
     protected int neightbours;

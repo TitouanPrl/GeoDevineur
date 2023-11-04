@@ -3,6 +3,7 @@ package com.example.geodevineur.enumerations;
 public enum Politic {
     LR, UDI, PS, DVD, DVG, Regionaliste, Renaissance, PRG, FaC, RE;
 
+    /* Converts a politic from string to Politic type */
     public static Politic fromString(String input) {
         if (input.equals("LR")) return Politic.LR;
         if (input.equals("UDI")) return Politic.UDI;

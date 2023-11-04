@@ -5,6 +5,7 @@ import java.util.Random;
 import com.example.geodevineur.Format;
 import com.example.geodevineur.tables.Departement;
 
+/* Condition cheking if the population of the department is more or less then a number */
 public class PopulationCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;

@@ -16,6 +16,7 @@ public class DepartementController {
     @Autowired
     DepartementRepository departementService;
 
+    /* Returns a list of all departments */
     public List<Departement> getAll(){
         List<Departement> result = new ArrayList<>();
         departementService.findAll().forEach(result::add);
@@ -23,15 +24,17 @@ public class DepartementController {
         return result;
     }
 
-    //Retourne departement au hasard
+    /* Returns a random department */
     public Departement getRandomOne(){
         return getAll().get(new Random().nextInt(95));
     }
 
+    /* Returns a department by its id */
     public Departement getById(int id){
         return departementService.findById(id).orElse(null);
     }
 
+    /* Returns a department by its number */
     public Departement getByNumber(String number){
         Departement result = null;
         for(Departement departement : getAll()){
@@ -42,6 +45,7 @@ public class DepartementController {
         return result;
     }
 
+    /* Returns a department by its name */
     public Departement getByName(String name){
         Departement result = null;
         for(Departement departement : getAll()){
@@ -52,6 +56,7 @@ public class DepartementController {
         return result;
     }
 
+    /* Returns a department by its prefecture id */
     public Departement getByPrefectureId(int prefecture_id){
         Departement result = null;
         for(Departement departement : getAll()){
@@ -62,6 +67,7 @@ public class DepartementController {
         return result;
     }
 
+    /* Returns a department by its prefecture name */
     public Departement getByPrefectureName(String prefecture_name){
         Departement result = null;
         for(Departement departement : getAll()){
@@ -72,6 +78,7 @@ public class DepartementController {
         return result;
     }
 
+    /* Returns a department by its region id */
     public List<Departement> getByRegionId(int region_id){
         List<Departement> result = new ArrayList<>();
         for(Departement departement : getAll()){
@@ -82,6 +89,7 @@ public class DepartementController {
         return result;
     }
 
+    /* Returns a department by its region name */
     public List<Departement> getByRegionName(String region_name){
         List<Departement> result = new ArrayList<>();
         for(Departement departement : getAll()){
@@ -92,6 +100,7 @@ public class DepartementController {
         return result;
     }
 
+    /* Checks if a string matches a department name */
     public boolean isValidName(String name){
         boolean result = false;
         for(Departement departement : getAll()){
