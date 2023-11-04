@@ -3,6 +3,7 @@ package com.example.geodevineur.condition;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.enumerations.Politic;
 
+/* Condition cheking the department policy */
 public class PoliticCond<E extends Departement> extends Condition<E>{
     private Politic politic;
 

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.example.geodevineur.tables.Departement;
 
+/* Condition cheking if the surface of the department is more or less than another */
 public class SurfaceCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;

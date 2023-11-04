@@ -3,6 +3,7 @@ package com.example.geodevineur.condition;
 import com.example.geodevineur.enumerations.Cardinal;
 import com.example.geodevineur.tables.Departement;
 
+/* Condition cheking if the department if SO, SE, NO, ... */
 public class CardinalCond<E extends Departement> extends Condition<E>{
     private Cardinal cardinal;
 

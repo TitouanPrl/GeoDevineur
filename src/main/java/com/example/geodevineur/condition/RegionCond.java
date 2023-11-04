@@ -3,6 +3,7 @@ package com.example.geodevineur.condition;
 import com.example.geodevineur.tables.Departement;
 import com.example.geodevineur.tables.Region;
 
+/* Condition cheking the region of the department */
 public class RegionCond<E extends Departement> extends Condition<E>{
     private Region region;
 
