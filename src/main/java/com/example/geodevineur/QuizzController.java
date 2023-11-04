@@ -86,7 +86,7 @@ public class QuizzController {
         Departement departementOfInput = getDepartementFromSInput(nextQ);
 
         //Check si le departement est celui à trouver
-        if(departementOfInput.getPossible()) {
+        if(getStep() > 0 && departementOfInput.equals(getDepartementToFind())) {
             int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
             return "quizz";
