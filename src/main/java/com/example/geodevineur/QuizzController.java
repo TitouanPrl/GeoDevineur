@@ -206,7 +206,7 @@ public class QuizzController {
         } else if(losingCond.getSentence().contains("voisins")){ //Neightbours
             return mistakeInputed.getName() + " possède " + mistakeInputed.getNeightbours() + " voisins (pas " + departementToFind.getNeightbours() + ")";
         } else if(losingCond.getSentence().contains("numéro")){ //Number
-            return mistakeInputed.getName() + " a pour numéro le " + mistakeInputed.getNumber() + " (seuil à " + departementToFind.getNumber() + ")";
+            return mistakeInputed.getName() + " a pour numéro le " + mistakeInputed.getNumber();
         } else if(losingCond.getSentence().contains("vote")){ //Politic
             return mistakeInputed.getName() + " vote " + mistakeInputed.getPolitic() + " en majorité (pas " + departementToFind.getPolitic() + ")";
         } else if(losingCond.getSentence().contains("habitants")){ //Population
