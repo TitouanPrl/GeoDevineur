@@ -29,7 +29,14 @@
         <div th:remove="tag" th:utext="${questionContent}"></div>
     </div>
 </div>
-<script>
+<footer class="text-muted border-top">
+    <div class="container text-center">
+        <p>Site créé dans le cadre d'un projet JEE</p>
+        <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
+    </div>
+</footer>
+</body>
+<script type="text/javascript">
     function proceedForm() {
         const pseudo = document.getElementById("pseudo").value;
         const password = document.getElementById("password").value;
@@ -47,7 +54,6 @@
         const params = new URLSearchParams(window.location.search);
         return params.get(word) === "true";
     }
-
 
     // Fonction pour afficher le modal si l'URL contient "fin=true"
     function displayModal() {
@@ -85,11 +91,4 @@
         });
     }
 </script>
-<footer class="text-muted border-top" style="padding-top: 15px">
-    <div class="container text-center">
-        <p>Site créé dans le cadre d'un projet JEE</p>
-        <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
-    </div>
-</footer>
-</body>
 </html>
