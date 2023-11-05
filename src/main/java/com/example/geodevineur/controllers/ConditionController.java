@@ -17,8 +17,8 @@ public class ConditionController {
         List<Condition<Departement>> allConditions = new ArrayList<>();
         List<Departement> allDepartementsTemp = allDepartements;
         Condition<Departement> cond = null;
-        while(getNbPossible(allDepartements) != 1){
-            System.out.println("nb possible ="+getNbPossible(allDepartements));
+        while(getNbPossible(allDepartementsTemp) != 1){
+            System.out.println("nb possible ="+getNbPossible(allDepartementsTemp));
             int tentatives = 0;
             do {
                 tentatives++;
@@ -34,11 +34,6 @@ public class ConditionController {
                 System.out.println(cond.getClass());
                 allConditions.add(cond);
                 System.out.println(cond.getSentence());
-            }
-        }
-        for(Departement dep : allDepartements){
-            if(dep.getPossible()){
-                System.out.println("dernier restant "+dep.getName());
             }
         }
         System.out.println("total conds : "+allConditions.size());
