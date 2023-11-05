@@ -22,10 +22,12 @@
         </div>
     </div>
 </header>
-<div class="container p-5">
-    <div th:remove="tag" th:utext="${scoreModal}"></div>
-    <div th:remove="tag" th:utext="${startButton}"></div>
-    <div th:remove="tag" th:utext="${questionContent}"></div>
+<div class="quizz">
+    <div class="container p-5">
+        <div th:remove="tag" th:utext="${scoreModal}"></div>
+        <div th:remove="tag" th:utext="${startButton}"></div>
+        <div th:remove="tag" th:utext="${questionContent}"></div>
+    </div>
 </div>
 <script>
     function proceedForm() {

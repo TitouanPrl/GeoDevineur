@@ -1,0 +1,12 @@
+.regles {
+    background-image: url('../img/backgrounds/regles.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.content {
+    width: 70%;
+    background-color: grey;
+    border-radius: 10px;
+    opacity: 90%;
+}

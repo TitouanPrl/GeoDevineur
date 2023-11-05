@@ -51,3 +51,10 @@
 .mb-4 {
     margin-bottom: 30%;
 }
+
+.quizz {
+    background-image: url('../img/backgrounds/quizz.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 900px;
+}

@@ -52,7 +52,7 @@ public class ScorePage {
         List<Score> allScores = scoreController.getAll();
         StringBuilder htmlContent = new StringBuilder();
 
-        htmlContent.append("<table><caption>Meilleurs scores (Total ").append(allScores.size()).append(")<caption>");
+        htmlContent.append("<table>");
         htmlContent.append("<tr><th>Pos</th><th>Nom</th><th>Score</th><th>Quizz </th><th></th>");
 
         int i=1;

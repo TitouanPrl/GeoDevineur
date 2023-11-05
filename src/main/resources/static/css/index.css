@@ -1,5 +1,7 @@
 .accueil {
-    background-image: url('https://w.forfun.com/fetch/ce/ce5ee0729b09c9e5a047828ae19201c6.jpeg');
+    background-image: url('../img/backgrounds/accueil.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
     height: 900px;
 }
 
@@ -9,6 +11,7 @@ h1 {
     color: white;
 }
 
-.my-2 {
-    margin-top: 50px;
+.buttons {
+    margin-top: 15%;
+    padding: 5px;
 }

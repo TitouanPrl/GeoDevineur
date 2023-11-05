@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/regles.css}">
 </head>
 <body>
 <header>
@@ -20,35 +21,35 @@
         </div>
     </div>
 </header>
-<div class="container" style="width: 70%; background-color: grey; border-radius: 10px; margin-top: 3%;margin-bottom: 3%">
-    <br><div class="question card-title align-items-center text-center">
-            <h1 class="">Fonctionnement du site</h1>
-    </div><br>
+<div class="regles p-5">
+    <div class="container content">
+        <br><div class="question card-title align-items-center text-center">
+                <h1 class="">Fonctionnement du site</h1>
+        </div><br><br>
 
-    <h2><strong>Quel est le but de ce site ?</strong></h2>
-    <p>Apprendre la géographie française de façon ludique.</p><br>
+        <h2><strong>Quel est le but de ce site ?</strong></h2>
+        <p>Apprendre la géographie française de façon ludique.</p><br>
 
-    <h2><strong>Comment ça marche ?</strong></h2>
-    <p>Il suffit d'apprendre via la page <a class="anchor-link" href="/apprendre">Apprendre</a>.</p>
-    <p>Vous y retrouverez l'ensemble des départements, préfectures et régions détaillés.</p><br>
+        <h2><strong>Comment ça marche ?</strong></h2>
+        <p>Il suffit d'apprendre via la page <a class="anchor-link" href="/apprendre">Apprendre</a>.</p>
+        <p>Vous y retrouverez l'ensemble des départements, préfectures et régions détaillés.</p><br>
 
-    <h2><strong>Je me sens prêt à faire un Quizz</strong></h2>
-    <p>Très bien ! Il suffit d'en lancer un sur la page <a class="anchor-link" href="/quizz?waiting=true">Quizz</a>.</p><br>
+        <h2><strong>Je me sens prêt à faire un Quizz</strong></h2>
+        <p>Très bien ! Il suffit d'en lancer un sur la page <a class="anchor-link" href="/quizz?waiting=true">Quizz</a>.</p><br>
 
-    <h2><strong>Je n'ai rien compris au quizz</strong></h2>
-    <p>Le but d'un Quizz et de trouver le département qui correspond à l'emsemble des questions posées.</p>
-    <p>A chaque étape, une nouvelle question réduit le champ des possible pour finir sur un seul département.</p><br>
+        <h2><strong>Je n'ai rien compris au quizz</strong></h2>
+        <p>Le but d'un Quizz et de trouver le département qui correspond à l'emsemble des questions posées.</p>
+        <p>A chaque étape, une nouvelle question réduit le champ des possible pour finir sur un seul département.</p><br>
 
-    <h2><strong>J'ai réussi je suis trop fort !</strong></h2>
-    <p>Bravo, si tu as bien enregistré ton score tu le retrouveras sur la page <a class="anchor-link" href="/scores">Scores</a>.</p>
-    <p>Tu peux supprimer tes scores en saisissant ton code confidentiel.</p><br>
+        <h2><strong>J'ai réussi je suis trop fort !</strong></h2>
+        <p>Bravo, si tu as bien enregistré ton score tu le retrouveras sur la page <a class="anchor-link" href="/scores">Scores</a>.</p>
+        <p>Tu peux supprimer tes scores en saisissant ton code confidentiel.</p><br>
 
-    <h2><strong>Euh c'est quoi mon code confidentiel ?</strong></h2>
-    <p>Quand tu réussis un Quizz, tu dois sasir ton pseudo et tu as la possibilité de définir un code, par défaut il n'y en a pas.</p>
-    <p>Ce code te permet d'additionner tes scores si plus tard tu refais d'autres quizz, et de le supprimer.</p><br>
+        <h2><strong>Euh c'est quoi mon code confidentiel ?</strong></h2>
+        <p>Quand tu réussis un Quizz, tu dois sasir ton pseudo et tu as la possibilité de définir un code, par défaut il n'y en a pas.</p>
+        <p>Ce code te permet d'additionner tes scores si plus tard tu refais d'autres quizz, et de le supprimer.</p><br>
+    </div>
 </div>
-
-
 <footer class="text-muted border-top" style="padding-top: 15px">
     <div class="container text-center">
         <p>Site créé dans le cadre d'un projet JEE</p>
