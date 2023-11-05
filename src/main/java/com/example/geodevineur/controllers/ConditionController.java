@@ -11,7 +11,6 @@ import java.util.Random;
 @Service
 public class ConditionController {
 
-    //LOGS A DELETE
     /* Return a list of condition for the quizz, the conditions lead finaly to only one department passed in parameter */
     public List<Condition<Departement>> getRun(List<Departement> allDepartements, Departement cible){
         List<Condition<Departement>> allConditions = new ArrayList<>();
@@ -26,7 +25,6 @@ public class ConditionController {
 
             /* If we can't find the next condition reducing the number of answers possible, we restart from the beginning */
             if (cond == null){
-                System.out.println("---RESTARTING-RUN-GENERATION------");
                 allConditions = new ArrayList<>();
                 allDepartementsTemp = allDepartements;
             } else {

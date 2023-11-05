@@ -38,7 +38,7 @@ public class QuizzController {
     @Getter@Setter
     private int step;
     @Getter@Setter
-    private int score; //a delete plus tard
+    private int score;
 
     public QuizzController(DepartementController departementController_, ConditionController conditionController_, Format format_){
         this.departementController = departementController_;
@@ -71,19 +71,12 @@ public class QuizzController {
         setStep(0);
         /* Set the list of conditions for the quizz, according to the searched department */
         setConditions(conditionController.getRun(departementController.getAll(), getDepartementToFind()));
-        //Logs du departements à trouver A DELETE
-        System.out.println("Departement to find : "+getDepartementToFind().getName());
         return "redirect:/quizz?nextQ=start";
     }
 
-    //LOGS A DELTE !!
     /* Main fonction, verify if the solution is found and if no, set the next question */
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
-        /* Comparing response and target (without the special chars) */
-        System.out.println("-----------");
-        System.out.println("Saisie : "+nextQ);
-
         /* Response written by the player */
         Departement departementOfInput = getDepartementFromStringInput(nextQ);
 
@@ -92,9 +85,7 @@ public class QuizzController {
             int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
             return "quizz";
-        } else if (getStep() > 0 && departementOfInput != null){
-            System.out.println(departementOfInput.getName()+" != "+departementToFind.getName());
-        }
+        } 
 
         /* Getting the last condition */
         Condition<Departement> previousCond = null;
@@ -104,13 +95,11 @@ public class QuizzController {
         if(previousCond == null || (departementOfInput != null && previousCond.checksCondition(departementOfInput))) {
             //logs à delete
             if(previousCond != null)
-                System.out.println(nextQ + " juste checked : "+previousCond.getSentence());
             model.addAttribute("previousQuestions",getPreviousQuestions());
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
-            /* Lose, printing the end message */
-            System.out.println(nextQ + " (" +(departementOfInput) + ") => didnt checked : "+previousCond.getSentence());
+            /* Lose, printing the losing screen */
             model.addAttribute("scoreModal",getLoseModal());
         }
 
