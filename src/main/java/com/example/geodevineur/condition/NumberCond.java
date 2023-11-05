@@ -5,6 +5,7 @@ import java.util.Random;
 import com.example.geodevineur.tables.Departement;
 
 /* Condition cheking if the number of the department is more or less than another */
+/* NOT IMPLEMENTED because of a unexpected behavior */
 public class NumberCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;
@@ -62,7 +63,7 @@ public class NumberCond<E extends Departement> extends Condition<E> {
     }
 
     public boolean checksCondition(E e) {
-        if (isLess) {
+        if (!isLess) {
             return compareId(e.getNumber(), threshold) < 0;
         } else {
             return compareId(e.getNumber(), threshold) > 0;

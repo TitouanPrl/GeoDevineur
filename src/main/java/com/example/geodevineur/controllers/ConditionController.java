@@ -64,18 +64,21 @@ public class ConditionController {
                 default -> cond;
             };
 
-            if (previousCond == null)
+            if (previousCond == null) {
                 rerun = (!isCondGood(cond, allDepartements));
-            else if (previousCond.getClass().equals(cond.getClass()))
+            }
+            else if (previousCond.getClass().equals(cond.getClass())) {
                 rerun = true;
-            else
+            }
+            else {
                 rerun = (!isCondGood(cond, allDepartements));
-            /* isCondGood will set the possible attribute of departements correctly */
+            }
 
             /* If we get an infinite loop because there is no next condition, we return null */
             if (tentative > 50){
                 rerun = false;
-                cond = null;
+                //cond = null;
+                cond = new PrefectureCond<>(chosen); /* If we can't find a cond, we return the prefecture cond to set potential to 1 */
             }
         } while (rerun);
         return cond;
@@ -95,10 +98,10 @@ public class ConditionController {
             if (dep.getPotential()) {
                 countPotential++;
             }
-        }
+        }        
 
         /* Verify if the condition restricts the number of departements left but not too much */
-        if (countPotential < countPossible && countPotential > countPossible / 3) {
+        if (countPotential < countPossible /*&& countPotential > countPossible / 3*/) {
             for (Departement dep : allDepartements) {
                 dep.setPossible(dep.getPotential());
             }
