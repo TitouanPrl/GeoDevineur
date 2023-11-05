@@ -87,8 +87,6 @@ public class QuizzController {
             int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
             return "quizz";
-        } else if (getStep() > 0 && departementOfInput != null){
-            System.out.println(departementOfInput.getName()+" != "+departementToFind.getName());
         }
 
         /* Getting the last condition */
@@ -101,9 +99,10 @@ public class QuizzController {
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
-            /* Lose, printing the end message */
-            System.out.println(nextQ + " (" +(departementOfInput) + ") => didnt checked : "+previousCond.getSentence());
-            model.addAttribute("scoreModal",getLoseModal(getErrorCorrection(departementOfInput, previousCond)));
+            String errorSentence = "";
+            if(departementOfInput != null)
+                errorSentence = getErrorCorrection(departementOfInput, previousCond);
+            model.addAttribute("scoreModal",getLoseModal(errorSentence));
         }
 
         return "quizz";
