@@ -38,7 +38,7 @@ public class QuizzController {
     @Getter@Setter
     private int step;
     @Getter@Setter
-    private int score; //a delete plus tard
+    private List<String> previousAnswers;
 
     public QuizzController(DepartementController departementController_, ConditionController conditionController_, Format format_){
         this.departementController = departementController_;
@@ -69,6 +69,8 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         /* Sets the step counter to 0 */
         setStep(0);
+        /* Sets empty privous answers */
+        setPreviousAnswers(new ArrayList<>());
         /* Set the list of conditions for the quizz, according to the searched department */
         setConditions(conditionController.getRun(departementController.getAll(), getDepartementToFind()));
         //Logs du departements à trouver A DELETE
@@ -95,6 +97,8 @@ public class QuizzController {
 
         /* Checking if the department written matches the condition */
         if(previousCond == null || (departementOfInput != null && previousCond.checksCondition(departementOfInput))) {
+            if(previousCond != null)
+                previousAnswers.add(previousCond.getSentence() + " : " + departementOfInput.getName());
             model.addAttribute("previousQuestions",getPreviousQuestions());
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
@@ -156,8 +160,8 @@ public class QuizzController {
         StringBuilder htmlContent = new StringBuilder();
         htmlContent.append("<h4>Questions répondues : </h4>");
         htmlContent.append("<ul>");
-        for(int i=0;i<getStep();i++){
-            htmlContent.append("<li>").append(getConditions().get(i).getSentence()).append("</li>");
+        for(String line : getPreviousAnswers()){
+            htmlContent.append("<li>").append(line).append("</li>");
         }
         htmlContent.append("</ul>");
         return htmlContent;
@@ -214,8 +218,9 @@ public class QuizzController {
         htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
         htmlContent.append("<div class=\"modal-content\">");
         htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
-        htmlContent.append("<h2>Dommage vous avez perdu ...</h2>");
-        htmlContent.append("<h4>").append(errorSentence).append("</h4>");
+        htmlContent.append("<h2>Dommage vous avez perdu ...</h2><br>");
+        htmlContent.append("<h4>").append(errorSentence).append("</h4><br>");
+        htmlContent.append("<h4>La réponse était : ").append(getDepartementToFind().getName()).append("</h4>");
         htmlContent.append("</div>");
         htmlContent.append("</div>");
         return htmlContent;

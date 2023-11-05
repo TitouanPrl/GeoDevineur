@@ -44,9 +44,10 @@ public class Format {
 
     //PAS TERMINé
     /* Finding the gender of a word */
-    public String getGenreByName(String name, String letter ){ //letter=d ou l
+    public String getPronom(String name, String letter ){ //letter=d ou l
         String result = ""; //la, les
         String last_char = name.substring(name.length() - 1);
+        String first_char = name.substring(0,0);
         if(last_char.equals("s")){
             return letter+"es";
         } else if(last_char.equals("e") && letter.equals("l")){
