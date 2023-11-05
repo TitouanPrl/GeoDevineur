@@ -13,6 +13,7 @@ public class NumberCond<E extends Departement> extends Condition<E> {
     private static final int maxId = 95;
 
     public NumberCond(E e, E compare_) {
+        System.out.println("compare="+compare_);
         random = new Random();
         setAttributes(e);
         double probaCompare = .3;
@@ -26,6 +27,7 @@ public class NumberCond<E extends Departement> extends Condition<E> {
 
     protected void setAttributes(E e) {
         if (compare != null) {
+            System.out.println("iciii");
             threshold = compare.getNumber();
             if (compareId(threshold,e.getNumber()) < 0) {
                 System.out.println("here, "+threshold+" < "+e.getNumber());
@@ -37,6 +39,7 @@ public class NumberCond<E extends Departement> extends Condition<E> {
                 return;
             }
         }
+
 
         int number = random.nextInt(NumberCond.maxId) + 1;
         if (number == 20) {

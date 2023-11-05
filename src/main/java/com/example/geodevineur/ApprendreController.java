@@ -34,7 +34,7 @@ public class ApprendreController {
     @Setter
     private Model model;
 
-    private final Map map;
+    private final MapController map;
     @Getter@Setter
     private String type;
 
@@ -46,7 +46,7 @@ public class ApprendreController {
         this.regionController = regionController_;
         this.entityController = entityController_;
         this.format = format_;
-        this.map = new Map("src/main/resources/static/img/france_departements.svg");
+        this.map = new MapController("src/main/resources/static/img/france_departements.svg");
     }
 
     /* Main fonction updating the map and the infos for an entity with given type and name */

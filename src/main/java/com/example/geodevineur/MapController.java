@@ -12,13 +12,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Map {
+public class MapController {
 
     String filePath;
     @Getter
     String content;
 
-    public Map(String filePath_) throws IOException {
+    public MapController(String filePath_) throws IOException {
         this.filePath = filePath_;
         this.content = Files.readString(Path.of(filePath_));
     }

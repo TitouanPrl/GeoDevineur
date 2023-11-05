@@ -55,8 +55,7 @@ public class ScoreController {
 
     /* Add a score to the db, or update it if the pseudo already exists */
     public String proceed(String pseudo, String password, int secondes, int nb_questions){
-        int random = (int) (10*Math.random());
-        int score = Format.calculScore(random*secondes, nb_questions);
+        int score = Format.calculScore(secondes, nb_questions);
 
         Score scoreOfPseudo = getByName(pseudo);
         String status;
