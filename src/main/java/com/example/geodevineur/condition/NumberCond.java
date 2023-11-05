@@ -8,7 +8,7 @@ import com.example.geodevineur.tables.Departement;
 public class NumberCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;
-    private boolean isLess; /* If more, isLess is false */
+    private boolean isLess = false; /* If more, isLess is false */
     private String threshold;
     private static final int maxId = 95;
 
@@ -36,8 +36,8 @@ public class NumberCond<E extends Departement> extends Condition<E> {
             }
         }
 
-
         int number = random.nextInt(NumberCond.maxId) + 1;
+
         if (number == 20) {
             threshold = "2A";
         } else if (number < 10) {
@@ -45,10 +45,16 @@ public class NumberCond<E extends Departement> extends Condition<E> {
         } else {
             threshold = Integer.toString(number);
         }
+
+        if (compareId(threshold,e.getNumber()) < 0) {
+            isLess = true;
+        } else if (compareId(threshold,e.getNumber()) > 0) {
+            isLess = false;
+        }
     }
 
     public String getSentence() {
-        if(isLess){
+        if(!isLess){
             return "Le numéro du département est inférieur au "+threshold;
         } else {
             return "Le numéro du département est supérieur au "+threshold;
