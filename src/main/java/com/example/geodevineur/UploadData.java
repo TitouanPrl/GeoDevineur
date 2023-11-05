@@ -49,8 +49,6 @@ public class UploadData {
         scoreController.deleteAll();
     }
 
-    //Type temporaire contenant une prefecture et son departement (en string) pour l'insere aisement dans la bdd
-    //va etre fusionné avec l'autre temporaire
     /* Tmp class to store string data and easily insert them into the db */
     public class PrefectureBis<Prefecture, String> {
         Prefecture prefecture;
@@ -62,8 +60,7 @@ public class UploadData {
         }
     }
 
-    //Type temporaire contenant un departement et sa region (en string) pour l'insere aisement dans la bdd
-    //va etre fusionné avec l'autre temporaire
+    /* Tmp class to store string data and easily insert them into the db */
     public class DepartementBis<Departement, String> {
         Departement departement;
         String regionName;

@@ -10,8 +10,6 @@ public class Condition{
     @Id
     protected int id;
 
-    //enumratio pour type = {prefecture/region/departement}
-
     @Getter
     protected String attribut;
     @Getter

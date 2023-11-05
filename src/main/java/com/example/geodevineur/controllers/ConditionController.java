@@ -36,7 +36,7 @@ public class ConditionController {
         return allConditions;
     }
 
-    /* Return the next condition to reduce the number of answers possible */
+    /* Returns the next condition to reduce the number of answers possible */
     public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen, Condition<Departement> previousCond) {
         Random random = new Random();
         int nbDep = allDepartements.size();
