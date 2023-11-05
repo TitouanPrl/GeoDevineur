@@ -78,7 +78,7 @@ public class ConditionController {
             if (tentative > 50){
                 rerun = false;
                 //cond = null;
-                cond = new PrefectureCond<>(chosen);
+                cond = new PrefectureCond<>(chosen); /* If we can't find a cond, we return the prefecture cond to set potential to 1 */
             }
         } while (rerun);
         return cond;
