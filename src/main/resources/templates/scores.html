@@ -47,7 +47,7 @@
 </footer>
 </body>
 <script type="text/javascript">
-    //On redirige l'envoi du form vers le back
+    /* Redirecting form to backend */
     function proceedForm() {
         const pseudo = document.getElementById("nameToDelete").textContent;
         const password = document.getElementById("password").value;
@@ -65,13 +65,13 @@
         document.getElementById("titleDelete").textContent = "Suppression du score de : " + name;
     }
 
-    // Fonction pour vérifier si l'URL contient le status passé en parametre
+    /* Verify if status is contained in the URL */
     function paramCheck(param,value) {
         const params = new URLSearchParams(window.location.search);
         return params.get(param) === value;
     }
 
-    // Fonction pour afficher le modal si l'URL contient "fin=true"
+    /* Prints end screen if "fin=true" */
     function displayModal() {
         const modal = document.getElementById("ScoreStatus");
         const status = document.getElementById("status");
@@ -98,28 +98,27 @@
         }
     }
 
-    // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
+    /* Closes end screen if clicking the cross or pressing escape */
     function closeModal(){
         const modal = document.getElementById("ScoreStatus");
         cleanURL();
         modal.style.display = "none";
     }
 
-    //Verification que la touche pressée est Echap
+    /* Verifies if escape is pressed */
     function checkKey(event){
         let keynum;
-        //Recuperation de la touche suivant les differents naviguateur
+        /* Getting the key according to the navigator used */
         if(window.event) keynum = event.keyCode;
         else if(event.which) keynum = event.which;
         if (keynum === 27) closeModal();
     }
 
-    //Enleve tous les parametres de l'url
+    /* Clear parameters from the URL */
     function cleanURL(){
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    // Appeler la fonction pour afficher le modal au chargement de la page
     displayModal();
 </script>
 </html>

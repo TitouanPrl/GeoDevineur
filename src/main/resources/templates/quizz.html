@@ -49,19 +49,19 @@
 
     //----------MODAL−CALL------------------------------
 
-    // Fonction pour vérifier si l'URL contient une clé $word -> true
+    /* Checks if url countaint key $word -> true */
     function urlContains(word) {
         const params = new URLSearchParams(window.location.search);
         return params.get(word) === "true";
     }
 
-    // Fonction pour afficher le modal si l'URL contient "fin=true"
+    /* Prints end screen if url countains "fin=true" */
     function displayModal() {
         const modal = document.getElementById("formScoreModal");
         modal.style.display = "block";
     }
 
-    // Fermer le modal lorsqu'on clique sur la croix OU appuie sur Echap
+    /* Closes end screen if clicking the cross or pressing escape */
     function closeModal(){
         const modal = document.getElementById("formScoreModal");
         if(modal.style.display === "block"){
@@ -70,16 +70,16 @@
         }
     }
 
-    //Verification que la touche pressée est Echap
+    /* Verifies if escape is pressed */
     function checkKey(event){
         let keynum;
-        //Recuperation de la touche suivant les differents naviguateur
+        /* Getting the key according to the navigator used */
         if(window.event) keynum = event.keyCode;
         else if(event.which) keynum = event.which;
         if (keynum === 27) closeModal();
     }
 
-    //Enleve tous les parametres de l'url
+    /* Clear parameters from the URL */
     function cleanURL(){
         window.history.replaceState({}, document.title, "quizz?waiting=true");
         window.location.reload();
