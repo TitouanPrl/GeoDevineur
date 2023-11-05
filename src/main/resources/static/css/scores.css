@@ -59,8 +59,6 @@ td {
     color: rgba(0, 0, 0, 1.0);
     font-weight: bold;
     background: grey;
-    color: rgba(0, 0, 0, 0.8);
-
 }
 
 tr:last-child td:first-child {
