@@ -15,6 +15,7 @@ A vous de jouer !
 #### Jouer
 ***
 Pour lancer le site, ouvrez le code dans un IDE et cliquez sur "run".
+Puis ouvrir l'adresse localhost:8080/ dans votre naviguateur préféré.
 
 #### Importer
 ***
