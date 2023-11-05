@@ -8,12 +8,11 @@ import com.example.geodevineur.tables.Departement;
 public class NumberCond<E extends Departement> extends Condition<E> {
     private Random random;
     private E compare;
-    private boolean isLess; // If more, isLess is false
+    private boolean isLess; /* If more, isLess is false */
     private String threshold;
     private static final int maxId = 95;
 
     public NumberCond(E e, E compare_) {
-        System.out.println("compare="+compare_);
         random = new Random();
         setAttributes(e);
         double probaCompare = .3;
@@ -29,11 +28,9 @@ public class NumberCond<E extends Departement> extends Condition<E> {
         if (compare != null) {
             threshold = compare.getNumber();
             if (compareId(threshold,e.getNumber()) < 0) {
-                System.out.println("here, "+threshold+" < "+e.getNumber());
                 isLess = true;
                 return;
             } else if (compareId(threshold,e.getNumber()) > 0) {
-                System.out.println("here2, "+threshold+" > "+e.getNumber());
                 isLess = false;
                 return;
             }

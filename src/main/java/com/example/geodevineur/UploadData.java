@@ -146,7 +146,7 @@ public class UploadData {
 
         try (BufferedReader brP = new BufferedReader(new FileReader(filePathPrfs))) {
             String lineP;
-            lineP = brP.readLine(); 
+            lineP = brP.readLine();
             while ((lineP = brP.readLine()) != null) {
                 String[] values = lineP.split(",");
                 Prefecture prefecture = new Prefecture(
