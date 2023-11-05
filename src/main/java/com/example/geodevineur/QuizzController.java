@@ -110,7 +110,7 @@ public class QuizzController {
             setStep(getStep()+1);
         } else {
             /* Lose, printing the end message */
-            System.out.println(nextQ + (departementOfInput) + " didnt checked : "+previousCond.getSentence());
+            System.out.println(nextQ + " (" +(departementOfInput) + ") => didnt checked : "+previousCond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
 
@@ -152,7 +152,7 @@ public class QuizzController {
         template.append("<h1>").append(question).append("</h1>");
         template.append("</div>");
         template.append("<div class=\"card-body align-items-center\">");
-        template.append("<p class=\"card-text\">").append(getPreviousQuestions()).append("</p>");
+        if (getStep() > 0) template.append("<p class=\"card-text\">").append(getPreviousQuestions()).append("</p>");
         template.append("<form action=\"quizz?nextQ=true\" method=\"get\" class=\"align-items-center text-center\">");
         template.append("<input  autocomplete=\"off\" class=\"\" type=\"text\" name=\"nextQ\"><br><br>");
         template.append("<input class=\"btn\" type=\"submit\" value=\"Valider\"><br><br>");
@@ -195,6 +195,7 @@ public class QuizzController {
         htmlContent.append("<div class=\"modal-content\">");
         htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
         htmlContent.append("<h2>Dommage vous avez perdu ...</h2>");
+        htmlContent.append("<h4>Il s'agissait de : ").append(departementToFind.getName()).append("</h4>");
         htmlContent.append("</div>");
         htmlContent.append("</div>");
         return htmlContent;

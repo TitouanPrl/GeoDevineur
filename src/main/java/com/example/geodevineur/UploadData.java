@@ -126,6 +126,7 @@ public class UploadData {
                         values[3], /* Number of the department */
                         Integer.parseInt(values[4]), /* Population */
                         Format.round((double) Float.parseFloat(values[5]),2), /* Surface */
+                        Cardinal.fromString(values[6]),
                         Format.IntToBoolean(Integer.parseInt(values[7])), /* Seaside */
                         Integer.parseInt(values[8]), /* Neighbours */
                         Politic.fromString(values[9])); /* Politic */
@@ -195,7 +196,9 @@ public class UploadData {
             saveManyToOne(departementsOfRegion,region);
             regionController.add(region);
         }
-        scoreController.add(new Score("toto", "", 100));
+        scoreController.add(new Score("Titouan", "", 300));
+        scoreController.add(new Score("Mael", "", 200));
+        scoreController.add(new Score("Rémi", "", 100));
 
         //-------------------------------------------------------------------------
 

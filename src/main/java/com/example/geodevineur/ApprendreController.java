@@ -190,6 +190,7 @@ public class ApprendreController {
         htmlContent.append("<h3>").append(departement.getName()).append(" - ").append(departement.getNumber()).append("</h3><br>");
         htmlContent.append("<p>Préfecture : ").append(format.getLinkOf(departement.getPrefecture().getName())).append("</p>");
         htmlContent.append("<p>Région : ").append(format.getLinkOf(departement.getRegion().getName())).append("</p>");
+        htmlContent.append("<p>Il se situe dans le ").append(departement.getCardinal()).append(" de la France</p>");
         htmlContent.append("<p>Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants</p>");
         htmlContent.append("<p>Il a une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");
         if(departement.getSeaside()){
