@@ -204,13 +204,13 @@ public class QuizzController {
         } else if(losingCond.getSentence().contains("lettres")){ //NBcharacters
             return mistakeInputed.getName() + " contient " + mistakeInputed.getName().length() + " lettres (pas " + departementToFind.getName().length() + ")";
         } else if(losingCond.getSentence().contains("voisins")){ //Neightbours
-            return mistakeInputed.getName() + " possède " + mistakeInputed.getNeightbours() + " voisins (pas " + departementToFind.getNeightbours() + ")";
+            return mistakeInputed.getName() + " possède " + mistakeInputed.getNeightbours() + " voisins";
         } else if(losingCond.getSentence().contains("numéro")){ //Number
             return mistakeInputed.getName() + " a pour numéro le " + mistakeInputed.getNumber();
         } else if(losingCond.getSentence().contains("vote")){ //Politic
             return mistakeInputed.getName() + " vote " + mistakeInputed.getPolitic() + " en majorité (pas " + departementToFind.getPolitic() + ")";
         } else if(losingCond.getSentence().contains("habitants")){ //Population
-            return mistakeInputed.getName() + " a " + Format.intToFormatedString(mistakeInputed.getPopulation()) + " habitants (pas " + Format.intToFormatedString(departementToFind.getPopulation()) + ")";
+            return mistakeInputed.getName() + " a " + Format.intToFormatedString(mistakeInputed.getPopulation()) + " habitants";
         } else if(losingCond.getSentence().contains("préfecture")){ //Prefecture
             return mistakeInputed.getName() + " a pour préfecture " + mistakeInputed.getPrefecture().getName() + " (pas " + departementToFind.getPrefecture().getName() + ")";
         } else if(losingCond.getSentence().contains("région")){ //Region
@@ -219,7 +219,7 @@ public class QuizzController {
             if(mistakeInputed.getSeaside()) return mistakeInputed.getName() + " se situe en bord de mer";
             else return mistakeInputed.getName() + " ne se situe pas en bord de mer";
         } else if(losingCond.getSentence().contains("km")){ //Surface
-            return mistakeInputed.getName() + " compte " + mistakeInputed.getSurface() + " km² (pas " + departementToFind.getSurface() + ")";
+            return mistakeInputed.getName() + " compte " + mistakeInputed.getSurface() + " km²";
         } else {
             return "";
         }
