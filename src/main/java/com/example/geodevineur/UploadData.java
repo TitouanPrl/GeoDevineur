@@ -129,7 +129,6 @@ public class UploadData {
                         Format.IntToBoolean(Integer.parseInt(values[7])), /* Seaside */
                         Integer.parseInt(values[8]), /* Neighbours */
                         Politic.fromString(values[9])); /* Politic */
-                //Cardinal pas utilisé
                 String regionName = values[1];
 
                 /* Adding element to the list */
