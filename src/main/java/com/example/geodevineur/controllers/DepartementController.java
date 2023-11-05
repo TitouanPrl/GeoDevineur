@@ -16,6 +16,8 @@ public class DepartementController {
     @Autowired
     DepartementRepository departementService;
 
+    Random random = new Random();
+
     /* Returns a list of all departments */
     public List<Departement> getAll(){
         List<Departement> result = new ArrayList<>();
@@ -26,7 +28,7 @@ public class DepartementController {
 
     /* Returns a random department */
     public Departement getRandomOne(){
-        return getAll().get(new Random().nextInt(95));
+        return getAll().get(random.nextInt(getAll().size()));
     }
 
     /* Returns a department by its id */
