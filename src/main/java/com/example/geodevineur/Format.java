@@ -36,6 +36,12 @@ public class Format {
         return htmlContent;
     }
 
+    /* Clear a string by deleting {,|'| |-}, accents, and turning capitals into small letters */
+    public String clearString(String value){
+        value = value.replace("é","e").replace("è","e").replace("î","i").replace("Î","i").replace("ô","o");
+        return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
+    }
+
     //PAS TERMINé
     /* Finding the gender of a word */
     public String getGenreByName(String name, String letter ){ //letter=d ou l
@@ -48,6 +54,22 @@ public class Format {
         } else {
             return "le";
         }
+    }
+
+    /* Converts seconds from int to string */
+    public String getTimeStringFromSeconds(int seconds){
+        int minutes = 0;
+        String sentence;
+        while (seconds > 60){
+            minutes++;
+            seconds -= 60;
+        }
+        if(minutes == 0){
+            sentence = seconds+" secondes";
+        } else {
+            sentence = minutes+"min "+seconds+"secondes";
+        }
+        return sentence;
     }
 
     /* Set the number of decimals of a float to "places" */
