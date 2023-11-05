@@ -82,7 +82,7 @@ public class QuizzController {
         /* Response written by the player */
         Departement departementOfInput = getDepartementFromStringInput(nextQ);
 
-        /* Comparison with the target */
+        /* Comparison with the target (without the special chars) */
         if(getStep() > 0 && departementOfInput != null && departementOfInput.getName().equals(getDepartementToFind().getName())) {
             int seconds = (int) Duration.between(getStartTime(),Instant.now()).toSeconds();
             model.addAttribute("scoreModal", getScoreModal(seconds));
@@ -124,7 +124,7 @@ public class QuizzController {
         return cible;
     }
 
-    //----------------------------ALL-TEMPLATES--------------------------------------
+    /*----------------------------ALL-TEMPLATES--------------------------------------*/
 
     /* Returns html template of all the previous questions */
     public StringBuilder getPreviousQuestions(){

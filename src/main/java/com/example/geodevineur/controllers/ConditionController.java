@@ -11,7 +11,6 @@ import java.util.Random;
 @Service
 public class ConditionController {
 
-    //LOGS A DELETE
     /* Return a list of condition for the quizz, the conditions lead finaly to only one department passed in parameter */
     public List<Condition<Departement>> getRun(List<Departement> allDepartements, Departement cible){
         List<Condition<Departement>> allConditions = new ArrayList<>();
@@ -36,7 +35,7 @@ public class ConditionController {
         return allConditions;
     }
 
-    /* Return the next condition to reduce the number of answers possible */
+    /* Returns the next condition to reduce the number of answers possible */
     public Condition<Departement> getNextCond(List<Departement> allDepartements, Departement chosen, Condition<Departement> previousCond) {
         Random random = new Random();
         int nbDep = allDepartements.size();
