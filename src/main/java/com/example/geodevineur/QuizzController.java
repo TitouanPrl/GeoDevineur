@@ -24,6 +24,8 @@ public class QuizzController {
     DepartementController departementController;
     @Autowired
     ConditionController conditionController;
+    @Autowired
+    Format format;
 
     @Getter@Setter
     public List<Condition<Departement>> conditions;
@@ -38,9 +40,10 @@ public class QuizzController {
     @Getter@Setter
     private int score; //a delete plus tard
 
-    public QuizzController(DepartementController departementController_, ConditionController conditionController_){
+    public QuizzController(DepartementController departementController_, ConditionController conditionController_, Format format_){
         this.departementController = departementController_;
         this.conditionController = conditionController_;
+        this.format = format_;
         this.conditions = new ArrayList<>();
     }
 
@@ -53,7 +56,6 @@ public class QuizzController {
     /* Prints starting button if page in waiting status */
     @RequestMapping(value = "quizz", params = "waiting")
     public String waiting(Model model) {
-        //conditionController.printAllCondsOfDep(departementController.getByName("Tarn"));
         model.addAttribute("startButton", getStartButton());
         return "quizz";
     }
@@ -83,7 +85,7 @@ public class QuizzController {
         System.out.println("Saisie : "+nextQ);
 
         /* Response written by the player */
-        Departement departementOfInput = getDepartementFromSInput(nextQ);
+        Departement departementOfInput = getDepartementFromStringInput(nextQ);
 
         /* Comparison with the target */
         if(getStep() > 0 && departementOfInput != null && departementOfInput.getName().equals(getDepartementToFind().getName())) {
@@ -103,12 +105,12 @@ public class QuizzController {
             //logs à delete
             if(previousCond != null)
                 System.out.println(nextQ + " juste checked : "+previousCond.getSentence());
-
+            model.addAttribute("previousQuestions",getPreviousQuestions());
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
             /* Lose, printing the end message */
-            System.out.println(nextQ + (departementOfInput) + " didnt checked : "+previousCond.getSentence());
+            System.out.println(nextQ + " (" +(departementOfInput) + ") => didnt checked : "+previousCond.getSentence());
             model.addAttribute("scoreModal",getLoseModal());
         }
 
@@ -116,21 +118,29 @@ public class QuizzController {
     }
 
     /* Gets a department from a string and deletes its special chars */
-    public Departement getDepartementFromSInput(String input){
-        String name = clearString(input);
+    public Departement getDepartementFromStringInput(String input){
+        String name = format.clearString(input);
         Departement cible = null;
         for(Departement departement : departementController.getAll()){
-            if(clearString(departement.getName()).equals(name)){
+            if(format.clearString(departement.getName()).equals(name)){
                 cible = departement;
             }
         }
         return cible;
     }
 
-    /* Clear a string by deleting {,|'| |-}, accents, and turning capitals into small letters */
-    public String clearString(String value){
-        value = value.replace("é","e").replace("è","e").replace("î","i").replace("Î","i").replace("ô","o");
-        return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
+    //----------------------------ALL-TEMPLATES--------------------------------------
+
+    /* Returns html template of all the previous questions */
+    public StringBuilder getPreviousQuestions(){
+        StringBuilder htmlContent = new StringBuilder();
+        htmlContent.append("<h4>Questions répondues : </h4>");
+        htmlContent.append("<ul>");
+        for(int i=0;i<getStep();i++){
+            htmlContent.append("<li>").append(getConditions().get(i).getSentence()).append("</li>");
+        }
+        htmlContent.append("</ul>");
+        return htmlContent;
     }
 
     /* Returns html template of the question */
@@ -142,10 +152,10 @@ public class QuizzController {
         template.append("<h1>").append(question).append("</h1>");
         template.append("</div>");
         template.append("<div class=\"card-body align-items-center\">");
+        if (getStep() > 0) template.append("<p class=\"card-text\">").append(getPreviousQuestions()).append("</p>");
         template.append("<form action=\"quizz?nextQ=true\" method=\"get\" class=\"align-items-center text-center\">");
-        template.append("<input class=\"\" type=\"text\" name=\"nextQ\"><br><br>");
+        template.append("<input  autocomplete=\"off\" class=\"\" type=\"text\" name=\"nextQ\"><br><br>");
         template.append("<input class=\"btn\" type=\"submit\" value=\"Valider\"><br><br>");
-        //template.append("<i class=\"card-subtitle border-top\">43 correspondants</i>");
         template.append("</form>");
         template.append("</div>");
         template.append("</div>");
@@ -159,7 +169,7 @@ public class QuizzController {
         htmlContent.append("<div class=\"modal-content\">");
         htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
         htmlContent.append("<h2>Bien joué, vous avez fait un score de <b>").append(Format.calculScore(seconds,getStep())).append("</b></h2>");
-        htmlContent.append("<i>Temps : <b>").append(getTimeStringFromSeconds(seconds)).append("</b>, Nombre de questions : <b>").append(getStep()).append("</b><br><br></i>");
+        htmlContent.append("<i>Temps : <b>").append(format.getTimeStringFromSeconds(seconds)).append("</b>, Nombre de questions : <b>").append(getStep()).append("</b><br><br></i>");
         htmlContent.append("<form id=\"saveScore\" onsubmit=\"proceedForm()\">");
         htmlContent.append("<div class=\"form-group\">");
         htmlContent.append("<label for=\"pseudo\">Pseudo</label>");
@@ -185,29 +195,14 @@ public class QuizzController {
         htmlContent.append("<div class=\"modal-content\">");
         htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
         htmlContent.append("<h2>Dommage vous avez perdu ...</h2>");
+        htmlContent.append("<h4>Il s'agissait de : ").append(departementToFind.getName()).append("</h4>");
         htmlContent.append("</div>");
         htmlContent.append("</div>");
         return htmlContent;
     }
 
-    /* Converts seconds from int to string */
-    public String getTimeStringFromSeconds(int seconds){
-        int minutes = 0;
-        String sentence;
-        while (seconds > 60){
-            minutes++;
-            seconds -= 60;
-        }
-        if(minutes == 0){
-            sentence = seconds+" secondes";
-        } else {
-            sentence = minutes+"min "+seconds+"secondes";
-        }
-        return sentence;
-    }
-
     /* Returns html template for the button launching the quizz */
     public StringBuilder getStartButton(){
-        return new StringBuilder("<button class=\"btn btn-success btn-lg\" id=\"start\">DEMARRER</button>");
+        return new StringBuilder("<button class=\"button-start\" id=\"start\" role=\"button\"><span class=\"text\">Démarrer le Quizz</span></button>");
     }
 }

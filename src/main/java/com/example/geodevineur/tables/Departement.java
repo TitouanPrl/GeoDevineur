@@ -35,6 +35,8 @@ public class Departement implements Comparable<Departement> {
     @Getter@Setter
     protected int neightbours;
     @Getter@Setter
+    protected Cardinal cardinal;
+    @Getter@Setter
     protected Politic politic;
 
     protected boolean possible = true;
@@ -44,6 +46,7 @@ public class Departement implements Comparable<Departement> {
                         String number_,
                         int pop_,
                         double surf_,
+                        Cardinal cardinal_,
                         boolean sea_,
                         int neigh_,
                         Politic politic_) {
@@ -51,6 +54,7 @@ public class Departement implements Comparable<Departement> {
         number = number_;
         population = pop_;
         surface = surf_;
+        cardinal = cardinal_;
         seaside = sea_;
         neightbours = neigh_;
         politic = politic_;
@@ -82,9 +86,5 @@ public class Departement implements Comparable<Departement> {
     @Override
     public int compareTo(Departement otherDpt) {
         return getName().compareTo(otherDpt.getName());
-    }
-
-    public Cardinal getCardinal(){
-        return getRegion().getCardinal();
     }
 }

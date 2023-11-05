@@ -20,6 +20,6 @@ public class PrefectureCond<E extends Departement> extends Condition<E>{
     }
 
     public boolean checksCondition(E e) {
-        return e.getPrefecture() == prefecture;
+        return e.getPrefecture().getName().equals(prefecture.getName());
     }
 }

@@ -34,7 +34,7 @@ public class ApprendreController {
     @Setter
     private Model model;
 
-    private final Map map;
+    private final MapController map;
     @Getter@Setter
     private String type;
 
@@ -46,7 +46,7 @@ public class ApprendreController {
         this.regionController = regionController_;
         this.entityController = entityController_;
         this.format = format_;
-        this.map = new Map("src/main/resources/static/img/france_departements.svg");
+        this.map = new MapController("src/main/resources/static/img/france_departements.svg");
     }
 
     /* Main fonction updating the map and the infos for an entity with given type and name */
@@ -190,6 +190,7 @@ public class ApprendreController {
         htmlContent.append("<h3>").append(departement.getName()).append(" - ").append(departement.getNumber()).append("</h3><br>");
         htmlContent.append("<p>Préfecture : ").append(format.getLinkOf(departement.getPrefecture().getName())).append("</p>");
         htmlContent.append("<p>Région : ").append(format.getLinkOf(departement.getRegion().getName())).append("</p>");
+        htmlContent.append("<p>Il se situe dans le ").append(departement.getCardinal()).append(" de la France</p>");
         htmlContent.append("<p>Il comporte ").append(Format.intToFormatedString(departement.getPopulation())).append(" habitants</p>");
         htmlContent.append("<p>Il a une superficie de ").append(Format.intToFormatedString((int)departement.getSurface())).append(" km²</p>");
         if(departement.getSeaside()){

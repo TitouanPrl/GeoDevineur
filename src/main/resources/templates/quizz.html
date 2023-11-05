@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/modal.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/quizz.css}">
 </head>
 <body onkeydown="checkKey(event)">
 <header>
@@ -21,12 +22,21 @@
         </div>
     </div>
 </header>
-<div class="container p-5">
-    <div th:remove="tag" th:utext="${scoreModal}"></div>
-    <div style="margin-left: 60%;margin-right: auto" th:remove="tag" th:utext="${startButton}"></div>
-    <div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}"></div>
+<div class="quizz">
+    <div class="container p-5">
+        <div th:remove="tag" th:utext="${scoreModal}"></div>
+        <div th:remove="tag" th:utext="${startButton}"></div>
+        <div th:remove="tag" th:utext="${questionContent}"></div>
+    </div>
 </div>
-<script>
+<footer class="text-muted border-top">
+    <div class="container text-center">
+        <p>Site créé dans le cadre d'un projet JEE</p>
+        <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
+    </div>
+</footer>
+</body>
+<script type="text/javascript">
     function proceedForm() {
         const pseudo = document.getElementById("pseudo").value;
         const password = document.getElementById("password").value;
@@ -44,7 +54,6 @@
         const params = new URLSearchParams(window.location.search);
         return params.get(word) === "true";
     }
-
 
     // Fonction pour afficher le modal si l'URL contient "fin=true"
     function displayModal() {
@@ -82,11 +91,4 @@
         });
     }
 </script>
-<footer class="text-muted border-top" style="padding-top: 15px">
-    <div class="container text-center">
-        <p>Site créé dans le cadre d'un projet JEE</p>
-        <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
-    </div>
-</footer>
-</body>
 </html>
