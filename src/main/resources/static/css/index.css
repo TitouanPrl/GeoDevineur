@@ -1,43 +1,21 @@
-/*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
-
-.megamenu {
-    position: static;
+.accueil {
+    background-image: url('../img/backgrounds/accueil.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 900px;
 }
 
-.megamenu .dropdown-menu {
-    background: none;
-    border: none;
-    width: 100%;
+h1 {
+    padding: 2%;
+    font-size: 5em;
+    color: white;
 }
 
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSES
-* ==========================================
-*
-*/
-
-body {
-    background: #eaafc8;
-    background: -webkit-linear-gradient(to right, #eaafc8, #654ea3);
-    background: linear-gradient(to right, #eaafc8, #654ea3);
-    min-height: 100vh;
+.buttons {
+    margin-top: 15%;
+    padding: 5px;
 }
 
-code {
-    color: #745eb1;
-    background: #fff;
-    padding: 0.1rem 0.2rem;
-    border-radius: 0.2rem;
-}
-
-.text-uppercase {
-    letter-spacing: 0.08em;
+.footer {
+    padding-top: 15px;
 }

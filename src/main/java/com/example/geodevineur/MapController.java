@@ -12,13 +12,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class Map {
+public class MapController {
 
     String filePath;
     @Getter
     String content;
 
-    public Map(String filePath_) throws IOException {
+    public MapController(String filePath_) throws IOException {
         this.filePath = filePath_;
         this.content = Files.readString(Path.of(filePath_));
     }
@@ -47,7 +47,8 @@ public class Map {
     /* Place a dot representing a prefecture on the map */
     public void colorizePrefecture(Prefecture prefecture, String color){
         int[] location = getPrefectureLocation(prefecture);
-        this.content = this.content.replace("#fill", color);
+        this.content = this.content.replace("stroke-width=\"0\"", "stroke-width=\"3\"");
+        this.content = this.content.replace("grey", color);
         this.content = this.content.replace("valueX", String.valueOf(location[0]));
         this.content = this.content.replace("valueY", String.valueOf(location[1]));
     }

@@ -20,6 +20,6 @@ public class RegionCond<E extends Departement> extends Condition<E>{
     }
 
     public boolean checksCondition(E e) {
-        return e.getRegion() == region;
+        return e.getRegion().getName().equals(region.getName());
     }
 }

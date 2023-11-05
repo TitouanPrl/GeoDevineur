@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/apprendre.css}">
 </head>
 <body>
 <header>
@@ -20,31 +21,32 @@
         </div>
     </div>
 </header>
-<div class="container" style="padding: 50px">
+<div class="apprendre p-5">
+    <div class="content">
+        <div class="container head">
+            <div class="container selects">
+                <label for="type-select"></label>
+                <select class="custom-select" id="type-select">
+                    <option value="prefecture">Préfecture</option>
+                    <option value="departement">Département</option>
+                    <option value="region">Région</option>
+                </select>
 
-    <div class="container" style="float: right;width: 400px">
-        <label for="type-select"></label>
-        <select class="custom-select" id="type-select">
-            <option value="prefecture">Préfecture</option>
-            <option value="departement">Département</option>
-            <option value="region">Région</option>
-        </select>
-
-        <label for="main-select"></label>
-        <div th:remove="tag" th:utext="${selectContent}"></div>
+                <label for="main-select"></label>
+                <div th:remove="tag" th:utext="${selectContent}"></div>
+            </div>
+            <div class="map" th:utext="${map}"></div>
+            <div class="infos align-items-center text-center" th:utext="${infos}"></div>
+        </div>
     </div>
-
-    <div style="float: left" th:utext="${map}"></div>
-    <div style="float: right;padding: 50px" class="align-items-center text-center" th:utext="${infos}"></div>
 </div>
-<footer class="text-muted" style="padding-top: 625px">
+<footer class="text-muted">
     <div class="container text-center border-top">
         <p>Site créé dans le cadre d'un projet JEE</p>
         <p><a href="https://github.com/TitouanPrl/GeoDevineur" class="nav-link">Github GéoDevineur</a></p>
     </div>
 </footer>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     if (window.PerformanceNavigationTiming) {
         const type = (new URLSearchParams(window.location.search)).get("type")
