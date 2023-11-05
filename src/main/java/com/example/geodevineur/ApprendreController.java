@@ -215,7 +215,8 @@ public class ApprendreController {
         htmlContent.append("<p>Elle contient les départements suivants :</p><p>");
         int i = 0;
         int value = 3;
-        if(region.getName().equals("Provence-Alpes-Côte d'Azur")) value = 2; //car que des departements à rallonge...
+        if(region.getName().equals("Provence-Alpes-Côte d'Azur"))
+            value = 2; //car que des departements à rallonge...
         for(Departement departement : region.getDepartements()){
             htmlContent.append(format.getLinkOf(departement.getName()));
             i++;
@@ -227,7 +228,6 @@ public class ApprendreController {
                     htmlContent.append(" ");
                 }
             }
-
         }
         htmlContent.append("</p>");
 

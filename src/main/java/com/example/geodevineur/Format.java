@@ -42,20 +42,6 @@ public class Format {
         return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
     }
 
-    //PAS TERMINé
-    /* Finding the gender of a word */
-    public String getGenreByName(String name, String letter ){ //letter=d ou l
-        String result = ""; //la, les
-        String last_char = name.substring(name.length() - 1);
-        if(last_char.equals("s")){
-            return letter+"es";
-        } else if(last_char.equals("e") && letter.equals("l")){
-            return "la";
-        } else {
-            return "le";
-        }
-    }
-
     /* Converts seconds from int to string */
     public String getTimeStringFromSeconds(int seconds){
         int minutes = 0;
@@ -80,16 +66,6 @@ public class Format {
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
-    }
-
-    public static int roundInt(int number, int step){
-        int result = 0;
-        while(number > step){
-            result++;
-            number -= step;
-        }
-        if(number > step/2) result++;
-        return result*step;
     }
 
     public static Boolean IntToBoolean(int x){

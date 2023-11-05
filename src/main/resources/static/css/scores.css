@@ -17,20 +17,14 @@
 }
 
 table {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    font-size: 14px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 1em;
     border-radius: 10px;
     border-spacing: 0;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     opacity: 90%;
-}
-
-caption {
-    color: white;
-    margin-bottom: 7px;
-    font-size: 20px;
 }
 
 th {
@@ -57,16 +51,14 @@ th:first-child, td:first-child {
 
 td {
     padding: 7px 20px;
-    background: rgba(230,230,230,1);
+    background: grey;
     color: rgba(0, 0, 0, 0.6);
 }
 
 .player td {
     color: rgba(0, 0, 0, 1.0);
     font-weight: bold;
-    background: rgba(215, 215, 215, 1);
-    color: rgba(0, 0, 0, 0.8);
-
+    background: grey;
 }
 
 tr:last-child td:first-child {

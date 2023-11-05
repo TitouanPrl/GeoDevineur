@@ -25,7 +25,7 @@ public class ConditionController {
             } while (cond == null && tentatives < 50);
 
             /* If we can't find the next condition reducing the number of answers possible, we restart from the beginning */
-            if (cond == null){
+            if (cond == null || (cond.getSentence().contains("numéro") && allConditions.isEmpty())){
                 System.out.println("---RESTARTING-RUN-GENERATION------");
                 allConditions = new ArrayList<>();
                 allDepartementsTemp = allDepartements;
@@ -41,9 +41,7 @@ public class ConditionController {
         Random random = new Random();
         int nbDep = allDepartements.size();
 
-        Departement secondary;
-        int randIndex = random.nextInt(nbDep);
-        secondary = allDepartements.get(randIndex);
+        Departement secondary = allDepartements.get(random.nextInt(nbDep));
 
         Condition<Departement> cond = null;
         boolean rerun;
@@ -52,41 +50,20 @@ public class ConditionController {
         do {
             tentative++;
             int randCond = random.nextInt(11);
-            switch (randCond) {
-                case 0:
-                    cond = new CardinalCond<>(chosen);
-                    break;
-                case 1:
-                    cond = new ContainLetterCond<>(chosen);
-                    break;
-                case 2:
-                    cond = new NbCharactersCond<>(chosen);
-                    break;
-                case 3:
-                    cond = new NeighbourCond<>(chosen, secondary);
-                    break;
-                case 4:
-                    cond = new PoliticCond<>(chosen);
-                    break;
-                case 5:
-                    cond = new PopulationCond<>(chosen, secondary);
-                    break;
-                case 6:
-                    cond = new NumberCond<>(chosen, secondary);
-                    break;
-                case 7:
-                    cond = new RegionCond<>(chosen);
-                    break;
-                case 8:
-                    cond = new SeasideCond<>(chosen);
-                    break;
-                case 9:
-                    cond = new SurfaceCond<>(chosen, secondary);
-                    break;
-                case 10:
-                    cond = new PrefectureCond<>(chosen);
-                    break;
-            }
+            cond = switch (randCond) {
+                case 0 -> new CardinalCond<>(chosen);
+                case 1 -> new ContainLetterCond<>(chosen);
+                case 2 -> new NbCharactersCond<>(chosen);
+                case 3 -> new NeighbourCond<>(chosen, secondary);
+                case 4 -> new PoliticCond<>(chosen);
+                case 5 -> new PopulationCond<>(chosen, secondary);
+                case 6 -> new NumberCond<>(chosen, secondary);
+                case 7 -> new RegionCond<>(chosen);
+                case 8 -> new SeasideCond<>(chosen);
+                case 9 -> new SurfaceCond<>(chosen, secondary);
+                case 10 -> new PrefectureCond<>(chosen);
+                default -> cond;
+            };
 
             if (previousCond == null)
                 rerun = (!isCondGood(cond, allDepartements));
@@ -130,7 +107,6 @@ public class ConditionController {
         }
         return false;
     }
-
 
     public int getNbPossible(List<Departement> allDeps){
         int i=0;
