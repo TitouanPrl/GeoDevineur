@@ -25,7 +25,7 @@ public class ConditionController {
             } while (cond == null && tentatives < 50);
 
             /* If we can't find the next condition reducing the number of answers possible, we restart from the beginning */
-            if (cond == null){
+            if (cond == null || (cond.getSentence().contains("numéro") && allConditions.isEmpty())){
                 System.out.println("---RESTARTING-RUN-GENERATION------");
                 allConditions = new ArrayList<>();
                 allDepartementsTemp = allDepartements;
@@ -41,9 +41,7 @@ public class ConditionController {
         Random random = new Random();
         int nbDep = allDepartements.size();
 
-        Departement secondary;
-        int randIndex = random.nextInt(nbDep);
-        secondary = allDepartements.get(randIndex);
+        Departement secondary = allDepartements.get(random.nextInt(nbDep));
 
         Condition<Departement> cond = null;
         boolean rerun;

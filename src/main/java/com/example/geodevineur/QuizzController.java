@@ -69,12 +69,10 @@ public class QuizzController {
         setDepartementToFind(departementController.getRandomOne());
         /* Sets the step counter to 0 */
         setStep(0);
-        /* Sets empty privous answers */
+        /* Sets empty previous answers */
         setPreviousAnswers(new ArrayList<>());
         /* Set the list of conditions for the quizz, according to the searched department */
         setConditions(conditionController.getRun(departementController.getAll(), getDepartementToFind()));
-        //Logs du departements à trouver A DELETE
-        System.out.println("Departement to find : "+getDepartementToFind().getName());
         return "redirect:/quizz?nextQ=start";
     }
 
