@@ -14,10 +14,7 @@ A vous de jouer !
 
 #### Jouer
 ***
-Pour lancer le site, placez vous à la racine de l'application et exécutez : 
-```sh
-mvn spring-boot:run
-```
+Pour lancer le site, ouvrez le code dans un IDE et cliquez sur "run".
 
 #### Importer
 ***
