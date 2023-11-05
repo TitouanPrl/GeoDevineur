@@ -2,6 +2,7 @@
     background-image: url('../img/backgrounds/scores.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    height: 750px;
 }
 
 .footer {

@@ -99,8 +99,8 @@ public class Format {
     /* Calculates a score */
     public static int calculScore(int secondes, int nb_questions){
         int max = 10000;
-        int a = 200;
-        int b = 100;
+        int a = 100;
+        int b = 200;
         int score = max - a * nb_questions - b * secondes;
         return Math.max(score, 0);
     }
