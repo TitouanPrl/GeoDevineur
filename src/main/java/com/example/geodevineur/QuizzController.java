@@ -76,14 +76,9 @@ public class QuizzController {
         return "redirect:/quizz?nextQ=start";
     }
 
-    //LOGS A DELTE !!
     /* Main fonction, verify if the solution is found and if no, set the next question */
     @RequestMapping(value = "quizz", params = "nextQ")
     public String nextQ(Model model, @RequestParam String nextQ){
-        /* Comparing response and target (without the special chars) */
-        System.out.println("-----------");
-        System.out.println("Saisie : "+nextQ);
-
         /* Response written by the player */
         Departement departementOfInput = getDepartementFromStringInput(nextQ);
 
@@ -102,19 +97,45 @@ public class QuizzController {
 
         /* Checking if the department written matches the condition */
         if(previousCond == null || (departementOfInput != null && previousCond.checksCondition(departementOfInput))) {
-            //logs à delete
-            if(previousCond != null)
-                System.out.println(nextQ + " juste checked : "+previousCond.getSentence());
             model.addAttribute("previousQuestions",getPreviousQuestions());
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
             /* Lose, printing the end message */
             System.out.println(nextQ + " (" +(departementOfInput) + ") => didnt checked : "+previousCond.getSentence());
-            model.addAttribute("scoreModal",getLoseModal());
+            model.addAttribute("scoreModal",getLoseModal(getErrorCorrection(departementOfInput, previousCond)));
         }
 
         return "quizz";
+    }
+
+    public String getErrorCorrection(Departement mistakeInputed, Condition<Departement> losingCond){
+        if(losingCond.getSentence().contains("situe au")){ //Cardinal
+            return mistakeInputed.getName() + " se situe au " + mistakeInputed.getCardinal() + " de la France";
+        } else if(losingCond.getSentence().contains("contient")){ //ContainLetter
+            return mistakeInputed.getName() + " se situe au " + mistakeInputed.getCardinal() + " de la France";
+        } else if(losingCond.getSentence().contains("lettres")){ //NBcharacters
+            return mistakeInputed.getName() + " contient " + mistakeInputed.getName().length() + " lettres";
+        } else if(losingCond.getSentence().contains("voisins")){ //Neightbours
+            return mistakeInputed.getName() + " possède " + mistakeInputed.getNeightbours() + " voisins";
+        } else if(losingCond.getSentence().contains("numéro")){ //Number
+            return mistakeInputed.getName() + " a pour numéro le " + mistakeInputed.getNumber();
+        } else if(losingCond.getSentence().contains("vote")){ //Politic
+            return mistakeInputed.getName() + " vote " + mistakeInputed.getPolitic() + " en majorité";
+        } else if(losingCond.getSentence().contains("habitants")){ //Population
+            return mistakeInputed.getName() + " a " + Format.intToFormatedString(mistakeInputed.getPopulation()) + " habitants";
+        } else if(losingCond.getSentence().contains("préfecture")){ //Prefecture
+            return mistakeInputed.getName() + " a pour préfecture " + mistakeInputed.getPrefecture().getName();
+        } else if(losingCond.getSentence().contains("région")){ //Region
+            return mistakeInputed.getName() + " a pour région " + mistakeInputed.getRegion().getName();
+        } else if(losingCond.getSentence().contains("mer")){ //Seaside
+            if(mistakeInputed.getSeaside()) return mistakeInputed.getName() + " se situe en bord de mer";
+            else return mistakeInputed.getName() + " ne se situe pas en bord de mer";
+        } else if(losingCond.getSentence().contains("km")){ //Surface
+            return mistakeInputed.getName() + " compte " + mistakeInputed.getSurface() + " km²";
+        } else {
+            return "";
+        }
     }
 
     /* Gets a department from a string and deletes its special chars */
@@ -189,13 +210,13 @@ public class QuizzController {
     }
 
     /* Returns the html template for the lost interface */
-    public StringBuilder getLoseModal(){
+    public StringBuilder getLoseModal(String errorSentence){
         StringBuilder htmlContent = new StringBuilder();
         htmlContent.append("<div class=\"modal\" id=\"formScoreModal\" style=\"display: block;\">");
         htmlContent.append("<div class=\"modal-content\">");
         htmlContent.append("<span class=\"close\" id=\"closeModal\" onclick=\"closeModal()\">&times;</span>");
         htmlContent.append("<h2>Dommage vous avez perdu ...</h2>");
-        htmlContent.append("<h4>Il s'agissait de : ").append(departementToFind.getName()).append("</h4>");
+        htmlContent.append("<h4>").append(errorSentence).append("</h4>");
         htmlContent.append("</div>");
         htmlContent.append("</div>");
         return htmlContent;
