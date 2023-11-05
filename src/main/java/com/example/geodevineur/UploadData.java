@@ -46,6 +46,7 @@ public class UploadData {
         regionController.deleteAll();
         prefectureController.deleteAll();
         departementController.deleteAll();
+        scoreController.deleteAll();
     }
 
     //Type temporaire contenant une prefecture et son departement (en string) pour l'insere aisement dans la bdd
@@ -196,9 +197,12 @@ public class UploadData {
             saveManyToOne(departementsOfRegion,region);
             regionController.add(region);
         }
-        scoreController.add(new Score("Titouan", "", 300));
-        scoreController.add(new Score("Mael", "", 200));
-        scoreController.add(new Score("Rémi", "", 100));
+        scoreController.add(new Score("Titouan", "", 7000));
+        scoreController.add(new Score("Mael", "", 5500));
+        scoreController.add(new Score("Rémi", "", 3000));
+        scoreController.add(new Score("Nicolas", "", 9000));
+        scoreController.add(new Score("Jean", "123", 50));
+        scoreController.update(scoreController.getByName("Mael"),1000);
 
         //-------------------------------------------------------------------------
 
