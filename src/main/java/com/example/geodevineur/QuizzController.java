@@ -89,15 +89,18 @@ public class QuizzController {
             return "quizz";
         }
 
-        /* Getting the last condition */
+        /* Getting the last condition, null if 1st question */
         Condition<Departement> previousCond = null;
-        if (getStep() > 0) previousCond = getConditions().get(getStep()-1);
+        if (getStep() > 0)
+            previousCond = getConditions().get(getStep()-1);
 
         /* Checking if the department written matches the condition */
         if(previousCond == null || (departementOfInput != null && previousCond.checksCondition(departementOfInput))) {
-            if(previousCond != null)
+            /* No previous questions if no previous conds, no need to print*/
+            if(previousCond != null){
                 previousAnswers.add(previousCond.getSentence() + " : " + departementOfInput.getName());
-            model.addAttribute("previousQuestions",getPreviousQuestions());
+                model.addAttribute("previousQuestions",getPreviousQuestions());
+            }
             model.addAttribute("questionContent",getTemplate(getConditions().get(getStep()).getSentence()));
             setStep(getStep()+1);
         } else {
@@ -106,37 +109,7 @@ public class QuizzController {
                 errorSentence = getErrorCorrection(departementOfInput, previousCond);
             model.addAttribute("scoreModal",getLoseModal(errorSentence));
         }
-
         return "quizz";
-    }
-
-    public String getErrorCorrection(Departement mistakeInputed, Condition<Departement> losingCond){
-        if(losingCond.getSentence().contains("situe au")){ //Cardinal
-            return mistakeInputed.getName() + " se situe au " + mistakeInputed.getCardinal() + " de la France";
-        } else if(losingCond.getSentence().contains("contient")){ //ContainLetter
-            return mistakeInputed.getName() + " se situe au " + mistakeInputed.getCardinal() + " de la France";
-        } else if(losingCond.getSentence().contains("lettres")){ //NBcharacters
-            return mistakeInputed.getName() + " contient " + mistakeInputed.getName().length() + " lettres";
-        } else if(losingCond.getSentence().contains("voisins")){ //Neightbours
-            return mistakeInputed.getName() + " possède " + mistakeInputed.getNeightbours() + " voisins";
-        } else if(losingCond.getSentence().contains("numéro")){ //Number
-            return mistakeInputed.getName() + " a pour numéro le " + mistakeInputed.getNumber();
-        } else if(losingCond.getSentence().contains("vote")){ //Politic
-            return mistakeInputed.getName() + " vote " + mistakeInputed.getPolitic() + " en majorité";
-        } else if(losingCond.getSentence().contains("habitants")){ //Population
-            return mistakeInputed.getName() + " a " + Format.intToFormatedString(mistakeInputed.getPopulation()) + " habitants";
-        } else if(losingCond.getSentence().contains("préfecture")){ //Prefecture
-            return mistakeInputed.getName() + " a pour préfecture " + mistakeInputed.getPrefecture().getName();
-        } else if(losingCond.getSentence().contains("région")){ //Region
-            return mistakeInputed.getName() + " a pour région " + mistakeInputed.getRegion().getName();
-        } else if(losingCond.getSentence().contains("mer")){ //Seaside
-            if(mistakeInputed.getSeaside()) return mistakeInputed.getName() + " se situe en bord de mer";
-            else return mistakeInputed.getName() + " ne se situe pas en bord de mer";
-        } else if(losingCond.getSentence().contains("km")){ //Surface
-            return mistakeInputed.getName() + " compte " + mistakeInputed.getSurface() + " km²";
-        } else {
-            return "";
-        }
     }
 
     /* Gets a department from a string and deletes its special chars */
@@ -222,6 +195,34 @@ public class QuizzController {
         htmlContent.append("</div>");
         htmlContent.append("</div>");
         return htmlContent;
+    }
+
+    /* Return the losing reason and the correction */
+    public String getErrorCorrection(Departement mistakeInputed, Condition<Departement> losingCond){
+        if(losingCond.getSentence().contains("situe au")){ //Cardinal
+            return mistakeInputed.getName() + " se situe au " + mistakeInputed.getCardinal() + " de la France (pas " + departementToFind.getCardinal() + ")";
+        } else if(losingCond.getSentence().contains("lettres")){ //NBcharacters
+            return mistakeInputed.getName() + " contient " + mistakeInputed.getName().length() + " lettres (pas " + departementToFind.getName().length() + ")";
+        } else if(losingCond.getSentence().contains("voisins")){ //Neightbours
+            return mistakeInputed.getName() + " possède " + mistakeInputed.getNeightbours() + " voisins (pas " + departementToFind.getNeightbours() + ")";
+        } else if(losingCond.getSentence().contains("numéro")){ //Number
+            return mistakeInputed.getName() + " a pour numéro le " + mistakeInputed.getNumber() + " (seuil à " + departementToFind.getNumber() + ")";
+        } else if(losingCond.getSentence().contains("vote")){ //Politic
+            return mistakeInputed.getName() + " vote " + mistakeInputed.getPolitic() + " en majorité (pas " + departementToFind.getPolitic() + ")";
+        } else if(losingCond.getSentence().contains("habitants")){ //Population
+            return mistakeInputed.getName() + " a " + Format.intToFormatedString(mistakeInputed.getPopulation()) + " habitants (pas " + Format.intToFormatedString(departementToFind.getPopulation()) + ")";
+        } else if(losingCond.getSentence().contains("préfecture")){ //Prefecture
+            return mistakeInputed.getName() + " a pour préfecture " + mistakeInputed.getPrefecture().getName() + " (pas " + departementToFind.getPrefecture().getName() + ")";
+        } else if(losingCond.getSentence().contains("région")){ //Region
+            return mistakeInputed.getName() + " a pour région " + mistakeInputed.getRegion().getName() + " (pas " + departementToFind.getRegion().getName() + ")";
+        } else if(losingCond.getSentence().contains("mer")){ //Seaside
+            if(mistakeInputed.getSeaside()) return mistakeInputed.getName() + " se situe en bord de mer";
+            else return mistakeInputed.getName() + " ne se situe pas en bord de mer";
+        } else if(losingCond.getSentence().contains("km")){ //Surface
+            return mistakeInputed.getName() + " compte " + mistakeInputed.getSurface() + " km² (pas " + departementToFind.getSurface() + ")";
+        } else {
+            return "";
+        }
     }
 
     /* Returns html template for the button launching the quizz */
