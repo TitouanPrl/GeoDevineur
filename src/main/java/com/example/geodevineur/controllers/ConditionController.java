@@ -65,7 +65,6 @@ public class ConditionController {
             };
 
             if (previousCond == null) {
-                System.out.println("UNOOOO");
                 rerun = (!isCondGood(cond, allDepartements));
             }
             else if (previousCond.getClass().equals(cond.getClass())) {
@@ -81,8 +80,6 @@ public class ConditionController {
                 //cond = null;
                 cond = new PrefectureCond<>(chosen);
             }
-            System.out.println("TENTATIVE : " + tentative);
-            System.out.println(cond.getSentence());
         } while (rerun);
         return cond;
     }
@@ -101,14 +98,10 @@ public class ConditionController {
             if (dep.getPotential()) {
                 countPotential++;
             }
-        }
-
-        System.out.println("POTENTIAL :" + countPotential + " ET POSSIBLE : " + countPossible);
-        
+        }        
 
         /* Verify if the condition restricts the number of departements left but not too much */
         if (countPotential < countPossible /*&& countPotential > countPossible / 3*/) {
-            System.out.println("COUNNNNNT");
             for (Departement dep : allDepartements) {
                 dep.setPossible(dep.getPotential());
             }
