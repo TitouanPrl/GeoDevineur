@@ -28,27 +28,11 @@ public class Score implements Comparable<Score>{
     }
 
     public Score() {
-
     }
 
     public void update(int score){
-        System.out.println("---avant---");
-        System.out.println(getPseudo());
-        System.out.println(getScore());
-        System.out.println(getVersion());
-        System.out.println("------------");
         setScore(getScore()+score);
         setVersion(getVersion()+1);
-        System.out.println("---apres---");
-        System.out.println(getPseudo());
-        System.out.println(getScore());
-        System.out.println(getVersion());
-        System.out.println("------------");
-
-    }
-
-    public Boolean isValidPassword(String password){
-        return (getPassword().equals(password));
     }
 
     @Override

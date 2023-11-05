@@ -42,21 +42,6 @@ public class Format {
         return value.replace(" ","").replace("-","").replace("'","").replace(",","").toLowerCase();
     }
 
-    //PAS TERMINé
-    /* Finding the gender of a word */
-    public String getPronom(String name, String letter ){ //letter=d ou l
-        String result = ""; //la, les
-        String last_char = name.substring(name.length() - 1);
-        String first_char = name.substring(0,0);
-        if(last_char.equals("s")){
-            return letter+"es";
-        } else if(last_char.equals("e") && letter.equals("l")){
-            return "la";
-        } else {
-            return "le";
-        }
-    }
-
     /* Converts seconds from int to string */
     public String getTimeStringFromSeconds(int seconds){
         int minutes = 0;
