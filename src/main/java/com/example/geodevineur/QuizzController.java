@@ -203,6 +203,6 @@ public class QuizzController {
 
     /* Returns html template for the button launching the quizz */
     public StringBuilder getStartButton(){
-        return new StringBuilder("<button class=\"btn btn-success btn-lg\" id=\"start\">DEMARRER</button>");
+        return new StringBuilder("<button class=\"button-start\" id=\"start\" role=\"button\"><span class=\"text\">Démarrer le Quizz</span></button>");
     }
 }

@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/header.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/modal.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/static/css/quizz.css}">
 </head>
 <body onkeydown="checkKey(event)">
 <header>
@@ -23,8 +24,8 @@
 </header>
 <div class="container p-5">
     <div th:remove="tag" th:utext="${scoreModal}"></div>
-    <div style="margin-left: 60%;margin-right: auto" th:remove="tag" th:utext="${startButton}"></div>
-    <div class="col-md-4 container" style="padding: 1%" th:remove="tag" th:utext="${questionContent}"></div>
+    <div th:remove="tag" th:utext="${startButton}"></div>
+    <div th:remove="tag" th:utext="${questionContent}"></div>
 </div>
 <script>
     function proceedForm() {

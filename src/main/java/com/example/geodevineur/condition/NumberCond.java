@@ -28,9 +28,11 @@ public class NumberCond<E extends Departement> extends Condition<E> {
         if (compare != null) {
             threshold = compare.getNumber();
             if (compareId(threshold,e.getNumber()) < 0) {
+                System.out.println("here, "+threshold+" < "+e.getNumber());
                 isLess = true;
                 return;
             } else if (compareId(threshold,e.getNumber()) > 0) {
+                System.out.println("here2, "+threshold+" > "+e.getNumber());
                 isLess = false;
                 return;
             }
